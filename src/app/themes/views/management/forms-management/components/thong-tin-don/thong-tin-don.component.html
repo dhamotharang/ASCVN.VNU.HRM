@@ -1,0 +1,174 @@
+<form class="m-form form-tt-don" novalidate>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10" *ngIf="itemData">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>{{ itemData.tieuDe }}</h2>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+          <nz-divider></nz-divider>
+        </div>
+        <div class="col-4"></div>
+
+        <div class="col-12 text-center">
+          <label class="col-form-label">{{ 'MANAGEMENT.LABEL.TRANG_THAI_XU_LY' | translate }}: </label>
+          <label class="pl-2 text-success">Đã duyệt</label>
+        </div>
+
+        <div class="col-12">
+          <label class="col-form-label">{{ 'MANAGEMENT.LABEL.KINH_GUI' | translate }}: </label>
+          <label class="pl-2">Trường Đại học Công Nghệ</label>
+        </div>
+
+        <div class="col-12">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.LABEL.TIEU_DE' | translate }}: </label>
+          <input type="text" class="col-lg-10 typeinput" [readOnly]="true" />
+        </div>
+
+        <div class="col-12 pb-4"></div>
+        <!-- Thông tin người đề xuất -->
+        <nz-card [nzTitle]="'MANAGEMENT.DON.THONG_TIN_NGUOI_DE_XUAT' | translate">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.HO_VA_TEN' | translate }} :</label>
+                <label class="pl-2">{{ itemData.tenNguoiGui }}</label>
+              </div>
+
+              <div class="col-6">
+                <label class="font-weight-bold"> {{ 'MANAGEMENT.DON.NGAY_SINH' | translate }} : </label>
+                <label class="pl-2">15/08/1999</label>
+              </div>
+
+              <div class="col-6">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.CO_QUAN_DON_VI' | translate }} :</label>
+                <label class="pl-2">Đại học Công Nghệ</label>
+              </div>
+
+              <div class="col-6">
+
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.CHUC_VU_HIEN_TAI' | translate }} :</label>
+                <label class="pl-2">Phó trưởng ban</label>
+              </div>
+
+              <div class="col-6">
+
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.CAN_CU_THEO_HD' | translate }} :</label>
+                <label class="pl-2">Làm việc 3 năm 1 lần</label>
+              </div>
+
+              <div class="col-6">
+
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.SO_HOP_DONG' | translate }} :</label>
+                <label class="pl-2">HD/VD/2019NTH</label>
+              </div>
+
+              <div class="col-12">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.THOI_GIAN_HD_TU_NGAY' | translate }} :</label>
+                <label class="pl-2">15/05/2019</label>
+                <label class="font-weight-bold pl-3">
+                  {{ 'MANAGEMENT.DON.DEN_NGAY' | translate }} :</label>
+                <label class="pl-2">15/05/2022</label>
+              </div>
+
+
+
+              <div class="col-6">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.NGAY_KY' | translate }} :</label>
+                <label class="pl-2">15/05/2019</label>
+              </div>
+
+              <div class="col-6">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.SO_DIEN_THOAI' | translate }} :</label>
+                <label class="pl-2">03698545632</label>
+              </div>
+
+              <div class="col-6">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.CHUC_DANH_NGHE_NGHIEP' | translate }} :</label>
+                <label class="pl-2">Chuyên viên</label>
+              </div>
+
+            </div>
+          </div>
+        </nz-card><br/>
+        <!-- Nội dung -->
+        <!-- <nz-divider nzPlain [nzText]="'MANAGEMENT.LABEL.NOI_DUNG' | translate" nzOrientation="left">
+        </nz-divider> -->
+        <nz-card [nzTitle]="'MANAGEMENT.LABEL.NOI_DUNG' | translate">
+          <div class="col-12">
+            <div class="row">
+
+              <div class="col-12">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.LY_DO_XIN_CHAM_DUT_HD' | translate }} :</label>
+                <label class="pl-2">Cơ quan công tác khá xa nhà, môi trường làm việc chưa tốt,...</label>
+              </div>
+
+              <div class="col-12">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.XIN_CHAM_DUT_HD_TU_NGAY' | translate }} :</label>
+                <label class="pl-2">1/2/2020</label>
+              </div>
+              <div class="col-12">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.BAN_GIAO_CV' | translate }} :</label>
+                <label class="pl-2">Nguyễn Văn Tiến</label>
+              </div>
+              <div class="col-12">
+                <label class="font-weight-bold">
+                  {{ 'MANAGEMENT.DON.HOAN_TAT_BAN_GIAO_CV' | translate }} :</label>
+                <label class="pl-2">15/01/2020</label>
+              </div>
+
+              <div class="col-6">
+                <div class="signature">
+                  <span>
+                    <u><b>
+                        {{ 'MANAGEMENT.DON.Y_KIEN_NGUOI_DUYET' | translate }}
+                      </b></u>
+                  </span>
+                  <span>
+                    Đồng ý cho nhân sự nghỉ việc theo quy định,
+                    đề nghị phòng Hành chánh lập quyết định
+                  </span>
+                  <span>
+                    <b>Trịnh Xuân Thành</b>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="signature">
+                  <span>
+                    Hà Nội, Ngày 05 tháng 05 năm 2020
+                  </span>
+                  <span>
+                    (Đã đề xuất)
+                  </span>
+                  <span>
+                    Phạm Văn Long
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <div class="col-10" *ngIf="!itemData">
+      <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</form>

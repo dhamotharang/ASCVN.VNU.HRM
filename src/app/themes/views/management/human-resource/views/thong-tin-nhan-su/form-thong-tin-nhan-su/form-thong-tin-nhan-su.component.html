@@ -1,0 +1,412 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()" [@fadeInOnEnter] [@fadeOutOnLeave]>
+    <nz-tabset>
+        <nz-tab nzTitle="Thông tin Chung">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_CMND' | translate }} <span class="text-danger">(*)</span> </label>
+                        <input type="text" class="m-input form-control" formControlName="soCMND" />
+                        <app-field-error [control]="form.get('soCMND')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.NGAY_CAP_CMND' | translate }} <span class="text-danger">(*)</span> </label>
+                        <nz-date-picker
+                            formControlName="ngayCapCMND"
+                            nzFormat="dd/MM/yyyy"
+                            [nzDisabledDate]="disabledDate"
+                            style="width: 100%"
+                        >
+                        </nz-date-picker>
+                        <app-field-error [control]="form.get('ngayCapCMND')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.NOI_CAP_CMND' | translate }} <span class="text-danger">(*)</span> </label>
+                        <input type="text" class="m-input form-control" formControlName="noiCapCMND" />
+                        <app-field-error [control]="form.get('noiCapCMND')"></app-field-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.HO_CHIEU' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="hoChieu" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.NGAY_CAP_HC' | translate }} </label>
+                        <nz-date-picker
+                            [nzDisabledDate]="disabledDate"
+                            style="width: 100%"
+                            formControlName="ngayCapHoChieu"
+                            nzFormat="dd/MM/yyyy"
+                        >
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.NOI_CAP_HC' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="noiCapHoChieu" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.DAN_TOC' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.DAN_TOC"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idDanToc"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TON_GIAO' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TON_GIAO"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idTonGiao"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_BHXH' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="soBHXH" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.DOI_TUONG_CHINH_SACH' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.DOI_TUONG_CHINH_SACH"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idGiaDinhChinhSach"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TINH_TRANG_HON_NHAN' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TINH_TRANG_HON_NHAN"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idTinhTrangHonNhan"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.DT_NHA_RIENG' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="dienThoaiNhaRieng" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.DT_CO_QUAN' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="dienThoaiCoQuan" />
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.NOTE' | translate }} </label>
+                <textarea class="form-control m-input" rows="3" formControlName="ghiChu"></textarea>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'LB.HRM.QUE_QUAN' | translate">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUOC_GIA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                            [isReference]="true"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="queQuan_IDQuocGia"
+                            (ngModelChange)="changeQuocGia_QueQuan($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TINH_THANH' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TINH_THANH"
+                            [isReference]="true"
+                            [referenceId]="form.get('queQuan_IDQuocGia').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="queQuan_IDTinh"
+                            (ngModelChange)="changeTinhThanh_QueQuan($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUAN_HUYEN' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUAN_HUYEN"
+                            [isReference]="true"
+                            [referenceId]="form.get('queQuan_IDTinh').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="queQuan_IDHuyen"
+                            (ngModelChange)="changeQuanHuyen_QueQuan($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.PHUONG_XA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.PHUONG_XA"
+                            [isReference]="true"
+                            [referenceId]="form.get('queQuan_IDHuyen').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="queQuan_IDPhuongXa"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_NHA' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="queQuan_SoNha" />
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'LB.HRM.NOI_SINH' | translate">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUOC_GIA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                            [isReference]="true"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="noiSinh_IDQuocGia"
+                            (ngModelChange)="changeQuocGia_NoiSinh($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TINH_THANH' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TINH_THANH"
+                            [isReference]="true"
+                            [referenceId]="form.get('noiSinh_IDQuocGia').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="noiSinh_IDTinh"
+                            (ngModelChange)="changeTinhThanh_NoiSinh($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUAN_HUYEN' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUAN_HUYEN"
+                            [isReference]="true"
+                            [referenceId]="form.get('noiSinh_IDTinh').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="noiSinh_IDHuyen"
+                            (ngModelChange)="changeQuanHuyen_NoiSinh($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.PHUONG_XA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.PHUONG_XA"
+                            [isReference]="true"
+                            [referenceId]="form.get('noiSinh_IDHuyen').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="noiSinh_IDPhuongXa"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_NHA' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="noiSinh_SoNha" />
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'LB.HRM.HO_KHAU_THUONG_TRU' | translate">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUOC_GIA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                            [isReference]="true"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="hktT_IDQuocGia"
+                            (ngModelChange)="changeQuocGia_Hktt($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TINH_THANH' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TINH_THANH"
+                            [isReference]="true"
+                            [referenceId]="form.get('hktT_IDQuocGia').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="hktT_IDTinh"
+                            (ngModelChange)="changeTinhThanh_Hktt($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUAN_HUYEN' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUAN_HUYEN"
+                            [isReference]="true"
+                            [referenceId]="form.get('hktT_IDTinh').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="hktT_IDHuyen"
+                            (ngModelChange)="changeQuanHuyen_Hktt($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.PHUONG_XA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.PHUONG_XA"
+                            [isReference]="true"
+                            [referenceId]="form.get('hktT_IDHuyen').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="hktT_IDPhuongXa"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_NHA' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="hktT_SoNha" />
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"></div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'LB.HRM.DIA_CHI_LIEN_LAC' | translate">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUOC_GIA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                            [isReference]="true"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="dclL_IDQuocGia"
+                            (ngModelChange)="changeQuocGia_Dcll($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TINH_THANH' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TINH_THANH"
+                            [isReference]="true"
+                            [referenceId]="form.get('dclL_IDQuocGia').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="dclL_IDTinh"
+                            (ngModelChange)="changeTinhThanh_Dcll($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.QUAN_HUYEN' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.QUAN_HUYEN"
+                            [isReference]="true"
+                            [referenceId]="form.get('dclL_IDTinh').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="dclL_IDHuyen"
+                            (ngModelChange)="changeQuanHuyen_Dcll($event)"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.PHUONG_XA' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.PHUONG_XA"
+                            [isReference]="true"
+                            [referenceId]="form.get('dclL_IDHuyen').value"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="dclL_IDPhuongXa"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_NHA' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="dclL_SoNha" />
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

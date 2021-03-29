@@ -1,0 +1,47 @@
+<nz-button-group>
+    <button nz-button nz-dropdown class="btn_custom btn_df" [nzDropdownMenu]="menu" nzPlacement="right">
+        <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div>
+        <span class="text">{{ 'LB.HRM.XUAT_LY_LICH' | translate }}</span>
+    </button>
+</nz-button-group>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="m-dropdown__wrapper menu-dropdown-table">
+        <div class="m-dropdown__inner">
+            <div class="m-dropdown__body">
+                <div class="m-dropdown__content">
+                    <ul class="m-nav">
+                        <li class="m-nav__item">
+                            <a href="javascript:void(0)" class="m-nav__link" (click)="onExport(report.MAU_1)">
+                                <span class="m-nav__link-text"> {{ 'LB.HRM.REPORT_1' | translate }} </span>
+                            </a>
+                        </li>
+
+                        <li class="m-nav__item">
+                            <a href="javascript:void(0)" class="m-nav__link" (click)="onExport(report.MAU_4)">
+                                <span class="m-nav__link-text"> {{ 'LB.HRM.REPORT_2' | translate }} </span>
+                            </a>
+                        </li>
+
+                        <li class="m-nav__item">
+                            <a href="javascript:void(0)" class="m-nav__link" (click)="onExport(report.MAU_3)">
+                                <span class="m-nav__link-text"> {{ 'LB.HRM.REPORT_3' | translate }} </span>
+                            </a>
+                        </li>
+
+                        <li class="m-nav__item">
+                            <a href="javascript:void(0)" class="m-nav__link" (click)="onExport(report.MAU_2)">
+                                <span class="m-nav__link-text"> {{ 'LB.HRM.REPORT_4' | translate }} </span>
+                            </a>
+                        </li>
+
+                        <li class="m-nav__item">
+                            <a href="javascript:void(0)" class="m-nav__link" (click)="onExport(report.MAU_LLKH)">
+                                <span class="m-nav__link-text"> {{ 'LB.HRM.REPORT_5' | translate }} </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nz-dropdown-menu>

@@ -1,0 +1,145 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group">
+        <label> {{ 'Phân loại' | translate }} <span class="text-danger">(*)</span> </label>
+        <div class="m-radio-inline">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="m-radio">
+                        <input type="radio" formControlName="loaiKhenThuong" [value]="1" (change)="handleChange(1)"/>
+                        {{ 'Khen thưởng Đoàn/ Đảng' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="m-radio">
+                        <input type="radio" formControlName="loaiKhenThuong" [value]="2" (change)="handleChange(2)"/>
+                        {{ 'Khen thưởng chính quyền' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group m-form__group">
+        <label> {{ 'HR.KHEN_THUONG_KY_LUAT.DON_VI' | translate }} <span class="text-danger">(*)</span> </label>
+        <input type="text" class="form-control" formControlName="donViKhenThuong" />
+        <app-field-error [control]="form.get('donViKhenThuong')"></app-field-error>
+    </div> -->
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.KHEN_THUONG' | translate }} <span class="text-danger">(*)</span>
+                </label>
+                <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear formControlName="idKhenThuong" >
+                    <ng-container *ngFor="let item of khenThuongList">
+                        <nz-option [nzLabel]="item.ten" [nzValue]="item.khenThuongId">
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+                <app-field-error [control]="form.get('idKhenThuong')"></app-field-error>
+            </div>
+        </div>
+        <!-- <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.NGAY_HIEU_LUC' | translate }} </label>
+                <div>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayHieuLuc" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.CAP_KHEN_THUONG' | translate }}</label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.CAP_QUYET_DINH"
+                    [placeHolder]="'LB.SELECT' | translate" formControlName="idCapKhenThuong">
+                </asc-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.SO_QUYET_DINH' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="soQuyetDinh" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.NGAY_QUYET_DINH' | translate }} </label>
+                <div>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayQuyetDinh" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.KHEN_THUONG' | translate }} <span class="text-danger">(*)</span>
+                </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.KHEN_THUONG" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idKhenThuong">
+                </asc-select>
+                <app-field-error [control]="form.get('idKhenThuong')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.KHEN_THUONG_KY_LUAT.HINH_THUC_KHEN_THUONG_KHAC' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="hinhThucKhenThuongKhac" />
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label></label>
+                <div>
+                    <label class="m-checkbox">
+                        <input type="checkbox" formControlName="isKhenThuongCaoNhat" />
+                        {{ 'HR.THI_DUA_KHEN_THUONG.KHEN_THUONG_CAO_NHAT' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+        </div>
+    </div>
+
+    <!-- <div class="form-group m-form__group">
+        <label>
+            {{ 'HR.KHEN_THUONG_KY_LUAT.NOI_DUNG' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="noiDung"></textarea>
+    </div> -->
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.ATTACH_FILE' | translate }}
+        </label>
+        <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput" [folderName]="folder.NS_NhanSu_KhenThuong"
+            [multiple]="false">
+        </asc-upload>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' |
+            translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

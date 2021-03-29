@@ -1,0 +1,102 @@
+<div class="row">
+    <!-- <div class="d-flex justify-content-end">
+        <div class="btn-actions">
+            <a href="javascript:void(0)" class="btn_custom btn_add" (click)="addChonChuyenNganhHandler()">
+                <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                <span class="text">{{ 'BTN.ADD' | translate }}</span>
+            </a>
+        </div>
+    </div> -->
+
+    <div class="col-sm-9">
+        <div class="form-group m-form__group">
+            <label> {{ 'PTN.NGANH_DAO_TAO' | translate }} </label>
+            <div>
+                <div class="select-user">
+                    <nz-select
+                        nzShowSearch
+                        [nzPlaceHolder]="'LB.SELECT' | translate"
+                        nzAllowClear
+                        [(ngModel)]="listDataCbbNganh"
+                        nzMode="multiple"
+                    >
+                        <ng-container *ngFor="let item of listDropNganh">
+                            <nz-option [nzLabel]="item.ma + ' - ' + item.ten" [nzValue]="item.id"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group m-form__group">
+            <label style="color: white">.</label>
+            <div>
+                <a type="button" class="btn_custom btn_add ml-1" (click)="addChonChuyenNganhHandler()">
+                    <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">Chọn ngành</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div class="grid-wrapper grid-wrapper-border">
+    <kendo-grid [data]="gridDanhSach" [resizable]="true" [columnMenu]="false">
+        <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" [width]="60" [columnMenu]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <button
+                    type="button"
+                    nz-button
+                    class="btn-svg-danger d-inline-block"
+                    (click)="removeChuyenNganhHandler(dataItem, rowIndex)"
+                >
+                    <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                </button>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" [title]="'PTN.NGANH_DAO_TAO' | translate">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <nz-select
+                    nzShowSearch
+                    [nzPlaceHolder]="'LB.SELECT' | translate"
+                    nzAllowClear
+                    (ngModelChange)="onChangeNganh($event, rowIndex)"
+                    [(ngModel)]="dataItem.idNganh"
+                >
+                    <ng-container *ngFor="let item of listDropNganh">
+                        <nz-option [nzLabel]="item.ma + ' - ' + item.ten" [nzValue]="item.id"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="200" [title]="'PTN.CHUYEN_NGANH' | translate">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <nz-select
+                    nzShowSearch
+                    [nzPlaceHolder]="'LB.SELECT' | translate"
+                    nzAllowClear
+                    [nzMode]="'multiple'"
+                    (ngModelChange)="onChangeChuyenNganh()"
+                    [(ngModel)]="dataItem.idChuyenNganh"
+                    (nzFocus)="onFocusNganh(dataItem.idNganh)"
+                    [nzClearIcon]="true"
+
+                >
+                    <ng-container *ngFor="let item of listDropChuyenNganh">
+                        <nz-option [nzLabel]="item.ma + ' - ' + item.ten" [nzValue]="item.id"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </ng-template>
+        </kendo-grid-column>
+    </kendo-grid>
+    <!-- <div class="form-group m-form__group">
+        <div class="btn-actions">
+            <a href="javascript:void(0)" class="btn_custom btn_add" (click)="addChuyenNganhHandler()">
+                <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                <span class="text">{{ 'BTN.ADD' | translate }}</span>
+            </a>
+        </div>
+    </div> -->
+</div>

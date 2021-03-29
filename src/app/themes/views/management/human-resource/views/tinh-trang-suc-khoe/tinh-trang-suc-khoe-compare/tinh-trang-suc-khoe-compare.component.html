@@ -1,0 +1,32 @@
+<table class="table table-bordered table-compare">
+    <thead>
+        <tr>
+            <th>{{'LB.HRM.TIEU_CHI' | translate}}</th>
+            <th style="min-width: 200px">{{'LB.HRM.NOI_DUNG_DA_CO' | translate}}</th>
+            <th>{{'LB.HRM.NOI_DUNG_DE_XUAT' | translate}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of arrayCompare">
+            <td class="font-weight-bold">{{ item.title }}</td>
+            <td class="text-success">{{ item.currentValue }}</td>
+            <td>
+                <span class="text-muted font-italic">
+                    {{ item.previousValue }}
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="text-right">
+    <ng-container *ngIf="arrayCompare && arrayCompare.length > 0 && isDuyetLyLichNhanSu">
+        <button class="btn_custom btn_update" (click)="onApprove(true)">
+            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+        </button>
+        <button class="btn_custom btn_df mr-1" (click)="onApprove(false)">
+            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+        </button>
+    </ng-container>
+</div>

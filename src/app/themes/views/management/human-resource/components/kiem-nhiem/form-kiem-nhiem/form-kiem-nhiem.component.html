@@ -1,0 +1,96 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.HRM.CO_QUAN' | translate }} <span class="text-danger">(*)</span> </label>
+                <app-select-user-tree [placeholder]="'LB.SELECT' | translate" formControlName="idCoQuanKiemNhiem" [isMultiple]="false">
+                </app-select-user-tree>
+                <app-field-error [control]="form.get('idCoQuanKiemNhiem')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.HRM.CHUC_VU' | translate }} <span class="text-danger">(*)</span> </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.CHUC_VU"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idChucVuKiemNhiem"
+                >
+                </asc-select>
+                <app-field-error [control]="form.get('idChucVuKiemNhiem')"></app-field-error>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'HR.KIEM_NHIEM.SO_QUYET_DINH' | translate }}
+                </label>
+                <input type="text" class="m-input form-control" formControlName="soQuyetDinh" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'HR.KIEM_NHIEM.NGAY_QUYET_DINH' | translate }}
+                </label>
+                <div>
+                    <nz-date-picker formControlName="ngayQuyetDinh" nzFormat="dd/MM/yyyy" style="width: 100%"> </nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'HR.KIEM_NHIEM.TU_NGAY' | translate }}
+                </label>
+                <div>
+                    <nz-date-picker
+                        [nzDisabledDate]="disabledNgayBatDau"
+                        formControlName="ngayBatDau"
+                        nzFormat="dd/MM/yyyy"
+                        style="width: 100%"
+                    >
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'HR.KIEM_NHIEM.DEN_NGAY' | translate }}
+                </label>
+                <div>
+                    <nz-date-picker
+                        [nzDisabledDate]="disabledNgayKetThuc"
+                        formControlName="ngayKetThuc"
+                        nzFormat="dd/MM/yyyy"
+                        style="width: 100%"
+                    >
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" rows="3" formControlName="ghiChu"></textarea>
+    </div>
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.ATTACH_FILE' | translate }}
+        </label>
+        <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput" [folderName]="folder.NS_NhanSu_KiemNhiem" [multiple]="false">
+        </asc-upload>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,14 @@
+<nz-tabset>
+    <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE1' | translate">
+        <app-thong-tin-ke-hoach [itemKeHoach]="model"></app-thong-tin-ke-hoach>
+    </nz-tab>
+    <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE4' | translate">
+        <app-vi-tri-can-tuyen [itemKeHoach]="model"></app-vi-tri-can-tuyen>
+    </nz-tab>
+    <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE2' | translate">
+        <app-tieu-chuan-tuyen-dung [keHoachTuyenDungTieuChuans]="model.keHoachTuyenDungTieuChuans"> </app-tieu-chuan-tuyen-dung>
+    </nz-tab>
+    <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE3' | translate">
+        <app-tien-do-thuc-hien [idKeHoach]="model.id"></app-tien-do-thuc-hien>
+    </nz-tab>
+</nz-tabset>

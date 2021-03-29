@@ -1,0 +1,121 @@
+<ng-template #template let-anchor>
+    <span>{{ anchor.nativeElement.innerText }}</span>
+</ng-template>
+<div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+    <div class="grid-wrapper no-hover grid-wrapper-border" [ngStyle]="{ 'height.px': pageHeight + 75 }">
+        <kendo-grid
+            [data]="listData"
+            [pageSize]="gridState.take"
+            [skip]="gridState.skip"
+            [loading]="isLoading"
+            [pageable]="pageConfig"
+            [resizable]="true"
+            [columnMenu]="true"
+            [sortable]="true"
+            [sort]="gridState.sort"
+            kendoGridSelectBy="id"
+            (selectionChange)="selectRow($event)"
+            [selectedKeys]="selectionIds"
+            (dataStateChange)="onStateChange($event)"
+            [selectable]="true"
+        >
+            <kendo-grid-column width="50" [columnMenu]="false" field="sao">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        <nz-rate [nzCount]="1" [ngModel]="1"></nz-rate>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="tieuDe" [title]="'FM.LABEL.TIEU_DE' | translate" [width]="180" [columnMenu]="false">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>
+                        <span>
+                            <b>{{ dataItem.tieuDe }}</b>
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            {{ dataItem.noiDung }}
+                        </span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="tenNguoiGui"
+                [width]="130"
+                [title]="idLoaiDon !== cacLoaiDonEnum.DON_NHAP ? ('FM.LABEL.NGUOI_GUI_THOI_GIAN' | translate) : ('FM.LABEL.NGUOI_NHAN' | translate)"
+                [columnMenu]="false"
+                class="text-center"
+            >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div *ngIf="idLoaiDon === cacLoaiDonEnum.DON_NHAP">
+                        <span class="text-danger">
+                            {{ dataItem.tenNguoiGui }}
+                        </span>
+                    </div>
+                    <div *ngIf="idLoaiDon !== cacLoaiDonEnum.DON_NHAP">
+                        <span class="text-danger">
+                            {{ dataItem.tenNguoiGui }}
+                        </span>
+                    </div>
+                    <div *ngIf="idLoaiDon !== cacLoaiDonEnum.DON_NHAP">
+                        <span>
+                            <b>{{ dataItem.thoiGianGui | date: 'HH:mm - dd/MM/yyyy' }}</b>
+                        </span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="ten" [title]="'FM.LABEL.DINH_KEM' | translate" [width]="80" [columnMenu]="false">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <ng-container *ngIf="dataItem.idFileDinhKem">
+                        <div class="text-center">
+                            <div
+                                nz-popover
+                                [nzPopoverTitle]="'LB.ATTACH_FILE' | translate"
+                                [nzPopoverContent]="contentTemplate"
+                                [innerHTML]="'selected-file.svg' | vnuIcon | safeHtml: 'html'"
+                            ></div>
+                        </div>
+                        <ng-template #contentTemplate>
+                            <a
+                                href="javascript:void(0)"
+                                class="md-view-file"
+                                (click)="showModalViewFile(dataItem.guidIdFileDinhKem, dataItem.fileName)"
+                            >
+                                <span [innerHTML]="dataItem.fileName | safeHtml: 'html'"></span>
+                            </a>
+                        </ng-template>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="trangThaiXuLy"
+                [width]="130"
+                [title]="'FM.LABEL.TRANG_THAI_XU_LY' | translate"
+                [columnMenu]="false"
+                class="text-center"
+            >
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <div>
+                        <span class="text-danger">
+                            {{ dataItem.trangThaiXuLy }}
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            <b>{{ dataItem.thoiGianXuLy | date: 'HH:mm - dd/MM/yyyy' }}</b>
+                        </span>
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="phanLoaiDon"
+                [width]="110"
+                [title]="'FM.LABEL.PHAN_LOAI_DON' | translate"
+                [columnMenu]="false"
+                class="text-center"
+            >
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>

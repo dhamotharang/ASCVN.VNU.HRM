@@ -1,0 +1,108 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'NV.TRANG_THAI' | translate }}
+                </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.KHCN_TRANG_THAI"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="trangThai"></asc-select>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'Tương tự' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="filter" value="Tên nhiệm vụ ....v...v." />
+                    <label>Grid dữ liệu</label>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'NV.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>
+<div *ngIf="isVisibleGrid">
+    <hr class="solid">
+<div class="form-group m-form__group">
+    <b>{{'SCI.LOC_MA_TUONG_TU' | translate}}</b>
+</div>
+<div class="row mb-4">
+    <div class="col-sm-3">
+        <nz-select nzShowSearch [(ngModel)]="type" [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear>
+            <nz-option [nzLabel]=" 'SCI.SLT_MA' | translate " [nzValue]="true">
+            </nz-option>
+            <nz-option [nzLabel]=" 'SCI.SLT_TEN' | translate " [nzValue]="false">
+            </nz-option>
+        </nz-select>
+    </div>
+    <div class="col-sm-9 pl-0">
+        <div class="m-input-icon m-input-icon--left m-input-icon--right">
+            <input type="text" class="form-control m-input" 
+                [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                [(ngModel)]="tableFieldName" 
+                (change)="onSearchChange()" 
+                (keydown.enter)="onSearchChange()" />
+            <span class="m-input-icon__icon m-input-icon__icon--left">
+                <span>
+                    <i class="la la-search"></i>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+<div kendoTooltip showOn="none" filter=".k-grid td">
+    <div class="grid-wrapper">
+        <kendo-grid 
+            [data]="gridView$ | async" 
+            [pageSize]="gridState.take"
+            [skip]="gridState.skip"
+            [pageable]="pageConfig"
+            [resizable]="true" 
+            [columnMenu]="true" 
+            [sortable]="true" 
+            [selectable]="true"
+            kendoGridSelectBy="id" 
+            [sort]="gridState.sort" 
+            [style.height]="'100%'"
+            (dataStateChange)="onStateChange($event)">
+            <kendo-grid-column [title]="'LB.STT' | translate" width="30" [columnMenu]="false"
+                [headerStyle]="{ 'text-align': 'center' }">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        {{ rowIndex + 1 }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [columnMenu]="false" field="Ma" [sortable]="false" [title]="'SCI.MA' | translate" width="90">
+            </kendo-grid-column>
+            <kendo-grid-column [columnMenu]="false" field="Ten" [sortable]="false" [title]="'SCI.TEN' | translate" width="150">
+            </kendo-grid-column>
+            <kendo-grid-column [title]="'NV.TRANG_THAI' | translate" field="TenTrangThai" [width]="60"
+                [columnMenu]="false" [sortable]="false" [headerStyle]="{ 'text-align': 'center' }">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center" [ngClass]="dataItem.CssClass">
+                        {{ dataItem.TenTrangThai }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>
+</div>

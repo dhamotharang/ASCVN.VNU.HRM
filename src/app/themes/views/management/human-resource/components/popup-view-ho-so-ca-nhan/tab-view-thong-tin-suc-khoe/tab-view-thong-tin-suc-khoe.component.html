@@ -1,0 +1,63 @@
+<div class="m-portlet mb-0">
+  <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">
+                  {{ 'HR.MENU.SUC_KHOE' | translate }}
+                  <!-- <small *ngIf="model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT" class="text-normal text-danger font-italic">
+                      ({{ 'HR.MES.15' | translate  }})
+                  </small> -->
+              </h3>
+          </div>
+      </div>
+  </div>
+  <div class="m-portlet__body p-3">
+      <div class="form-group row">
+          <div class="col-md-6">
+              <div class="row">
+                  <label class="col-6 col-form-label"> {{ 'HR.MENU.SUC_KHOE' | translate }}<span class="float-right">:</span></label>
+                  <label class="col-6 col-form-label lb-bold-info">{{ model?.tenTrinhTrangSucKhoe }}</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="row">
+                  <label class="col-6 col-form-label"> {{ 'HR.SUC_KHOE.CHIEU_CAO' | translate }}<span class="float-right">:</span></label>
+                  <label class="col-6 col-form-label lb-bold-info">{{ model?.chieuCao }}</label>
+              </div>
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-md-6">
+              <div class="row">
+                  <label class="col-6 col-form-label"> {{ 'HR.SUC_KHOE.CAN_NANG' | translate }}<span class="float-right">:</span></label>
+                  <label class="col-6 col-form-label lb-bold-info">{{ model?.canNang }}</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="row">
+                  <label class="col-6 col-form-label"> {{ 'HR.SUC_KHOE.NHOM_MAU' | translate }}<span class="float-right">:</span></label>
+                  <label class="col-6 col-form-label lb-bold-info">{{ model?.tenNhomMau }}</label>
+              </div>
+          </div>
+      </div>
+      <div class="form-group row">
+          <div class="col-md-12">
+              <div class="row">
+                  <label class="col-md-3 col-6 col-form-label"> {{ 'LB.NOTE' | translate }}<span class="float-right">:</span> </label>
+                  <label class="col-md-9 col-6 col-form-label lb-bold-info">{{ model?.ghiChu }}</label>
+              </div>
+          </div>
+      </div>
+      <div class="row" *ngIf="model?.idFileDinhKem && model.idFileDinhKem > 0">
+          <div class="col-md-12">
+              <div class="row">
+                  <a class="col-12 col-form-label lb-bold-info" (click)="openViewFile()">
+                      <i class="fa fa-paperclip mr-2"></i>{{ model.tenFile }}</a
+                  >
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>

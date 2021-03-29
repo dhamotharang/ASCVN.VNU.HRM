@@ -1,0 +1,28 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="noiDung"></textarea>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'Chuyển tới' | translate }} </label>
+                <widget-select-user-for-filter
+                    [userSelectedIds]="userSelected"
+                    [placeholder]="'LB.SELECT' | translate"
+                    formControlName="nhanSuId"
+                >
+                </widget-select-user-for-filter>
+                <app-field-error [control]="form.get('nhanSuId')"></app-field-error>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,206 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <section>
+        <nz-tabset>
+            <nz-tab [nzTitle]="'SCI.BBKH.THONG_TIN_CHUNG' | translate">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.MA' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="maBaiBaoKhoaHoc" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.TEN' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="tenBaiBaoKhoaHoc" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.DE_TAI' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.KHCN_DE_TAI"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idDeTai"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.DON_VI' | translate }}
+                            </label>
+                            <div>
+                                <!-- <app-select-user-tree [placeholder]="'LB.HRM.CO_QUAN' | translate" formControlName="idCoQuan"
+                                    [isMultiple]="false"></app-select-user-tree> -->
+                                <!-- <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                                    <div>
+                                        <app-select-user-tree
+                                            [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                            formControlName="idCoQuan"
+                                            [isMultiple]="false"
+                                        ></app-select-user-tree>
+                                    </div>
+                                </ng-container>
+                                <ng-template #personlTemplate1>
+                                    <div>
+                                        <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                    </div>
+                                </ng-template> -->
+                                <div>
+                                    <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.TAP_CHI' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.TAP_CHI_KHCN"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idTapChi"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.SO_TRICH_DAN' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="soTrichDan"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.TAP_SO' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="tapSo" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.PHAM_VI' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.DM_PHAM_VI_BAI_BAO"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="phamViBaiBao"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.NAM_CONG_BO' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.NAM"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="namCongBo"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.VI_TRI_TRANG' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="viTriTrang" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'SCI.BBKH.NGUON_GOC' | translate }} </label>
+                            <div>
+                                <div>
+                                    <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear
+                                        formControlName="isTrongNuoc">
+                                        <nz-option [nzLabel]=" 'SCI.BBKH.TRONG_NUOC' | translate " [nzValue]="true">
+                                        </nz-option>
+                                        <nz-option [nzLabel]=" 'SCI.BBKH.NUOC_NGOAI' | translate " [nzValue]="false">
+                                        </nz-option>
+                                    </nz-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.BBKH.GHI_CHU' | translate }}
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="ghiChu"></textarea>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'SCI.BBKH.PTN' | translate">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-  m-form__group">
+                            <app-chon-phong-thi-nghiem
+                            (changedData)="receiveDataPhongThiNghiem($event)"
+                            [idThamChieu]="form.get('id').value"
+                            [suDungPTN]="this.fsuDung"
+                            >
+                            </app-chon-phong-thi-nghiem>
+                       </div>
+                    </div>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'NV.THANH_VIEN' | translate">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <app-chon-thanh-vien (changedData)="receiveDataThanhVien($event)"
+                            [idThamChieu]="form.get('id').value"
+                            [thanhPhanThamGia]="this.fthanhPhanThamGia"
+                            >
+                            </app-chon-thanh-vien>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <chon-thanh-vien-ngoai (changedData)="receiveDataThanhVienNgoai($event)"  
+                                [idThamChieu]="form.get('id').value"
+                                [thanhPhanThamGiaNgoai]="this.fthanhPhanThamGiaNgoai"> 
+                            </chon-thanh-vien-ngoai>
+                        </div>
+                    </div>
+                </div>
+            </nz-tab>
+        </nz-tabset>
+    </section>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate
+            }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,256 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset [nzSelectedIndex]="tabCurrentIndex" (nzSelectChange)="changeTabIndex($event)">
+
+        <nz-tab [nzTitle]="'NV.THONG_TIN_CHUNG' | translate">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.MA' | translate }}
+                        </label>
+                        <div>
+                            <input class="form-control" formControlName="maNhiemVuKhoaHoc" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.TEN' | translate }}
+                        </label>
+                        <div>
+                            <input class="form-control" formControlName="tenNhiemVuKhoaHoc" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.TEN_VIET_TAT' | translate }}
+                        </label>
+                        <div>
+                            <input class="form-control" formControlName="tenVietTat" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'NV.CO_QUAN' | translate }} </label>
+                        <div>
+                            <!-- <app-select-user-tree
+                                [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                formControlName="idCoQuan"
+                                [isMultiple]="false"
+                            ></app-select-user-tree> -->
+                            <!-- <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                                <div>
+                                    <app-select-user-tree
+                                        [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                        formControlName="idCoQuan"
+                                        [isMultiple]="false"
+                                    ></app-select-user-tree>
+                                </div>
+                            </ng-container>
+                            <ng-template #personlTemplate1>
+                                <div>
+                                    <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                </div>
+                            </ng-template> -->
+                            <div>
+                                <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'NV.NAM' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.NAM"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="namThucHien"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'NV.NGAY_BAT_DAU' | translate }} </label>
+                        <div>
+                            <nz-date-picker
+                                formControlName="ngayBatDau"
+                                nzFormat="dd/MM/yyyy"
+                                style="width: 100%"
+                                [nzDisabledDate]="disabledNgayBatDau"
+                            >
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'NV.NGAY_KET_THUC' | translate }} </label>
+                        <div>
+                            <nz-date-picker
+                                formControlName="ngayKetThuc"
+                                nzFormat="dd/MM/yyyy"
+                                style="width: 100%"
+                                [nzDisabledDate]="disabledNgayKetThuc"
+                            >
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'NV.CAP_DO' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.KHCN_DM_CAP_DO"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="idCapDo"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'NV.LINH_VUC' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.LINH_VUC"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="idLinhVuc"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <khcn-upload
+                            [folderName]="folder.KHCN_KHOA_HOC_CONG_NGHE"
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput"
+                            [multiple]="true"
+                        >
+                        </khcn-upload>
+                    </div>
+                </div>
+
+
+            </div>
+        </nz-tab>
+
+        <!-- <nz-tab [nzTitle]="'SCI.BBKH.PTN' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <app-chon-phong-thi-nghiem> </app-chon-phong-thi-nghiem>
+                    </div>
+                </div>
+            </div>
+        </nz-tab> -->
+
+        <nz-tab [nzTitle]="'NV.THANH_VIEN' | translate">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <app-chon-thanh-vien
+                            (changedData)="receiveDataThanhVien($event)"
+                            [idThamChieu]="form.get('id').value"
+                            [thanhPhanThamGia]="this.fthanhPhanThamGia"
+                        ></app-chon-thanh-vien>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <chon-thanh-vien-ngoai (changedData)="receiveDataThanhVienNgoai($event)"  [idThamChieu]="form.get('id').value"
+                        [thanhPhanThamGiaNgoai]="this.fthanhPhanThamGiaNgoai"> </chon-thanh-vien-ngoai>
+                    </div>
+                </div>
+            </div>
+
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'NV.MUC_TIEU_NOI_DUNG' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.TOM_TAT' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="tomTat" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.MUC_TIEU' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="mucTieu" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.NOI_DUNG' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="noiDungNghienCuu" rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'NV.MO_TA' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'NV.MO_TA' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="moTaSanPham" rows="12"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'NV.KET_QUA_DU_KIEN' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <app-ket-qua-du-kien
+                            [idNhiemVuKhoaHoc]="form.get('id').value"
+                            [ketQuaDuKien]="this.fketQuaDuKien"
+                            (changedData)="receiveDataKetQua($event)"
+                        ></app-ket-qua-du-kien>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+
+    </nz-tabset>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

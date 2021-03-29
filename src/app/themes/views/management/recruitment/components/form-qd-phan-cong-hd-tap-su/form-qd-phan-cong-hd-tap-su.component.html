@@ -1,0 +1,144 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset>
+        <nz-tab [nzTitle]="'Thông tin quyết định' | translate">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Số quyết định' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="soQuyetDinh" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Người hướng dẫn' | translate }}</label>
+                        <widget-select-user-for-filter [placeholder]="'LB.SELECT' | translate" formControlName="idNhanSuNhanQuyetDinh">
+                        </widget-select-user-for-filter>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Nội dung quyết định' | translate }}</label>
+                        <textarea class="form-control" formControlName="noiDung"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Người quyết định' | translate }} </label>
+                        <widget-select-user-for-filter [placeholder]="'LB.SELECT' | translate" formControlName="idNguoiKy">
+                        </widget-select-user-for-filter>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Chức vụ người quyết định' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="chucVuNguoiKy" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Ngày hiệu lực' | translate }}</label>
+                        <div>
+                            <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayHieuLuc" style="width: 100%"> </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Thời gian tập sự' | translate }}</label>
+                        <div>
+                            <div class="d-flex row">
+                                <div class="col-6">
+                                    <nz-date-picker
+                                        formControlName="tapSuTuNgay"
+                                        nzFormat="dd/MM/yyyy"
+                                        [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                                        style="width: 100%"
+                                        [nzDisabledDate]="disabledTapSuNgayBatDau"
+                                    >
+                                    </nz-date-picker>
+                                </div>
+                                <div class="col-6">
+                                    <nz-date-picker
+                                        formControlName="tapSuDenNgay"
+                                        nzFormat="dd/MM/yyyy"
+                                        [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                                        style="width: 100%"
+                                        [nzDisabledDate]="disabledTapSuNgayKetThuc"
+                                    >
+                                    </nz-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'Thời gian nộp báo cáo' | translate }}</label>
+                        <div>
+                            <div class="d-flex row">
+                                <div class="col-6">
+                                    <nz-date-picker
+                                        [nzDisabledDate]="disabledBaoCaoNgayBatDau"
+                                        formControlName="nopBaoCaoTuNgay"
+                                        nzFormat="dd/MM/yyyy"
+                                        style="width: 100%"
+                                        [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                                    >
+                                    </nz-date-picker>
+                                </div>
+                                <div class="col-6">
+                                    <nz-date-picker
+                                        [nzDisabledDate]="disabledBaoCaoNgayKetThuc"
+                                        formControlName="nopBaoCaoDenNgay"
+                                        nzFormat="dd/MM/yyyy"
+                                        style="width: 100%"
+                                        [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                                    ></nz-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.NOTE' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="ghiChu" />
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'Danh sách tập sự' | translate">
+            <div class="row">
+                <div class="col-sm-12 mt-3">
+                    <div class="grid-wrapper grid-wrapper-border">
+                        <kendo-grid [data]="listTapSu" [resizable]="true" [columnMenu]="false">
+                            <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        {{ rowIndex + 1 }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="hoDem" [title]="'Họ đệm' | translate"> </kendo-grid-column>
+                            <kendo-grid-column field="tenNhanSu" [width]="150" [title]="'Tên' | translate"> </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

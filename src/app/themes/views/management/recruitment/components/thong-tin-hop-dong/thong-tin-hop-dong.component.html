@@ -1,0 +1,164 @@
+<div class="row">
+    <!--    <div class="col-sm-2">-->
+    <!--        <div class="m-card-profile">-->
+    <!--            <div class="m-card-profile__title m&#45;&#45;hide">{{ 'LB.HRM.THONG_TIN_CA_NHAN' | translate }}</div>-->
+    <!--            <div class="m-card-profile__pic">-->
+    <!--                <div class="m-card-profile__pic">-->
+    <!--                    <img-->
+    <!--                        src="'./assets/images/no-avatar.jpg'"-->
+    <!--                        alt=""-->
+    <!--                        onerror="this.onerror=null;this.src='./assets/images/no-avatar.jpg';"-->
+    <!--                    />-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <div class="m-card-profile__details text-center">-->
+    <!--            <span class="m-card-profile__name custom-user">Trần Quốc Thiện</span>-->
+    <!--        </div>-->
+    <!--        <div class="m-card-profile__details text-center">-->
+    <!--            <span class="m-card-profile__name custom-user"> 0358890216</span>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Số hợp đồng' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.soHopDong }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Loại hợp đồng' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info">{{ gridRow?.tenLoaiHopDong }} </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Ngày hợp đồng' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.ngayHopDong | date: 'dd/MM/yyyy' }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Ngày duyệt' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.ngayDuyet | date: 'dd/MM/yyyy' }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Người duyệt' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenNhanSuDuyet }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Người ký' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenNguoiKy }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Chức vụ người ký' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.chucVuNguoiKy }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">
+                        {{ 'Chức vụ người ký thay' | translate }} <span class="float-right">:</span></label
+                    >
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.chucVuNguoiKyThay }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Ngày ký' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.ngayKy | date: 'dd/MM/yyyy' }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Thời gian hợp đồng' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info">
+                        {{ model?.hdTuNgay | date: 'dd/MM/yyyy' }} - {{ model?.hdDenNgay | date: 'dd/MM/yyyy' }}</label
+                    >
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Thời gian tập sự' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info">
+                        {{ model?.tapSuTuNgay | date: 'dd/MM/yyyy' }} - {{ model?.tapSuDenNgay | date: 'dd/MM/yyyy' }}</label
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Địa điểm làm việc' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.idNguoiKy }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Cơ quan' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ gridRow?.tenCoQuan }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Chức danh chuyên môn' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenTrinhDoChuyenMon }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Chức vụ' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenChucVu }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label"> {{ 'Nhiệm vụ' | translate }}<span class="float-right">:</span> </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.nhiemVu }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label"> {{ 'Đính kèm' | translate }}<span class="float-right">:</span> </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">
+                        <a
+                            class="col-12 col-form-label lb-bold-info"
+                            *ngIf="model?.idFileDinhKem && model.idFileDinhKem > 0"
+                            (click)="openViewFile()"
+                        >
+                            {{ model?.nameFileDinhKem }}</a
+                        >
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-overlay" *ngIf="opened"></div>

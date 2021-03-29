@@ -1,0 +1,67 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.NGUOI_THUC_HIEN' | translate }}  </label>
+                <div>
+                    <widget-select-user-for-filter
+                        [userSelectedIds]="userSelected"
+                        [placeholder]="'LB.SELECT' | translate"
+                        formControlName="idNguoiThucHien"
+                    >
+                    </widget-select-user-for-filter>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.NGAY_THUC_HIEN' | translate }}  </label>
+                <div>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayThucHien" style="width: 100%"> </nz-date-picker>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TINH_TRANG' | translate }}  </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.TINH_TRANG_SU_DUNG_THIET_BI"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idTinhTrangThietBi"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.HINH_THUC' | translate }}  </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.HINH_THUC_BAO_TRI"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="hinhThuc"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NOI_DUNG_THUC_HIEN' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="noiDungThucHien"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

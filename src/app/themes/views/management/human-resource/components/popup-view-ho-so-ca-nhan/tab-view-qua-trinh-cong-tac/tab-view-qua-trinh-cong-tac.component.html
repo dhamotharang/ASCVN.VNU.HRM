@@ -1,0 +1,194 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">{{ 'HR.MENU.QUA_TRINH_CONG_TAC' | translate }}
+                  <!-- <small *ngIf="isShowInfo" class="text-normal text-danger font-italic">
+                      ({{ 'HR.MES.15' | translate }})
+                  </small> -->
+              </h3>
+          </div>
+      </div>
+  </div>
+  <div class="m-portlet__body m-portlet-custom">
+      <ng-template #template let-anchor>
+          <span>{{ anchor.nativeElement.innerText }}</span>
+      </ng-template>
+
+      <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td"
+          (mouseover)="showTooltip($event)">
+          <div class="grid-wrapper">
+              <kendo-grid [data]="gridViewQTCT$ | async" [loading]="loadingQTCT" [pageSize]="gridStateQTCT.take"
+                  [skip]="gridStateQTCT.skip" [resizable]="true" [columnMenu]="false" [sortable]="true"
+                  [pageable]="pageConfigQTCT" [sort]="gridStateQTCT.sort" kendoGridSelectBy="id"
+                  (dataStateChange)="onStateChangeQTCT($event)">
+                  <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false"
+                      [headerStyle]="{'text-align': 'center'}">
+                      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          <div class="text-center">
+                              {{ rowIndex + 1 }}
+                          </div>
+                      </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column class="text-center" field="ngayBatDau" width="100"
+                      [title]="'HR.QUA_TRINH_CONG_TAC.TU' | translate">
+                      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          {{ dataItem.ngayBatDau ? (dataItem.ngayBatDau | date: 'MM/yyyy') : '' }}
+                      </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column class="text-center" field="ngayKetThuc" width="100"
+                      [title]="'HR.QUA_TRINH_CONG_TAC.DEN' | translate">
+                      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          {{ dataItem.ngayKetThuc ? (dataItem.ngayKetThuc | date: 'MM/yyyy') : '' }}
+                      </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column field="soQuyetDinh" [title]="'HR.QUA_TRINH_CONG_TAC.SO_QUYET_DINH' | translate" [width]="150">
+                  </kendo-grid-column>
+                  <kendo-grid-column field="donViCongTac" [title]="'HR.QUA_TRINH_CONG_TAC.DON_VI' | translate">
+                  </kendo-grid-column>
+                  <kendo-grid-column field="congViecDamNhan" [title]="'HR.QUA_TRINH_CONG_TAC.VI_TRI' | translate">
+                  </kendo-grid-column>
+                  <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                      <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                          <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                              {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                          </div>
+                      </ng-template>
+                  </kendo-grid-column>
+                  <ng-template kendoGridDetailTemplate let-dataItem>
+                      <section>
+                          <div class="row">
+                              <label class="col-3 col-form-label">{{ 'HR.QUA_TRINH_CONG_TAC.NGAY_QUYET_DINH' |
+                                  translate }}<span class="float-right">:</span></label>
+                              <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ngayQuyetDinh |
+                                  date:'dd/MM/yyyy' }}</label>
+                          </div>
+                          <div class="row">
+                              <label class="col-3 col-form-label">{{ 'HR.QUA_TRINH_CONG_TAC.CHUC_VU' | translate
+                                  }}<span class="float-right">:</span></label>
+                              <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.tenChucVu }}</label>
+                          </div>
+                          <div class="row">
+                              <label class="col-3 col-form-label">{{ 'HR.QUA_TRINH_CONG_TAC.CHUC_DANH' | translate
+                                  }}<span class="float-right">:</span></label>
+                              <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.tenChucDanh }}</label>
+                          </div>
+                          <div class="row">
+                              <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span
+                                      class="float-right">:</span></label>
+                              <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu }}</label>
+                          </div>
+                      </section>
+                  </ng-template>
+              </kendo-grid>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">{{ 'HR.MENU.KIEM_NHIEM' | translate }}
+                    <!-- <small *ngIf="isShowInfo" class="text-normal text-danger font-italic">
+                        ({{ 'HR.MES.15' | translate }})
+                    </small> -->
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__body m-portlet-custom">
+        <ng-template #template let-anchor>
+            <span>{{ anchor.nativeElement.innerText }}</span>
+        </ng-template>
+
+        <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+            <div class="grid-wrapper">
+                <kendo-grid
+                    [data]="gridViewKN$ | async"
+                    [loading]="loadingKN"
+                    [pageSize]="gridStateKN.take"
+                    [skip]="gridStateKN.skip"
+                    [resizable]="true"
+                    [columnMenu]="false"
+                    [sortable]="true"
+                    [pageable]="pageConfigKN"
+                    [sort]="gridStateKN.sort"
+                    kendoGridSelectBy="id"
+                    (dataStateChange)="onStateChangeKN($event)"
+                >
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false" [headerStyle]="{'text-align': 'center'}">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="tenCoQuanKiemNhiem" [title]="'LB.HRM.CO_QUAN' | translate" [sortable]="false"> </kendo-grid-column>
+                    <kendo-grid-column field="tenChucVuKiemNhiem" [title]="'LB.HRM.CHUC_VU' | translate" [sortable]="false"> </kendo-grid-column>
+                    <kendo-grid-column field="soQuyetDinh" width="120" [title]="'HR.KIEM_NHIEM.SO_QUYET_DINH' | translate" [sortable]="false">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column width="100" [title]="'LB.ATTACH_FILE' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <ng-container *ngIf="dataItem.idFileDinhKem">
+                                <div class="text-center">
+                                    <div
+                                        nz-popover
+                                        [nzPopoverTitle]="'LB.ATTACH_FILE' | translate"
+                                        [nzPopoverContent]="contentTemplate"
+                                        [innerHTML]="'selected-file.svg' | vnuIcon | safeHtml: 'html'"
+                                    ></div>
+                                </div>
+                                <ng-template #contentTemplate>
+                                    <a
+                                        href="javascript:void(0)"
+                                        class="md-view-file"
+                                        (click)="showModalViewFile(dataItem.guidId, dataItem.tenFile)"
+                                    >
+                                        <span [innerHTML]="dataItem.tenFile | safeHtml: 'html'"></span>
+                                    </a>
+                                </ng-template>
+                            </ng-container>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                                {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <ng-template kendoGridDetailTemplate let-dataItem>
+                        <section>
+                            <div class="row">
+                                <label class="col-3 col-form-label"
+                                    >{{ 'HR.KIEM_NHIEM.NGAY_QUYET_DINH' | translate }}<span class="float-right">:</span></label
+                                >
+                                <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ngayQuyetDinh | date: 'dd/MM/yyyy' }}</label>
+                            </div>
+                            <div class="row">
+                                <label class="col-3 col-form-label"
+                                    >{{ 'HR.KIEM_NHIEM.TU_NGAY' | translate }}<span class="float-right">:</span></label
+                                >
+                                <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ngayBatDau | date: 'dd/MM/yyyy' }}</label>
+                            </div>
+                            <div class="row">
+                                <label class="col-3 col-form-label"
+                                    >{{ 'HR.KIEM_NHIEM.DEN_NGAY' | translate }}<span class="float-right">:</span></label
+                                >
+                                <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ngayKetThuc | date: 'dd/MM/yyyy' }}</label>
+                            </div>
+                            <div class="row">
+                                <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span class="float-right">:</span></label>
+                                <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu }}</label>
+                            </div>
+                        </section>
+                    </ng-template>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

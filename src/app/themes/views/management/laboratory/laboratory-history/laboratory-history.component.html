@@ -1,0 +1,425 @@
+
+<app-nhat-ky-su-dung-thiet-bi [isMain]="true"> </app-nhat-ky-su-dung-thiet-bi>
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>
+
+
+
+
+<!-- <div class="search-backdrop" (click)="openAdvanceSearch()"></div>
+<div class="m-portlet m-portlet--mobile mb-0" [@fadeInOnEnter] [@fadeOutOnLeave]>
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption m-portlet__head-caption-title">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ tabName }}
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-caption">
+            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance">
+                <input
+                    type="text"
+                    class="form-control m-input"
+                    [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                    [(ngModel)]="modelSearch.keyword"
+                    (change)="onSearchChange()"
+                    (keydown.enter)="onSearchChange()"
+                />
+                <span class="m-input-icon__icon m-input-icon__icon--left">
+                    <span>
+                        <i class="la la-search"></i>
+                    </span>
+                </span>
+                <span class="m-input-icon__icon m-input-icon__icon--right">
+                    <span (click)="openAdvanceSearch()" class="dropbtn-search-advance">
+                        <i class="la la-caret-down"></i>
+                    </span>
+                </span>
+                <div
+                    id="myDropdown"
+                    class="dropdown-content-search-advance w-200"
+                    [ngClass]="this.searchAdvance ? 'show-search-advance' : ''"
+                    *ngIf="openFirstTime"
+                >
+                    <div class="custom-search-advance m-form">
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-2 col-form-label">{{ 'PTN.DK.THOI_GIAN_BAT_DAU' | translate }} </label>
+                            <div class="col-lg-4">
+                                <nz-date-picker
+                                    [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                    [(ngModel)]="modelSearch.tuNgay"
+                                    nzFormat="dd/MM/yyyy HH:mm"
+                                    style="width: 100%"
+                                >
+                                </nz-date-picker>
+                            </div>
+                            <label class="col-lg-2 col-form-label"> {{ 'PTN.DK.THOI_GIAN_KET_THUC' | translate }} </label>
+                            <div class="col-lg-4">
+                                <nz-date-picker
+                                    [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                    [(ngModel)]="modelSearch.denNgay"
+                                    nzFormat="dd/MM/yyyy HH:mm"
+                                    style="width: 100%"
+                                >
+                                </nz-date-picker>
+                            </div>
+                        </div>
+
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-2 col-form-label"> {{ 'PTN.TB.PHONG_THI_NGHIEM' | translate }} </label>
+                            <div class="col-lg-4">
+                                <asc-select
+                                    [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                                    [placeHolder]="'LB.SELECT' | translate"
+                                    [isReference]="true"
+                                    [(ngModel)]="modelSearch.idPhongThiNghiem"
+                                ></asc-select>
+                            </div>
+                            <label class="col-lg-2 col-form-label"> {{ 'PTN.DK' | translate }} </label>
+                            <div class="col-lg-4">
+                                <asc-select
+                                    [modeOfDropDowList]="dropdownListEnum.DANG_KY_SD_PHONG_THI_NGHIEM"
+                                    [placeHolder]="'LB.SELECT' | translate"
+                                    [isReference]="true"
+                                    [referenceId]="modelSearch.idPhongThiNghiem"
+                                    [(ngModel)]="modelSearch.idDangKySuDung"
+                                ></asc-select>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label class="col-lg-2 col-form-label"> {{ 'PTN.DK.NGUOI_SU_DUNG' | translate }} </label>
+                            <div class="col-lg-5">
+                                <div class="select-user" style="width: 400px">
+                                    <widget-select-user-for-filter
+                                        [placeholder]="'LB.SELECT' | translate"
+                                        [(ngModel)]="chonNhanSu"
+                                        [userSelectedIds]="chonNhanSu"
+                                        [mode]="'multiple'"
+                                        (listItems)="changeNhanSu($event)"
+                                    >
+                                    </widget-select-user-for-filter>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row text-right">
+                            <div class="col-12 text-right">
+                                <div class="btn-actions">
+                                    <button class="btn_custom btn_add mr-1" (click)="searchHandler()">
+                                        <span class="text">
+                                            {{ 'BTN.SEARCH' | translate }}
+                                        </span>
+                                    </button>
+                                    <button class="btn_custom btn_df" (click)="refreshHandler()">
+                                        <span class="text">
+                                            {{ 'BTN.RESET' | translate }}
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <ng-container>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_add" (click)="addHandler(false)">
+                            <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+                <ng-container>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_remove" (click)="removeSelectedHandler()" [disabled]="selectionIds.length < 1">
+                            <div [innerHTML]="'trash.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.DELETE' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <ng-template #template let-anchor>
+            <span>{{ anchor.nativeElement.innerText }}</span>
+        </ng-template>
+
+        <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+            <div class="grid-wrapper" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                    [data]="gridView$ | async"
+                    [pageSize]="gridState.take"
+                    [skip]="gridState.skip"
+                    [pageable]="pageConfig"
+                    [resizable]="true"
+                    [columnMenu]="true"
+                    [sortable]="true"
+                    [selectable]="true"
+                    kendoGridSelectBy="id"
+                    [selectedKeys]="selectionIds"
+                    [sort]="gridState.sort"
+                    [style.height]="'100%'"
+                    (dataStateChange)="onStateChange($event)"
+                >
+                    <kendo-grid-checkbox-column showSelectAll="true" width="45" [columnMenu]="false"></kendo-grid-checkbox-column>
+                    <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" width="90" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-button-group>
+                                <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                    <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                </button>
+                            </nz-button-group>
+                            <nz-dropdown-menu #menu="nzDropdownMenu">
+                                <div class="m-dropdown__wrapper menu-dropdown-table">
+                                    <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                    <div class="m-dropdown__inner">
+                                        <div class="m-dropdown__body">
+                                            <div class="m-dropdown__content">
+                                                <ul class="m-nav">
+                                                    <li class="m-nav__section m-nav__section--first">
+                                                        <span class="m-nav__section-text">
+                                                            {{ 'LB.ACTION' | translate }}
+                                                        </span>
+                                                    </li>
+
+                                                    <ng-container>
+                                                        <li class="m-nav__item">
+                                                            <a (click)="editHandler(dataItem, true)" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-edit"></i>
+                                                                <span class="m-nav__link-text"> {{ 'BTN.EDIT' | translate }}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ng-container>
+
+                                                    <ng-container>
+                                                        <li class="m-nav__item">
+                                                            <a (click)="removeHandler(dataItem)" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                                <span class="m-nav__link-text"> {{ 'BTN.DELETE' | translate }}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ng-container>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nz-dropdown-menu>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [columnMenu]="false" field="tenPhongThiNghiem" [title]="'PTN.TEN' | translate"></kendo-grid-column>
+
+                    <kendo-grid-column [title]="'PTN.DK.THOI_GIAN_BAT_DAU' | translate" width="180" [columnMenu]="false" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.ngayBatDau | date: 'dd/MM/yyyy HH:mm' }}
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        [title]="'PTN.DK.THOI_GIAN_KET_THUC' | translate"
+                        width="180"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.ngayKetThuc | date: 'dd/MM/yyyy HH:mm' }}
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="mucDichSuDung"
+                        [title]="'PTN.DK.MUC_DICH_SU_DUNG' | translate"
+                        width="360"
+                    ></kendo-grid-column>
+
+                    <kendo-grid-column [columnMenu]="false" field="nguoiSuDung" [title]="'PTN.DK.NGUOI_SU_DUNG' | translate" width="200">
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="soNguoiThamGia"
+                        [title]="'PTN.DK.SO_NGUOI_SU_DUNG' | translate"
+                        width="150"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                {{ dataItem.soNguoiThamGia }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <ng-template kendoGridDetailTemplate let-dataItem>
+                        <nz-tabset>
+                            <nz-tab [nzTitle]="'PTN.THONG_TIN_CHUNG' | translate">
+                                <section>
+                                    <div class="row" *ngIf="dataItem.nguoiSuDung != null && dataItem.nguoiSuDung != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.DK.NGUOI_SU_DUNG' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.nguoiSuDung }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="dataItem.soNguoiThamGia != null && dataItem.soNguoiThamGia != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.DK.SO_NGUOI_SU_DUNG' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.soNguoiThamGia }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" *ngIf="dataItem.ngayBatDau != null && dataItem.ngayBatDau != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.DK.THOI_GIAN_BAT_DAU' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{
+                                                    dataItem?.ngayBatDau | date: 'dd/MM/yyyy HH:mm'
+                                                }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.ngayKetThuc != null && dataItem.ngayKetThuc != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.DK.THOI_GIAN_KET_THUC' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{
+                                                    dataItem?.ngayKetThuc | date: 'dd/MM/yyyy HH:mm'
+                                                }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.mucDichSuDung != null && dataItem.mucDichSuDung != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.DK.MUC_DICH_SU_DUNG' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.mucDichSuDung }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.ketQuaSuDung != null && dataItem.ketQuaSuDung != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.KET_QUA_SU_DUNG' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.ketQuaSuDung }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.chatThai != null && dataItem.chatThai != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.CHAT_THAI' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.chatThai }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.kienNghi != null && dataItem.kienNghi != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.KIEN_NGHI' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.kienNghi }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.vanDeAnToan != null && dataItem.vanDeAnToan != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.VAN_DE_AN_TOAN' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.vanDeAnToan }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="dataItem.ghiChu != null && dataItem.ghiChu != ''">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <label class="col-2 col-form-label"
+                                                    >{{ 'PTN.DK.GHI_CHU' | translate }}<span class="float-right">:</span></label
+                                                >
+                                                <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.ghiChu }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </nz-tab>
+                            <nz-tab [nzTitle]="'PTN.DMTH.THIET_BI' | translate">
+                                <div class="grid-wrapper grid-wrapper-border">
+                                    <kendo-grid
+                                        [data]="dataItem.dangKySuDung_NhatKySuDung_ChiTiets"
+                                        [resizable]="true"
+                                        [columnMenu]="false"
+                                    >
+                                        <kendo-grid-column [title]="'LB.STT' | translate" [width]="60" [columnMenu]="false">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                <div class="text-center">
+                                                    {{ rowIndex + 1 }}
+                                                </div>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="300" [title]="'PTN.DMTH.THIET_BI' | translate">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                {{ dataItem.maThietBi ? dataItem.maThietBi + ' - ' : '' }} {{ dataItem.tenThietBi }}
+                                            </ng-template>
+                                        </kendo-grid-column>
+
+                                        <kendo-grid-column [width]="150" [title]="'PTN.DMTH.TIEU_HAO' | translate">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                {{ dataItem.mucTieuHao }}
+                                            </ng-template>
+                                        </kendo-grid-column>
+
+                                        <kendo-grid-column [title]="'PTN.TINH_TRANG_TRUOC' | translate">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                {{ dataItem.tinhTrangTruoc }}
+                                            </ng-template>
+                                        </kendo-grid-column>
+
+                                        <kendo-grid-column [title]="'PTN.TINH_TRANG_SAU' | translate">
+                                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                                {{ dataItem.tinhTrangSau }}
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                    </kendo-grid>
+                                </div>
+                            </nz-tab>
+                        </nz-tabset>
+                    </ng-template>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div> -->

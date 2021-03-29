@@ -1,0 +1,259 @@
+<div class="m-portlet mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ 'HR.MENU.KHAC' | translate }}
+                    <small *ngIf="model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT"
+                        class="text-normal text-danger font-italic">
+                        <!-- ({{ trangThaiDuLieus[model?.idTrangThaiDuLieu] }}) -->
+                        ({{ 'HR.MES.15' | translate  }})
+                    </small>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <ng-container *ngIf="modelNhanSuLichSuBanThan && modelNhanSuLichSuBanThan.compareData && !isTraCuuNhanSu">
+                        <button class="btn_custom btn_add" nz-popover [nzPopoverTitle]="titleTemplateLichSu"
+                            [nzPopoverContent]="contentTemplateLichSu" nzPopoverTrigger="click" [(nzPopoverVisible)]="visibleLichSu"
+                            [nzPopoverOverlayStyle]="{'z-index': '10000px !important'}">
+                            <div [innerHTML]="'hummer.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'So sánh tiểu sử bản thân' | translate }}</span>
+                        </button>
+                    </ng-container>
+                    <ng-template #titleTemplateLichSu><i nz-icon nzType="close"></i> {{ 'LB.HRM.LICH_SU_CHINH_SUA'|translate }}</ng-template>
+                    <ng-template #contentTemplateLichSu>
+                        <app-lich-su-ban-than-compare [compareData]="modelNhanSuLichSuBanThan" (closePopover)="closePopover()">
+                      </app-lich-su-ban-than-compare>
+                    </ng-template>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <ng-container *ngIf="modelNhanSuHoanCanhKinhTe && modelNhanSuHoanCanhKinhTe.compareData && !isTraCuuNhanSu">
+                        <button class="btn_custom btn_add" nz-popover [nzPopoverTitle]="titleTemplateKinhTe"
+                            [nzPopoverContent]="contentTemplateKinhTe" nzPopoverTrigger="click" [(nzPopoverVisible)]="visibleKinhTe"
+                            [nzPopoverOverlayStyle]="{'z-index': '10000px !important'}">
+                            <div [innerHTML]="'hummer.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'So sánh hoàn cảnh kinh tế' | translate }}</span>
+                        </button>
+                    </ng-container>
+                    <ng-template #titleTemplateKinhTe><i nz-icon nzType="close"></i> {{ 'LB.HRM.LICH_SU_CHINH_SUA'|translate }}</ng-template>
+                    <ng-template #contentTemplateKinhTe>
+                        <app-hoan-canh-kinh-te-compare [compareData]="modelNhanSuHoanCanhKinhTe" (closePopover)="closePopover()">
+                      </app-hoan-canh-kinh-te-compare>
+                    </ng-template>
+                </li>
+                <!-- <ng-container
+                    *ngIf="isDuyetLyLichNhanSu && model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT && !model?.compareData">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_update" (click)="onApprove(true)">
+                            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_df" (click)="onApprove(false)">
+                            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container> -->
+                <ng-container *ngIf="(isDuyetLyLichNhanSu && !model?.compareData) || !isDuyetLyLichNhanSu">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_add" (click)="showFormCapNhatThongTinKhac()">
+                            <div [innerHTML]="'update.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.UPDATE' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+
+                <li class="m-portlet__nav-item">
+                    <app-export-ho-so-nhan-su [nhanSuId]="nhanSuId"></app-export-ho-so-nhan-su>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <nz-collapse nzAccordion class="ant-collapse-custom">
+        <nz-collapse-panel [nzHeader]="'HR.KHAC.01' | translate" [nzActive]="true">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label">{{ 'HR.KHAC.02' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ model?.tienAnTienSu }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label">{{ 'HR.KHAC.19' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ model?.lamViecCheDoCu }}</label>
+                    </div>
+                </div>
+            </div>
+
+        </nz-collapse-panel>
+        <nz-collapse-panel [nzHeader]="'HR.KHAC.03' | translate" [nzActive]="true">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label">{{ 'HR.KHAC.04' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ model?.thamGiaToChucChinhTri }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label">{{ 'HR.KHAC.05' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ model?.thanNhanNuocNgoai }}</label>
+                    </div>
+                </div>
+            </div>
+        </nz-collapse-panel>
+        <nz-collapse-panel class="text-uppercase" [nzHeader]="'HR.KHAC.20' | translate" [nzActive]="true">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ model?.nhanXet }}</label>
+                    </div>
+                </div>
+            </div>
+        </nz-collapse-panel>
+        <nz-collapse-panel [nzHeader]="'HR.KHAC.06' | translate" [nzActive]="true">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ 'HR.KHAC.07' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label"> {{ 'HR.KHAC.08' | translate }} <span class="float-right">:</span></label>
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.nguonThuNhapChinh }}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label">
+                            {{ 'HR.KHAC.09' | translate }} <span class="float-right">:</span></label
+                        >
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.nguonKhac }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ 'HR.KHAC.10' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label"> {{ 'HR.KHAC.11' | translate }} <span class="float-right">:</span></label>
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.tenNhaODuocCap }}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label">
+                            {{ 'HR.KHAC.12' | translate }} <span class="float-right">:</span></label
+                        >
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.dienTichNhaODuocCap }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label"> {{ 'HR.KHAC.13' | translate }} <span class="float-right">:</span></label>
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.tenNhaOTuMua }}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label">
+                            {{ 'HR.KHAC.12' | translate }} <span class="float-right">:</span></label
+                        >
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.dienTichNhaOTuMua }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ 'HR.KHAC.14' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label"> {{ 'HR.KHAC.15' | translate }} <span class="float-right">:</span></label>
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.dienTichDatODuocCap }}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label">
+                            {{ 'HR.KHAC.16' | translate }} <span class="float-right">:</span></label
+                        >
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.dienTichDatOTuMua }}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <label class="col-12 col-form-label lb-bold-info">{{ 'HR.KHAC.17' | translate }}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="col-4 col-form-label"> {{ 'HR.KHAC.18' | translate }} <span class="float-right">:</span></label>
+                        <label class="col-8 col-form-label lb-bold-info">{{ model?.datSanXuatKinhDoanh }}</label>
+                    </div>
+                </div>
+            </div>
+
+        </nz-collapse-panel>
+    </nz-collapse>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>

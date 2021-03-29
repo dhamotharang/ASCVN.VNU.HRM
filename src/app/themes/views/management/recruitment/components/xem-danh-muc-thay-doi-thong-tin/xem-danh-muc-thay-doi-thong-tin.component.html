@@ -1,0 +1,96 @@
+<div class="m-portlet m-portlet--mobile mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item">
+                    <button class="btn_custom btn_remove" (click)="onApprove(false)" [disabled]="!isDuyetAll">
+                        <!-- <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div> -->
+                        <span class="text"> {{ 'Không duyệt tất cả' | translate }}</span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item">
+                    <button class="btn_custom btn_add" (click)="onApprove(true)" [disabled]="!isDuyetAll">
+                        <!-- <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div> -->
+                        <span class="text"> {{ 'Duyệt tất cả' | translate }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <ng-template #template let-anchor>
+            <span>{{ anchor.nativeElement.innerText }}</span>
+        </ng-template>
+        <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+            <div class="grid-wrapper no-hover grid-wrapper-border">
+                <kendo-grid [data]="gridView" [loading]="isLoading" [resizable]="true" [columnMenu]="true" [style.height]="'100%'">
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column field="thongTinTabHienThi" [title]="'LB.HRM.MAN_HINH' | translate"
+                        [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.thongTinTabHienThi | manHinhDuyetThongTinNhanSu }}
+                        </ng-template>
+                    </kendo-grid-column> -->
+                    <kendo-grid-column field="tenThongTinTabHienThi" [title]="'LB.HRM.MAN_HINH' | translate" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.tenThongTinTabHienThi }}
+                            <small *ngIf="dataItem.viTriTab !== 111" class="text-normal text-danger font-italic">
+                                ({{ 'HR.MES.15' | translate }})
+                            </small>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="ngayDeXuat"
+                        [title]="'LB.HRM.THOI_GIAN_DE_XUAT' | translate"
+                        [width]="150"
+                        [sortable]="false"
+                        [columnMenu]="false"
+                        class="text-center"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.ngayDeXuat | date: 'dd/MM/yyyy - HH:mm' }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="tenNguoiDuyet"
+                        [title]="'LB.HRM.NGUOI_DUYET' | translate"
+                        [width]="130"
+                        [sortable]="false"
+                        [columnMenu]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [title]="'LB.HRM.THOI_GIAN_DUYET' | translate"
+                        [width]="150"
+                        [sortable]="false"
+                        [columnMenu]="false"
+                        class="text-center"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.ngayDuyet | date: 'dd/MM/yyyy - HH:mm' }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [title]="'LB.HRM.VAO_DUYET' | translate"
+                        [width]="100"
+                        [sortable]="false"
+                        [columnMenu]="false"
+                        class="text-center"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <button class="btn_custom btn_update" (click)="onMoveTab(dataItem)" *ngIf="dataItem.viTriTab !== 111">
+                                <span class="text">{{ 'Xem' | translate }}</span>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

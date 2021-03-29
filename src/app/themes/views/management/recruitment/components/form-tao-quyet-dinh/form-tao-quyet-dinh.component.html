@@ -1,0 +1,240 @@
+<form class="m-form qd-td" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group" [ngClass]="action === actionEnum.VIEW ? 'disable' : ''">
+                <label> {{ 'RECRUITMENT.KE_HOACH.KHTD' | translate }} </label>
+                <div>
+                    <nz-select formControlName="idKeHoachTuyenDung" (ngModelChange)="changeKeHoach($event)"
+                        nzAllowClear [nzPlaceHolder]="'LB.SELECT' | translate" [nzDisabled]="action === actionEnum.VIEW">
+                        <nz-option *ngFor="let item of lstDanhMucKeHoach" [nzValue]="item.id"
+                            [nzLabel]="item.maKeHoach + ' - ' + item.tenKeHoach">
+                        </nz-option>
+                    </nz-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nz-tabset>
+        <nz-tab [nzTitle]="'LB.QUYET_DINH.TT_QUYET_DINH' | translate">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.SO_QUYET_DINH' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="soQuyetDinh"
+                            [readOnly]="action === actionEnum.VIEW" />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group" [ngClass]="action === actionEnum.VIEW ? 'disable' : ''">
+                        <label> {{ 'LB.QUYET_DINH.NGUOI_KY' | translate }} </label>
+                        <widget-select-user-for-filter [placeholder]="'LB.SELECT' | translate"
+                            formControlName="idNguoiKy" [userSelectedIds]="userSelected"
+                            [disabled]="action === actionEnum.VIEW" [coQuanId]="idCoQuan">
+                        </widget-select-user-for-filter>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.NGAY_KY' | translate }} </label>
+                        <div>
+                            <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayKy" style="width: 100%"
+                                [nzDisabled]="action === actionEnum.VIEW">
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.CHUC_VU_NGUOI_KY' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="chucVuNguoiKy"
+                            [readOnly]="action === actionEnum.VIEW" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.TRICH_YEU' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="trichYeu"
+                            [readonly]="action === actionEnum.VIEW" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.NOI_DUNG_CAN_CU' | translate }} </label>
+                        <textarea class="form-control" formControlName="noiDungCanCu"
+                            [readonly]="action === actionEnum.VIEW"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.NOI_DUNG' | translate }} </label>
+                        <textarea class="form-control" formControlName="noiDung"
+                            [readonly]="action === actionEnum.VIEW"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.QUYET_DINH.NOI_NHAN' | translate }} </label>
+                        <textarea class="form-control" formControlName="noiNhan"
+                            [readonly]="action === actionEnum.VIEW"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.NOTE' | translate }} </label>
+                        <textarea class="form-control" formControlName="ghiChu"
+                            [readonly]="action === actionEnum.VIEW"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <asc-upload
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput"
+                            [folderName]="folder.TD_QuyetDinhTuyenDung"
+                            [multiple]="false"
+                            [isDisabled]="action === actionEnum.VIEW"
+                        >
+                        </asc-upload>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'LB.QUYET_DINH.DS_THANH_VIEN' | translate">
+            <div class="row">
+                <div class="col-sm-12" *ngIf="action !== actionEnum.VIEW">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <nz-select nzShowSearch nzAllowClear [nzPlaceHolder]="'LB.SELECT_MEMBER' | translate"
+                                    [(ngModel)]="listNhanSuSelected" [ngModelOptions]="{ standalone: true }"
+                                    [nzMode]="'multiple'" nzDropdownClassName="height-77">
+                                    <ng-container *ngFor="let item of listTempNhanSuQDTD">
+                                        <nz-option nzCustomContent [nzLabel]="item.hoDem + ' ' + item.ten"
+                                            [nzValue]="item">
+                                            <b class="content-primary">{{ item.hoDem + ' ' + item.ten }}</b>
+                                            <p class="mb-0">|__ {{ item.tenViTriViecLam }}</p>
+                                        </nz-option>
+                                    </ng-container>
+                                </nz-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 d-flex justify-content-between">
+                            <button type="button" class="btn_custom btn_add" (click)="addMemberToTable()">
+                                <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                <span class="text">{{ 'BTN.ADD_TO_GRID' | translate }}</span>
+                            </button>
+                            <button type="button" class="btn_custom btn_remove ml-2" (click)="deleteMemberToTable()"
+                                [disabled]="selectionNhanSuIds.length < 1">
+                                <div [innerHTML]="'trash.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                <span class="text">{{ 'BTN.DELETE' | translate }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-3">
+                    <div class="grid-wrapper grid-wrapper-border">
+                        <kendo-grid [data]="listBangNhanSu" [pageSize]="gridStateHoSo.take" [skip]="gridStateHoSo.skip"
+                            [loading]="isLoadingHoSo" [pageable]="pageHSConfig" [resizable]="true" [columnMenu]="true"
+                            [sortable]="false" [sort]="gridStateHoSo.sort" kendoGridSelectBy="idNhanSu"
+                            [selectedKeys]="selectionNhanSuIds" >
+                            <kendo-grid-checkbox-column showSelectAll="true" width="45" [columnMenu]="false"
+                                class="text-center" [headerStyle]="{ 'text-align': 'center' }"
+                                *ngIf="action !== actionEnum.VIEW">
+                            </kendo-grid-checkbox-column>
+                            <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" width="60"
+                                [headerStyle]="{ 'text-align': 'center' }" [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <nz-button-group>
+                                        <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu"
+                                            nzPlacement="right" type="button">
+                                            <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                        </button>
+                                    </nz-button-group>
+                                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                                        <div class="m-dropdown__wrapper menu-dropdown-table w-min">
+                                            <span
+                                                class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                        <ul class="m-nav">
+                                                            <li class="m-nav__section m-nav__section--first">
+                                                                <span class="m-nav__section-text">
+                                                                    {{ 'LB.ACTION' | translate }}
+                                                                </span>
+                                                            </li>
+                                                            <li class="m-nav__item">
+                                                                <a class="m-nav__link"
+                                                                    (click)="showLinkDuyetHoSoNhanSu(dataItem.idNhanSu)">
+                                                                    <i class="m-nav__link-icon flaticon-user"></i>
+                                                                    <span class="m-nav__link-text">{{
+                                                                        'LB.QUYET_DINH.XEM_HS_CA_NHAN' | translate }}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nz-dropdown-menu>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [title]="'LB.STT' | translate" width="50" [columnMenu]="false"
+                                [headerStyle]="{ 'text-align': 'center' }">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        {{ rowIndex + 1 }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [columnMenu]="false" field="maNhanSu"
+                                [title]="'LB.QUYET_DINH.MA_CAN_BO' | translate" width="100">
+                            </kendo-grid-column>
+                            <kendo-grid-column [title]="'LB.QUYET_DINH.HO_VA_TEN' | translate" [width]="130"
+                                [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <b>{{ dataItem.hoDem + ' ' + dataItem.ten }}</b>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="tenGioiTinh" [title]="'LB.QUYET_DINH.GIOI_TINH' | translate"
+                                [width]="70" [columnMenu]="false" class="text-center">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="ngaySinh" [title]="'LB.QUYET_DINH.NGAY_SINH' | translate"
+                                [width]="70" [columnMenu]="false" class="text-center">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    {{ dataItem.ngaySinh | date: 'dd/MM/yyyy' }}
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="tenViTriViecLam"
+                                [title]="'LB.QUYET_DINH.VI_TRI_UNG_TUYEN' | translate" [width]="130"
+                                [columnMenu]="false">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="tenLoaiNhanSu" [title]="'LB.QUYET_DINH.PHAN_LOAI' | translate"
+                                [width]="130" [columnMenu]="false">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="tenNgachCongChuc"
+                                [title]="'LB.QUYET_DINH.CHUC_DANH_NGHE_NGHIEP' | translate" [width]="130"
+                                [columnMenu]="false">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="tenTrinhDoChuyenMon"
+                                [title]="'LB.QUYET_DINH.TRINH_DO_CHUYEN_MON' | translate" [width]="130"
+                                [columnMenu]="false">
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' |
+            translate }}</button>
+        <button type="submit" class="btn_custom btn_add" *ngIf="action !== actionEnum.VIEW">{{ 'BTN.SAVE_INFO' |
+            translate }}</button>
+    </div>
+</form>

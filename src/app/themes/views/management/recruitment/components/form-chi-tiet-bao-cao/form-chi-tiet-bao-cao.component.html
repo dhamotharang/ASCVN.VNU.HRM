@@ -1,0 +1,111 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset>
+        <nz-tab [nzTitle]="'RECRUITMENT.TAP_SU.BAO_CAO' | translate">
+            <div class="row">
+                <div class="col-sm-12 d-flex">
+                    <div class="mr-5">
+                        <label class="col-form-label lb-bold-info mr-2">
+                            {{ 'LB.NGUOI_TAP_SU' | translate }}
+                            <span class="float-right">:</span>
+                        </label>
+                        <label class="col-form-label lb-bold-info bolder">
+                            {{ tenNguoiTapSu }}
+                        </label>
+                    </div>
+                    <div class="ml-5">
+                        <label class="col-form-label lb-bold-info mr-2">
+                            {{ 'LB.HRM.VI_TRI_VIEC_LAM' | translate }}
+                            <span class="float-right">:</span>
+                        </label>
+                        <label class="col-form-label lb-bold-info bolder">
+                            {{ viTriViecLam }}
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.CONG_VIEC_DUOC_PHAN_CONG' | translate }}</label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="congViecDuocPhanCong"
+                            [readOnly]="action === actionEnum.VIEW"
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.PHAM_CHAT_DAO_DUC' | translate }}</label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="phamChatDaoDuc"
+                            [readOnly]="action === actionEnum.VIEW"
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.NANG_LUC_TRINH_DO' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="nangLuc" [readOnly]="action === actionEnum.VIEW" />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.Y_THUC_CHAP_HANH' | translate }}</label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="yThucToChuc"
+                            [readOnly]="action === actionEnum.VIEW"
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.THAM_GIA_CONG_TAC_DOAN_THE' | translate }}</label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="thamGiaCongTac"
+                            [readOnly]="action === actionEnum.VIEW"
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.GHI_CHU' | translate }}</label>
+                        <textarea
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="ghiChu"
+                            [readOnly]="action === actionEnum.VIEW"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <asc-upload
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput$ | async"
+                            [folderName]="folder.TS_BaoCaoCaNhan"
+                            [multiple]="false"
+                            [isDisabled]="action === actionEnum.VIEW"
+                        >
+                        </asc-upload>
+                        <!-- <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput$ | async"
+                      [folderName]="folder.TD_HopDongTuyenDung" [multiple]="false">
+                  </asc-upload> -->
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button *ngIf="action !== actionEnum.VIEW" type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

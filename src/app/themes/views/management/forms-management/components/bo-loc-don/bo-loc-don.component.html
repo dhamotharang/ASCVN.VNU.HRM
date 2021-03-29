@@ -1,0 +1,102 @@
+<div class="custom-search-advance m-form d-form">
+    <div class="form-group m-form__group row">
+        <div class="col-6">
+            <label class="col-form-label">{{ 'FM.LABEL.PHAN_LOAI_DON' | translate }} </label>
+            <div>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.GIOI_TINH"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    [(ngModel)]="modelFilter.idPhanLoaiDon"
+                >
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-6" *ngIf="idLoaiDon !== cacLoaiDonEnum.DON_NHAP">
+            <label class="col-form-label"> {{ 'FM.LABEL.TRANG_THAI_XU_LY' | translate }} </label>
+            <div>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.GIOI_TINH"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    [(ngModel)]="modelFilter.idTrangThaiXuLy"
+                >
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-6" *ngIf="idLoaiDon !== cacLoaiDonEnum.DON_NHAP">
+            <label class="col-form-label">{{ 'FM.LABEL.TRANG_THAI_QUYET_DINH' | translate }} </label>
+            <div>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.GIOI_TINH"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    [(ngModel)]="modelFilter.idTrangThaiQuyetDinh"
+                >
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="col-form-label">
+                {{
+                    idLoaiDon === cacLoaiDonEnum.DON_NHAP || idLoaiDon === cacLoaiDonEnum.DON_DA_GUI
+                        ? ('FM.LABEL.NGUOI_NHAN' | translate)
+                        : ('FM.LABEL.NGUOI_GUI' | translate)
+                }}
+            </label>
+            <div>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.GIOI_TINH"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    [(ngModel)]="modelFilter.idNguoiGuiHoacNhan"
+                >
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="col-form-label">{{ 'FM.LABEL.THOI_GIAN_GUI' | translate }} </label>
+            <div class="row">
+                <div class="col-6">
+                    <nz-date-picker
+                        [nzDisabledDate]="disabledNgayBatDau"
+                        [(ngModel)]="modelFilter.thoiGianTu"
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                    >
+                    </nz-date-picker>
+                </div>
+                <div class="col-6">
+                    <nz-date-picker
+                        [nzDisabledDate]="disabledNgayKetThuc"
+                        [(ngModel)]="modelFilter.thoiGianDen"
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                    ></nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <label class="col-form-label">{{ 'FM.LABEL.THOI_GIAN_GUI' | translate }}</label>
+            <div class="row">
+                <div class="col-12">
+                    <label nz-checkbox [(ngModel)]="modelFilter.duocDanhSao" ngDefaultControl>{{
+                        'FM.LABEL.DA_DUOC_DANH_DAU_SAO' | translate
+                    }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group m-form__group row text-right">
+        <div class="col-12 text-right">
+            <div class="btn-actions">
+                <button class="btn_custom btn_add mr-2" (click)="filterHandler()">
+                    <span class="text">
+                        {{ 'BTN.SEARCH' | translate }}
+                    </span>
+                </button>
+                <button type="button" class="btn_custom btn_df" (click)="resetHandler()">
+                    <span class="text">
+                        {{ 'BTN.RESET' | translate }}
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

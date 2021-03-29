@@ -1,0 +1,30 @@
+.nav.nav-pills.nav-pills--success .nav-link.active {
+    background: #f3f6f9;
+    color: #1890ff;
+}
+
+.nav.nav-pills .nav-link,
+.nav.nav-tabs .nav-link {
+    color: #333;
+}
+
+.m-portlet {
+    height: inherit;
+}
+
+.tab-change-data span{
+    color: #dc2127 !important;
+}
+
+.tab-change-data i{
+    color: #dc2127 !important;
+}
+
+.checker {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 2px;
+    margin-bottom: -2px;
+    margin-right: 3px;
+}

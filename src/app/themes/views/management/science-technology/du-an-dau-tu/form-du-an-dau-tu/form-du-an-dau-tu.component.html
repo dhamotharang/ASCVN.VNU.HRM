@@ -1,0 +1,172 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <section>
+        <nz-tabset>
+            <nz-tab [nzTitle]="'SCI.DADT.THONG_TIN_CHUNG' | translate">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.TEN' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="tenDuAnDauTu" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.LOAI_DU_AN' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.DM_LOAI_DU_AN"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idLoaiDuAn" [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.DON_VI' | translate }}
+                            </label>
+                            <div>
+                                <!-- <app-select-user-tree [placeholder]="'LB.HRM.CO_QUAN' | translate" formControlName="idCoQuan"
+                                    [isMultiple]="false"></app-select-user-tree> -->
+                                <!-- <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                                    <div>
+                                        <app-select-user-tree
+                                            [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                            formControlName="idCoQuan"
+                                            [isMultiple]="false"
+                                        ></app-select-user-tree>
+                                    </div>
+                                </ng-container>
+                                <ng-template #personlTemplate1>
+                                    <div>
+                                        <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                    </div>
+                                </ng-template> -->
+                                <div>
+                                    <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.SO_QUYET_DINH' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="soQuyetDinh" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.NGAY_KHOI_CONG' | translate }}
+                            </label>
+                            <div>
+                                <div>
+                                    <nz-date-picker
+                                        nzFormat="dd/MM/yyyy"
+                                        formControlName="ngayKhoiCong"
+                                        style="width: 100%"
+                                        [nzDisabledDate]="disabledNgayBatDau">
+                                    </nz-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.NGAY_HOAN_THANH' | translate }}
+                            </label>
+                            <div>
+                                <div>
+                                    <nz-date-picker
+                                        nzFormat="dd/MM/yyyy"
+                                        formControlName="ngayHoanThanh"
+                                        style="width: 100%"
+                                        [nzDisabledDate]="disabledNgayKetThuc">
+                                    </nz-date-picker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.NAM_DAU_TU' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.NAM"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="namDauTu"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.KINH_PHI' | translate }}
+                            </label>
+                            <div>
+                                <!-- <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="kinhPhi" style="width: 100%"></nz-input-number> -->
+                                <input currencyMask formControlName="kinhPhi" class="form-control" min="0" max="999999999999999"
+                                [options]="{
+                                     prefix: '',
+                                     thousands: '.',
+                                     decimal: ',',
+                                     precision: 0
+                                    }"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.DIA_DIEM' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="diaDiem" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.DADT.GHI_CHU' | translate }}
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="ghiChu" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nz-tab>
+            <!-- <nz-tab [nzTitle]="'SCI.DADT.PHONG_THI_NGHIEM' | translate">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-  m-form__group">
+                            <app-chon-phong-thi-nghiem
+                            (changedData)="receiveDataPhongThiNghiem($event)"
+                            [idThamChieu]="form.get('id').value"
+                            [suDungPTN]="this.fsuDung"
+                            >
+                            </app-chon-phong-thi-nghiem>
+                       </div>
+                    </div>
+                </div>
+            </nz-tab> -->
+        </nz-tabset>
+    </section>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

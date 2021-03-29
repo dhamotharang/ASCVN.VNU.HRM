@@ -1,0 +1,122 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.DKSHTT.PHONG_THI_NGHIEM' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        [permissionType]="1"
+                        formControlName="idPhongThiNghiem"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.MA' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="maSoHuuTriTue" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.TEN' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenSoHuuTriTue" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.TAC_GIA' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenTacGia" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.TINH_TRANG' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tinhTrang" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.NAM' | translate }}
+                </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.NAM"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="namDangKy"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.THIET_BI' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="thietBiSuDung"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.MO_TA' | translate }}
+                </label>
+                <div>
+                    <div>
+                        <input class="form-control" formControlName="moTa" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DKSHTT.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <div class="m-checkbox-inline">
+                    <label class="m-checkbox">
+                        <input type="checkbox" formControlName="isVisible" />
+                        {{ 'LB.PTN.VISIBLE' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

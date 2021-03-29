@@ -1,0 +1,12 @@
+.view-tieu-chi-danh-gia {
+    border: 1px solid transparent;
+    background-color: transparent !important;
+    justify-content: center;
+    color: red !important;
+}
+
+.view-tieu-chi-danh-gia:hover {
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: red !important;
+}

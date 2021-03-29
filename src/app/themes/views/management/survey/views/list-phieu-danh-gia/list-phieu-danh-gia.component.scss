@@ -1,0 +1,14 @@
+.label {
+    text-shadow: none !important;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 3px 6px;
+    color: #fff;
+}
+.label.label-sm {
+    font-size: 13px;
+    padding: 2px 5px;
+}
+.label-success {
+    background-color: #36c6d3;
+}

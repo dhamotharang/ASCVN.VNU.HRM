@@ -1,0 +1,63 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.CHUC_DANH_KHOA_HOC' | translate }} <span class="text-danger">(*)</span> </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.CHUC_DANH_KHOA_HOC"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idChucDanhKhoaHoc"
+                >
+                </asc-select>
+                <app-field-error [control]="form.get('idChucDanhKhoaHoc')"></app-field-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.NAM_THANG' | translate }} </label>
+                <div>
+                    <nz-date-picker
+                        nzMode="month"
+                        formControlName="namThang"
+                        nzFormat="MM/yyyy"
+                        style="width: 100%"
+                        [nzPlaceHolder]="'LB.SELECT' | translate"
+                    ></nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.NOI_CONG_NHAN' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="noiCongNhan" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.ATTACH_FILE' | translate }}
+        </label>
+        <asc-upload
+            (fileInput)="onSelectFile($event)"
+            [file]="fileInput"
+            [folderName]="folder.NS_NhanSu_ChucDanhKhoaHoc"
+            [multiple]="false"
+        ></asc-upload>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,29 @@
+export interface IDuyetThongTinNhanSuModel {
+    duyetToanBo?: boolean;
+    lyDoDuyet?: string;
+    idTrangThaiDuLieu?: number;
+    idNhanSu?: number;
+    idNhanSuChiTiet?: number;
+    idNhanSuTuyenDung?: number;
+    idNhanSuDoanDang?: number;
+    idNhanSuLuong?: number;
+    idNhanSuSucKhoe?: number;
+    idNhanSuTrinhDo?: number;
+    idNhanSuLichSuCaNhan?: number;
+    idNhanSuHoanCanhKinhTe?: number;
+    idsNhanSuDaoTaoBoiDuong?: number[];
+    idsNhanSuTrinhDoChuyenMon?: number[];
+    idsNhanSuTrinhDoNgoaiNgu?: number[];
+    idsNhanSuTrinhDoTinHoc?: number[];
+    idsNhanSuChucDanhKhoaHoc?: number[];
+    idsNhanSuQuaTrinhDang?: number[];
+    idsNhanSuQuaTrinhDoan?: number[];
+    idsNhanSuQuaTrinhCongDoan?: number[];
+    idsNhanSuQuaTrinhCongTac?: number[];
+    idsNhanSuKhenThuong?: number[];
+    idsNhanSuKyLuat?: number[];
+    idsNhanSuThiDuaKhenThuong?: number[];
+    idsNhanSuKiemNhiem?: number[];
+    idsNhanSuQuanHeGiaDinh?: number[];
+    idNhanSuKhac?: number;
+}

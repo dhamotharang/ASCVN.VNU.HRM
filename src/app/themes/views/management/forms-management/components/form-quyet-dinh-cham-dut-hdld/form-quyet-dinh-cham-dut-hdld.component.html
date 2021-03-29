@@ -1,0 +1,105 @@
+<form class="m-form form-tt-don" novalidate>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>{{'MANAGEMENT.TITLE.QUYET_DINH_CHAM_DUT_HDLD' | translate}}</h2>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+          <nz-divider></nz-divider>
+        </div>
+        <div class="col-4"></div>
+
+
+
+        <div class="col-12">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.LABEL.SO_QUYET_DINH' | translate }}: </label>
+          <input type="text" class="col-lg-7 typeinput" />
+        </div>
+
+        <div class="col-6">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.LABEL.CAN_CU_THEO_HD' | translate }}: </label>
+          <label class="col-form-label font-weight-bold"> {{'HĐLĐ/2020A2'}} </label>
+
+        </div>
+
+        <div class="col-6  d-flex justify-content-end">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.DON.KY_NGAY' | translate }}: </label>
+          <label class="col-form-label font-weight-bold">{{'20/05/2018'}}</label>
+        </div>
+
+        <div class="col-6">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.LABEL.GIUA_DHQG_HN' | translate }}: </label>
+          <label class="col-form-label font-weight-bold">{{'La Chí Thành'}}</label>
+        </div>
+
+        <div class="col-6  d-flex justify-content-end">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.DON.CHUC_VU' | translate }}: </label>
+          <label class="col-form-label font-weight-bold">{{'Phó phòng'}}</label>
+        </div>
+
+        <div class="col-6">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.LABEL.THUOC_DON_VI' | translate }}: </label>
+          <label class="col-form-label font-weight-bold">{{'ĐH An Ninh'}}</label>
+        </div>
+
+        <div class="col-6  d-flex justify-content-end">
+          <label class="col-form-label pr-2">{{ 'MANAGEMENT.DON.CHUC_DANH_NGHE_NGHIEP' | translate }}: </label>
+          <label class="col-form-label font-weight-bold">{{'Chuyên viên'}}</label>
+        </div>
+
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <label class="col-form-label">
+                {{ 'MANAGEMENT.DON.CHAM_DUT_HOP_DONG_LD_TU_NGAY' | translate }} :</label>
+            </div>
+            <div class="col-6">
+              <nz-date-picker nzFormat="dd/MM/yyyy" style="width: 100%">
+              </nz-date-picker>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="col-form-label pr-2">({{ 'MANAGEMENT.TEXT.1' | translate }}) </label>
+        </div>
+
+        <div class="col-12">
+          <label class="m-checkbox">
+            <input type="checkbox" />{{ 'MANAGEMENT.DON.KHOA_TK' | translate}}
+            <span></span>
+          </label>
+        </div>
+        <div class="col-12 pb-4"></div>
+
+        <div class="col-6">
+          <label class="col-form-label">
+            {{ 'MANAGEMENT.LABEL.NOI_NHAN' | translate }}
+          </label>
+          <textarea rows="4" class="form-control"></textarea>
+        </div>
+
+        <div class="col-6">
+          <div class="form-group m-form__group">
+            <label>
+              {{ 'MANAGEMENT.LABEL.VAN_BAN_DINH_KEM' | translate }}
+            </label>
+            <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput$ | async"
+              [folderName]="folder.TD_HopDongTuyenDung" [multiple]="false">
+            </asc-upload>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="d-flex justify-content-center mt-3">
+    <button type="button" (click)="closeForm()" class="btn_custom btn_update btn_close mr-2">{{ 'BTN.IN_QUUYET_DINH' | translate}}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_add btn_close mr-2">{{ 'BTN.SAVE' | translate}}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.CANCEL' | translate}}</button>
+  </div>
+</form>

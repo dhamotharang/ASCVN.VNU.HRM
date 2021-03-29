@@ -1,0 +1,64 @@
+<form class="m-form form-tt-don" novalidate>
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-7">
+              <label class="col-form-label ">{{ 'MANAGEMENT.TEXT.6' | translate }}: </label>
+            </div>
+            <div class="col-5">
+              <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                [placeHolder]="'LB.SELECT' | translate">
+              </asc-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="col-form-label">
+            {{ 'MANAGEMENT.DON.LY_DO_XIN_CHAM_DUT_HD' | translate }}
+          </label>
+          <textarea rows="4" class="form-control" [readOnly]="true"></textarea>
+        </div>
+
+        <div class="col-12 py-3">
+          <div class="row">
+            <div class="col-1">
+              <label class="col-form-label">
+                {{ 'MANAGEMENT.LABEL.ONG_BA' | translate }}:
+              </label>
+            </div>
+            <div class="col-4">
+              <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                [placeHolder]="'LB.SELECT' | translate">
+              </asc-select>
+            </div>
+            <div class="col-7">
+              <label class="col-form-label">
+                {{ 'MANAGEMENT.TEXT.7' | translate }}
+              </label>
+            </div>
+            <div class="col-12">
+              <textarea rows="4" class="form-control" [readOnly]="true"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <label class="col-form-label">
+            {{ 'MANAGEMENT.LABEL.NHAP_NOI_DUNG_Y_KIEN' | translate }}
+          </label>
+          <textarea rows="4" class="form-control"></textarea>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center mt-3">
+    <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.TRO_LAI' |
+      translate}}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_add btn_close mr-2">{{ 'BTN.GUI_Y_KIEN' |
+      translate}}</button>
+  </div>
+</form>

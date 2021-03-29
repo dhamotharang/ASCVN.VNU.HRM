@@ -1,0 +1,50 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group">
+        <label class="col-form-label"> {{ 'LB.CATALOG.CODE' | translate }}  </label>
+        <input type="text" class="m-input form-control" formControlName="ma" />
+    </div>
+
+    <div class="form-group m-form__group">
+        <label class="col-form-label"> {{ 'LB.CATALOG.NAME' | translate }}  </label>
+        <input type="text" class="m-input form-control" formControlName="ten" />
+    </div>
+
+    <div class="form-group m-form__group">
+        <label> {{ 'Loại danh hiệu' | translate }} </label>
+        <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear
+            formControlName="idLoaiDanhHieu">
+            <nz-option [nzLabel]="'Danh hiệu cá nhân'" [nzValue]="1"></nz-option>
+            <nz-option [nzLabel]="'Danh hiệu tập thể'" [nzValue]="2"></nz-option>
+        </nz-select>
+        <app-field-error [control]="form.get('idLoaiDanhHieu')"></app-field-error>
+    </div>
+
+    <div class="form-group m-form__group row">
+        <label class="col-12 col-form-label">
+            {{ 'LB.CATALOG.ORDER' | translate }}
+        </label>
+        <div class="col-3">
+            <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="stt"></nz-input-number>
+        </div>
+        <div class="col-3">
+            <div class="m-checkbox-inline">
+                <label class="m-checkbox">
+                    <input type="checkbox" formControlName="isVisible" />
+                    {{ 'LB.CATALOG.VISIBLE' | translate }}
+                    <span></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group m-form__group">
+        <label class="col-form-label">
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,103 @@
+<!-- <div class="form-group m-form__group">
+    <div class="d-flex justify-content-end">
+        <div class="btn-actions">
+            <a href="javascript:void(0)" class="btn_custom btn_add" (click)="addThietBiHandler()">
+                <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                <span class="text">{{ 'BTN.ADD' | translate }}</span>
+            </a>
+        </div>
+    </div>
+</div>
+<br /> -->
+<div class="row">
+    <div class="col-sm-9">
+        <div class="form-group m-form__group">
+            <div>
+                <div class="select-user">
+                    <nz-select
+                        nzShowSearch
+                        [nzPlaceHolder]="'LB.SELECT' | translate"
+                        nzAllowClear
+                        [(ngModel)]="listChonThietBi"
+                        nzMode="multiple"
+                    >
+                        <ng-container *ngFor="let item of listDropThietBi">
+                            <nz-option [nzLabel]="((item.maThietBi ? item.maThietBi : '') +  (item.maThietBi && item.tenThietBi ? ' - ' : '') + (item.tenThietBi ? item.tenThietBi : ''))" [nzValue]="item.id"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group m-form__group">
+            <div>
+                <a type="button" class="btn_custom btn_add ml-1" (click)="addThietBiHandler()">
+                    <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="grid-wrapper grid-wrapper-border">
+    <kendo-grid [data]="listThietBi" [resizable]="true" [columnMenu]="false">
+        <kendo-grid-column
+            [title]="'LB.ACTION' | translate"
+            class="text-center"
+            [width]="90"
+            [columnMenu]="false"
+        >
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <button
+                    type="button"
+                    nz-button
+                    class="btn-svg-danger d-inline-block"
+                    (click)="removeThietBiHandler(dataItem, rowIndex)"
+                >
+                    <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                </button>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [title]="'LB.STT' | translate" [width]="60" [columnMenu]="false" [headerStyle]="{ 'text-align': 'center' }">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="text-center">
+                    {{ rowIndex + 1 }}
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="300" [title]="'PTN.DMTH.THIET_BI' | translate">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div>
+                    {{
+                        (dataItem.maThietBi ? dataItem.maThietBi : '') +
+                            (dataItem.maThietBi && dataItem.tenThietBi ? ' - ' : '') +
+                            (dataItem.tenThietBi ? dataItem.tenThietBi : '')
+                    }}
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [width]="150" [title]="'PTN.DMTH.TIEU_HAO' | translate">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <nz-input-number
+                [nzFormatter]=""
+                [nzMin]="1"
+                [nzStep]="1"
+                [(ngModel)]="dataItem.mucTieuHao"
+                style="width: 100%"
+            ></nz-input-number>
+            </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [title]="'PTN.TB.DIEU_KIEN_VAN_HANH' | translate">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <input
+                        type="text"
+                        class="m-input form-control"
+                        [(ngModel)]="dataItem.dieuKienVanHanh"
+                    />
+            </ng-template>
+        </kendo-grid-column>
+    </kendo-grid>
+</div>

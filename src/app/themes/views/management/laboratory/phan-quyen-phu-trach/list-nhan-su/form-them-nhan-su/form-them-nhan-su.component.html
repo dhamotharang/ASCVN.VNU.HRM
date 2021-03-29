@@ -1,0 +1,122 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.PQPT.NHAN_SU' | translate }} </label>
+                <div>
+                    <div class="select-user">
+                        <widget-select-user-for-filter
+                            [placeholder]="'LB.SELECT' | translate"
+                            formControlName="idNhanSu"
+                            [(ngModel)]="chonNhanSu"
+                            [userSelectedIds]="chonNhanSu"
+                            [mode]="'multiple'"
+                            (listItems)="changeNhanSu($event)"
+                        >
+                        </widget-select-user-for-filter>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group m-form__group">
+                <label style="color: white">.</label>
+                <div>
+                    <a type="button" class="btn_custom btn_add ml-1" (click)="addNhanSuHandler()">
+                        <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">Thêm nhân sự</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <div class="grid-wrapper grid-wrapper-border">
+                    <kendo-grid [data]="viewNhanSu" [resizable]="true" [columnMenu]="false">
+                        <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" [width]="90" [columnMenu]="false">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <button
+                                    type="button"
+                                    nz-button
+                                    class="btn-svg-danger d-inline-block"
+                                    (click)="removeNhanSuHandler(dataItem, rowIndex)"
+                                >
+                                    <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                </button>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column field="maNhanSu" [columnMenu]="false" [title]="'PTN.PQPT.MA_NHAN_SU' | translate" width="120">
+                        </kendo-grid-column>
+                        <!-- <kendo-grid-column [columnMenu]="false" field="hoDem" [title]="'PTN.PQPT.HO_DEM' | translate" width="180" >
+                        </kendo-grid-column>
+                        <kendo-grid-column [columnMenu]="false" field="ten" [title]="'PTN.PQPT.TEN' | translate" width="100" >
+                        </kendo-grid-column> -->
+
+                        <kendo-grid-column
+                            field="ten"
+                            class="text-left"
+                            [title]="'NV.FULL_NHAN_SU' | translate"
+                            width="180"
+                            [columnMenu]="false"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="dark">
+                                    <b>
+                                        {{
+                                            dataItem.hoTenNhanSu != null && dataItem.hoTenNhanSu != undefined
+                                                ? dataItem.hoTenNhanSu
+                                                : dataItem.hoDem + ' ' + dataItem.ten
+                                        }}</b
+                                    >
+                                </div>
+                                <div class="grid-size12">
+                                    {{
+                                        (dataItem.tenChucVu ? dataItem.tenChucVu : '') +
+                                            (dataItem.tenChucVu && dataItem.tenChucDanh ? ' - ' : '') +
+                                            (dataItem.tenChucDanh ? dataItem.tenChucDanh : '')
+                                    }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="tenGioiTinh"
+                            [title]="'PTN.PQPT.TEN_GIOI_TINH' | translate"
+                            width="100"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center">
+                                    {{ dataItem.tenGioiTinh }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [columnMenu]="false"
+                            field="ngaySinh"
+                            [title]="'PTN.PQPT.NGAY_SINH' | translate"
+                            width="150"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center">
+                                    {{ dataItem.ngaySinh | date: 'dd/MM/yyyy' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

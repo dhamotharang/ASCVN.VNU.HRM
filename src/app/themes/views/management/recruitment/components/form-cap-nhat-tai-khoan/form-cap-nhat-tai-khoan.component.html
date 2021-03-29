@@ -1,0 +1,38 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group">
+        <label class="control-label">{{ 'LB.HRM.HO_TEN' | translate }} </label>
+        <input type="text" class="m-input form-control" [value]="model.hoDem + ' ' + model.ten" disabled />
+    </div>
+    <div class="form-group m-form__group">
+        <label class="control-label">{{ 'LB.HRM.USERNAME' | translate }}</label>
+        <input type="text" class="m-input form-control" [value]="model.userName" disabled />
+    </div>
+    <div class="form-group m-form__group">
+        <label class="control-label">{{ 'LB.HRM.NEW_USERNAME' | translate }} </label>
+        <input type="text" class="m-input form-control" formControlName="userNameNew" />
+    </div>
+    <div class="form-group m-form__group">
+        <label class="control-label">{{ 'USER.PASSWORD' | translate }} <span class="text-danger">(*)</span></label>
+    </div>
+    <div class="form-group m-form__group">
+        <label class="m-radio">
+            <input type="radio" formControlName="isPASS_CMND" [value]="true" />
+            {{ 'RECRUITMENT.TEXT.24' | translate }}
+            <span></span>
+        </label>
+    </div>
+    <div class="form-group m-form__group">
+        <label class="m-radio">
+            <input type="radio" formControlName="isPASS_CMND" [value]="false" />
+            {{ 'USER.PASSWORD' | translate }}
+            <span></span>
+        </label>
+    </div>
+    <div class="form-group m-form__group" *ngIf="!form.get('isPASS_CMND').value">
+        <input type="password" class="m-input form-control" formControlName="password" />
+    </div>
+    <div class="text-right mt-3">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

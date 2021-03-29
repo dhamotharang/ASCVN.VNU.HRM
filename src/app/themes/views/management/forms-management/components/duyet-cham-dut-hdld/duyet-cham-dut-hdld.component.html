@@ -1,0 +1,32 @@
+<form class="m-form form-tt-don" novalidate>
+  <div class="row"> 
+    <div class="col-12">
+      <div class="row"> 
+          <div class="col-12">
+            <div class="row"> 
+              <div class="col-8"> 
+                <label class="col-form-label ">{{ 'MANAGEMENT.TEXT.6' | translate }}: </label>
+              </div>
+              <div class="col-4">
+                <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                  [placeHolder]="'LB.SELECT' | translate">
+                </asc-select>
+              </div>  
+            </div>
+        </div> 
+
+        <div class="col-12">
+          <label class="col-form-label">
+            {{ 'MANAGEMENT.LABEL.NOI_DUNG_DUYET' | translate }}
+          </label>
+          <textarea rows="4" class="form-control"></textarea>
+        </div>
+      </div>
+    </div> 
+  </div>
+  <div class="d-flex justify-content-center mt-3">
+    <button type="button" (click)="closeForm()" class="btn_custom btn_add btn_close mr-2">{{ 'BTN.DUYET' | translate}}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.TRO_LAI' | translate}}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_update btn_close mr-2">{{ 'BTN.KHONG_DUYET' | translate}}</button>
+  </div>
+</form>

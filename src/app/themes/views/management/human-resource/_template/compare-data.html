@@ -1,0 +1,39 @@
+<div style="max-width: 700px">
+    <div class="grid-wrapper grid-wrapper-border">
+        <kendo-grid [data]="arrayCompare" [resizable]="true" [columnMenu]="false" [height]="400" [pageable]="false" kendoGridSelectBy="key">
+            <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">{{ rowIndex + 1 }}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="title" width="150" [title]="'LB.HRM.TIEU_CHI' | translate">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="font-weight-bold">{{ dataItem.title }}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="currentValue" width="150" [title]="'LB.HRM.NOI_DUNG_DA_CO' | translate">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-success">{{ dataItem.currentValue }}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="previousValue" width="150" [title]="'LB.HRM.NOI_DUNG_DE_XUAT' | translate">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-muted font-italic">{{ dataItem.previousValue }}</div>
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>
+<div class="text-right mt-2">
+    <ng-container *ngIf="isDuyetLyLichNhanSu">
+        <button class="btn_custom btn_update mr-1" (click)="onApprove(true)">
+            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+        </button>
+        <button class="btn_custom btn_df" (click)="onApprove(false)">
+            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+        </button>
+    </ng-container>
+</div>
+<div class="k-overlay" *ngIf="opened"></div>

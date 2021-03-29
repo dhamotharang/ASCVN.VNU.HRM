@@ -1,0 +1,172 @@
+<div class="row d-block-max">
+    <div class="col-sm-12">
+        <div class="grid-wrapper grid-wrapper-border">
+            <kendo-grid
+                [data]="gridView"
+                [pageSize]="gridState.take"
+                [skip]="gridState.skip"
+                [loading]="loading"
+                [pageable]="pageConfig"
+                [resizable]="true"
+                [columnMenu]="false"
+                [sortable]="true"
+                [sort]="gridState.sort"
+                [style.height]="'100%'"
+                (dataStateChange)="onStateChange($event)"
+                [selectable]="true"
+                [group]="groups"
+            >
+                <kendo-grid-column field="tenNhomViTriViecLam" [title]="'RECRUITMENT.TEXT.01' | translate" class="text-left" hidden="true">
+                    <ng-template kendoGridGroupHeaderTemplate let-group let-value="value">
+                        {{ value }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column
+                    [title]="'LB.ACTION' | translate"
+                    [width]="120"
+                    [columnMenu]="false"
+                    *ngIf="isNhapLyLich && itemKeHoach.idTrangThaiDuyet === trangThaiKeHoachEnum.BAN_DUYET"
+                >
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center label_success" (click)="nhapLyLich(dataItem, itemKeHoach)">
+                            {{ 'RECRUITMENT.KE_HOACH.NHAP_LY_LICH' | translate }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.DINH_BIEN.VTVL' | translate" [columnMenu]="false" [sortable]="false" [width]="400">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.tenViTriViecLam }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column-group
+                    [title]="'RECRUITMENT.DINH_BIEN.TITLE' | translate"
+                    [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                >
+                    <kendo-grid-column
+                        field="dinhBienCapLuong"
+                        [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                        [width]="100"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="dinhBienTuTra"
+                        [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                        [width]="80"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [title]="'RECRUITMENT.THONG_KE.TONG_SO' | translate"
+                        [width]="80"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            {{ dataItem.dinhBienCapLuong + dataItem.dinhBienTuTra }}
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid-column-group>
+                <kendo-grid-column-group
+                    [title]="'RECRUITMENT.KE_HOACH.HIEN_HANH' | translate"
+                    [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                >
+                    <kendo-grid-column
+                        field="hienTaiCapLuong"
+                        [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                        [width]="100"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="hienTaiTuTra"
+                        [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                        [width]="80"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [title]="'RECRUITMENT.THONG_KE.TONG_SO' | translate"
+                        [width]="80"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            {{ dataItem.hienTaiCapLuong + dataItem.hienTaiTuTra }}
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid-column-group>
+                <kendo-grid-column-group
+                    [title]="'RECRUITMENT.KE_HOACH.DE_XUAT' | translate"
+                    [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                >
+                    <kendo-grid-column
+                        field="capLuong"
+                        [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                        [width]="100"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="tuTra"
+                        [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                        [width]="80"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [title]="'RECRUITMENT.THONG_KE.TONG_SO' | translate"
+                        [width]="80"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            {{ dataItem.capLuong + dataItem.tuTra }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="nguonTuyen"
+                        [title]="'RECRUITMENT.DINH_BIEN.NGUON_TUYEN' | translate"
+                        [width]="200"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                    </kendo-grid-column>
+                </kendo-grid-column-group>
+                <kendo-grid-column
+                    field="soLuongDaNhap"
+                    [title]="'RECRUITMENT.KE_HOACH.SL_NHAP' | translate"
+                    [width]="120"
+                    [columnMenu]="false"
+                    *ngIf="isNhapLyLich && itemKeHoach.idTrangThaiDuyet === trangThaiKeHoachEnum.BAN_DUYET"
+                    [sortable]="false"
+                >
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>

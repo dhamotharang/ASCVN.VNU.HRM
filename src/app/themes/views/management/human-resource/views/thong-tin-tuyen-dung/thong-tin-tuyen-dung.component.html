@@ -1,0 +1,215 @@
+<div class="m-portlet mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ 'HR.MENU.TUYEN_DUNG' | translate }}
+                    <small *ngIf="model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT"
+                        class="text-normal text-danger font-italic">
+                        <!-- ({{ trangThaiDuLieus[model?.idTrangThaiDuLieu] }}) -->
+                        ({{ 'HR.MES.15' | translate  }})
+                    </small>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <ng-container *ngIf="model && model.compareData && !isTraCuuNhanSu">
+                        <button class="btn_custom btn_add" nz-popover [nzPopoverTitle]="titleTemplate"
+                            [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click" [(nzPopoverVisible)]="visible"
+                            [nzPopoverOverlayStyle]="{'z-index': '10000px !important'}">
+                            <div [innerHTML]="'hummer.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.COMPARE' | translate }}</span>
+                        </button>
+                    </ng-container>
+                    <ng-template #titleTemplate><i nz-icon nzType="close"></i> {{ 'LB.HRM.LICH_SU_CHINH_SUA'|translate
+                        }}</ng-template>
+                    <ng-template #contentTemplate>
+                        <app-thong-tin-tuyen-dung-compare [compareData]="model" (closePopover)="closePopover()">
+                        </app-thong-tin-tuyen-dung-compare>
+                    </ng-template>
+                </li>
+                <ng-container
+                    *ngIf="isDuyetLyLichNhanSu && model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT && !model?.compareData">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_update" (click)="onApprove(true)">
+                            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_df" (click)="onApprove(false)">
+                            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+                <!-- <ng-container *ngIf="(isDuyetLyLichNhanSu && !model?.compareData) || !isDuyetLyLichNhanSu"> -->
+                <ng-container *ngIf="isCapNhatTuyenDung && isTraCuuNhanSu">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_add" (click)="showFormCapNhatThongTinTuyenDung()">
+                            <div [innerHTML]="'update.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.UPDATE' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+
+                <li class="m-portlet__nav-item">
+                    <app-export-ho-so-nhan-su [nhanSuId]="nhanSuId"></app-export-ho-so-nhan-su>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body p-3">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NGUON_TUYEN' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.tenNguonTuyenDung }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NGUOI_TUYEN' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">
+                        <span> {{ model?.hoTenNguoiTuyen }} </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NN_TUYEN_DUNG' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.ngheNghiepTuyenDung }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.CO_QUAN_TUYEN_DUNG' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.coQuanTuyenDung }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NHOM_VIEC_LAM' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.tenNhomViTriViecLam }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.KE_HOACH_TUYEN_DUNG' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.tenKeHoachTuyenDung }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.VI_TRI_VIEC_LAM' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.tenViTriViecLam }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.HINH_THUC_TRA_LUONG' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{
+                        model?.hinhThucTraLuong === 1 ? 'Cấp lương' : model?.hinhThucTraLuong === 2 ? 'Tự trả' : ''
+                        }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NGAY_TUYEN_DUNG' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayTuyenDung | date: 'dd/MM/yyyy'
+                        }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NGAY_NHAN_VIEC' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayNhanViec | date: 'dd/MM/yyyy'
+                        }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NAM_GIAO_DUC' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.namVaoNganhGiaoDuc }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NGAY_BAT_DAU_DHQGHN' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayBatDauDHQG | date: 'dd/MM/yyyy'
+                        }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.CONG_VIEC_DUOC_GIAO' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.congViecDuocGiao }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.SO_TRUONG_CONG_TAC' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.soTruongCongTac }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.NGAY_BAT_DAU_NN' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayBatDauNN | date: 'dd/MM/yyyy'
+                        }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <label class="col-6 col-form-label">{{ 'HR.TUYEN_DUNG.VIEC_LAM_LAU_NHAT' | translate }}<span
+                            class="float-right">:</span></label>
+                    <label class="col-6 col-form-label lb-bold-info">{{ model?.viecLamLauNhat
+                        }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-3 col-6 col-form-label">{{ 'LB.NOTE' | translate }} <span
+                            class="float-right">:</span></label>
+                    <label class="col-md-9 col-6 col-form-label lb-bold-info">{{ model?.ghiChu }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>

@@ -1,0 +1,109 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.PHONG_THI_NGHIEM' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        [permissionType]="1"
+                        formControlName="idPhongThiNghiem"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.THNKH.HO_TEN' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="hoTen" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.THNKH.QUOC_TICH' | translate }}
+                </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idQuocTich"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.THNKH.CHUC_VU' | translate }}
+                </label>
+                <div>
+                    <div>
+                        <input class="form-control" formControlName="chucVuNghienCuu" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.THNKH.DON_VI_DOI_TAC' | translate }}
+                </label>
+                <div>
+                    <div>
+                        <input class="form-control" formControlName="donViDoiTac" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.THNKH.MO_TA' | translate }}
+                </label>
+                <div>
+                    <div>
+                        <input class="form-control" formControlName="moTa" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.THNKH.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+		  <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <div class="m-checkbox-inline">
+                    <label class="m-checkbox">
+                        <input type="checkbox" formControlName="isVisible" />
+                        {{ 'LB.PTN.VISIBLE' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

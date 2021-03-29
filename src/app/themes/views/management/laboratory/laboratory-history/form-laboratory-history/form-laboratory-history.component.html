@@ -1,0 +1,176 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset [nzSelectedIndex]="tabCurrentIndex" (nzSelectChange)="changeTabIndex($event)">
+        <!-- start Tab1:  -->
+        <nz-tab [nzTitle]="'Thông tin chung' | translate">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.TB.PHONG_THI_NGHIEM' | translate }}
+                        </label>
+                        <div class="select-user" style="width: 400px">
+                            <asc-select
+                                    [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                                    [placeHolder]="'LB.SELECT' | translate"
+                                    [isReference]="true"
+                                    formControlName="idPhongThiNghiem"
+                                ></asc-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DK' | translate }}
+                        </label>
+                        <div class="select-user" style="width: 400px">
+                            <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.DANG_KY_SD_PHONG_THI_NGHIEM"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            [isReference]="true"
+                            formControlName="idDangKySuDung"
+                            [referenceId]='this.form.get("idPhongThiNghiem").value'
+                        ></asc-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DK.NGUOI_SU_DUNG' | translate }}
+                        </label>
+                        <div class="select-user" style="width: 400px">
+                            <widget-select-user-for-filter
+                                [userSelectedIds]="userSelected"
+                                [placeholder]="'LB.SELECT' | translate"
+                                formControlName="idNguoiSuDung"
+                            >
+                            </widget-select-user-for-filter>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.SO_NGUOI_SU_DUNG' | translate }} </label>
+                        <div>
+                            <nz-input-number
+                                [nzMin]="1"
+                                [nzStep]="1"
+                                formControlName="soNguoiThamGia"
+                                style="width: 100%"
+                            ></nz-input-number>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.THOI_GIAN_BAT_DAU' | translate }}  </label>
+                        <div>
+                            <nz-date-picker
+                                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                formControlName="ngayBatDau"
+                                nzFormat="dd/MM/yyyy HH:mm"
+                                style="width: 100%"
+                                [nzDisabledDate]="disabledNgayBatDau"
+                            >
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.THOI_GIAN_KET_THUC' | translate }}  </label>
+                        <div>
+                            <nz-date-picker
+                                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                formControlName="ngayKetThuc"
+                                nzFormat="dd/MM/yyyy HH:mm"
+                                style="width: 100%"
+                                [nzDisabledDate]="disabledNgayKetThuc"
+                            >
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DK.MUC_DICH_SU_DUNG' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="mucDichSuDung"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.KET_QUA_SU_DUNG' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="ketQuaSuDung"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.CHAT_THAI' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="chatThai"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.VAN_DE_AN_TOAN' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="vanDeAnToan"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.KIEN_NGHI' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="kienNghi"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <!-- end Tab1:  -->
+        <!-- start Tab2:  -->
+        <nz-tab [nzTitle]="'PTN.DMTH.THIET_BI' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <div>
+                            <app-danh-sach-chon-thiet-bi-nhat-ky
+                                formControlName="dangKySuDung_NhatKySuDung_ChiTiets"
+                                [idDangKySuDung]="form.get('idDangKySuDung').value"
+                                [idNhatKySuDung]="form.get('id').value"
+                            >
+                            </app-danh-sach-chon-thiet-bi-nhat-ky>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <!-- end Tab2:  -->
+    </nz-tabset>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

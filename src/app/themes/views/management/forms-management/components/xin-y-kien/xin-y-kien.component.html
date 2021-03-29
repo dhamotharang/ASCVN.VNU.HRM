@@ -1,0 +1,85 @@
+<form class="m-form form-tt-don" novalidate [formGroup]="form"> 
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-8">
+              <label class="col-form-label ">{{ 'MANAGEMENT.TEXT.6' | translate }}: </label>
+            </div>
+            <div class="col-4">
+              <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC" formControlName="idNhanSu"
+                [placeHolder]="'LB.SELECT' | translate">
+              </asc-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="row"> 
+            <div class="col-8"> 
+              <label class="col-form-label">
+                {{ 'MANAGEMENT.LABEL.DANH_SACH_XIN_Y_KIEN' | translate }}
+              </label>
+            </div>
+            <div class="col-4 d-flex justify-content-end"> 
+              <button type="button" (click)="add()" class="btn_custom btn_add mr-2">{{ 'BTN.ADD' | translate}}</button>
+              <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.DELETE' | translate}}</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="m-portlet__body">
+          <div class="m-portlet__head-tools">
+            <ng-template #template let-anchor>
+              <span>{{ anchor.nativeElement.innerText }}</span>
+            </ng-template>
+
+            <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td"
+              (mouseover)="showTooltip($event)">
+              <div class="grid-wrapper no-hover">
+                <kendo-grid [data]="gridViewHoSo$ | async" [pageSize]="gridStateHoSo.take" [skip]="gridStateHoSo.skip"
+                  [loading]="isLoadingHoSo" [resizable]="true" [columnMenu]="true" [sortable]="true"
+                  [sort]="gridStateHoSo.sort" kendoGridSelectBy="maNhanSu" [selectedKeys]="selectionHoSoIds"
+                  [selectable]="true">
+                  <kendo-grid-checkbox-column showSelectAll="true" [width]="50" [columnMenu]="false" class="text-center"
+                    [headerStyle]="{ 'text-align': 'center' }">
+                  </kendo-grid-checkbox-column>
+                  <kendo-grid-column [title]="'LB.STT' | translate" width="50" [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      <div class="text-center">
+                        {{ rowIndex + 1 }}
+                      </div>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column [columnMenu]="false" field="hoTen" [title]="'MANAGEMENT.DON.HO_VA_TEN' | translate"
+                    width="100">
+                  </kendo-grid-column>
+                  <kendo-grid-column field="tenChucVu" [title]="'MANAGEMENT.DON.CHUC_VU' | translate" [width]="130"
+                    [columnMenu]="false">
+                  </kendo-grid-column>
+                  <kendo-grid-column field="tenPhongBan" [title]="'MANAGEMENT.DON.PHONG_BAN' | translate" [width]="130"
+                    [columnMenu]="false">
+                  </kendo-grid-column>
+                  <kendo-grid-column class="text-center" field="tenDonVi" [title]="'MANAGEMENT.DON.DON_VI' | translate"
+                    [width]="50" [columnMenu]="false">
+                  </kendo-grid-column>
+                  <kendo-grid-column field="tenTrangThai" [title]="'MANAGEMENT.DON.TRANG_THAI' | translate"
+                    [width]="130" [columnMenu]="false" [sortable]="false">
+                  </kendo-grid-column>
+
+                </kendo-grid>
+              </div>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>  
+  <div class="d-flex justify-content-center mt-3">
+    <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.TRO_LAI' |
+      translate}}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_add mr-2">{{ 'BTN.XIN_Y_KIEN' |
+      translate}}</button>
+  </div>
+</form>

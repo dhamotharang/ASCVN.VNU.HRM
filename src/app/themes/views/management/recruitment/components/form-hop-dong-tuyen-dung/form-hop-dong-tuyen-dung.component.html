@@ -1,0 +1,681 @@
+<form class="m-form form-hd-td" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.SO_HD' | translate }} </label>
+                        <input type="text" [readOnly]="action === isAction.VIEW" class="m-input form-control" formControlName="soHopDong" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.NGAY_KY' | translate }} </label>
+                        <nz-date-picker
+                            nzFormat="dd/MM/yyyy"
+                            formControlName="ngayKy"
+                            style="width: 100%"
+                            [nzDisabled]="action === isAction.VIEW"
+                        >
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.NGUOI_DUYET_HOP_DONG' | translate }} </label>
+                        <widget-select-user-for-filter
+                            [placeholder]="'LB.SELECT' | translate"
+                            [disabled]="action === isAction.VIEW"
+                            formControlName="idNhanSuDuyet"
+                            [userSelectedIds]="chonNguoiDuyet"
+                            [coQuanId]="idCoQuanCap1"
+                        >
+                        </widget-select-user-for-filter>
+                    </div>
+                </div>
+                <div class="col-12 pb-4"></div>
+                <!-- bên A -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.NGUOI_DAI_DIEN_BEN_A' | translate" nzOrientation="left"> </nz-divider>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.ONG_BA' | translate }} </label>
+                        <widget-select-user-for-filter
+                            (listItems)="changeNhanSuBenA($event)"
+                            [disabled]="action === isAction.VIEW || isCapNhatSau"
+                            [placeholder]="'LB.SELECT' | translate"
+                            formControlName="idNguoiKy"
+                            [userSelectedIds]="chonNguoiKy"
+                            [coQuanId]="idCoQuanCap1"
+                        >
+                        </widget-select-user-for-filter>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.QUOC_TICH' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="quocTichNguoiKy"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CHUC_VU' | translate }}</label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="chucVuBenA"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.SO_DIEN_THOAI' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="soDienThoaiBenA"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DAI_DIEN_CHO' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="daiDienChoBenA"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-12 pb-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DIA_CHI' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="diaChiBenA"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <!-- bên B -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.NGUOI_DAI_DIEN_BEN_B' | translate" nzOrientation="left"> </nz-divider>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.ONG_BA' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="tenNhanSu"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.QUOC_TICH' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="quocTichNhanSu"
+                            [readOnly]="true"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.SINH_NGAY' | translate }} </label>
+                        <nz-date-picker
+                            nzFormat="dd/MM/yyyy"
+                            formControlName="ngaySinhBenB"
+                            style="width: 100%"
+                            nzDisabled
+                        >
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.NOI_SINH_TAI' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="noiSinhBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.NGHE_NGHIEP' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="ngheNghiepBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DIA_CHI_THUONG_TRU' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="diaChiThuongTruBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.SO_CMND' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="soCMNDBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CAP_NGAY' | translate }} </label>
+                        <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayCapCMNDBenB" style="width: 100%" nzDisabled>
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CMND_CAP_TAI' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="CMNDCapTaiBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.SO_SO_LAO_DONG' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="soSoLaoDongBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CAP_NGAY' | translate }} </label>
+                        <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayCapSSLDBenB" style="width: 100%" nzDisabled>
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.SO_SO_LAO_DONG_CAP_TAI' | translate }} </label>
+                        <input type="text" class="m-input form-control" formControlName="SSLDCapTaiBenB" [readOnly]="true" />
+                    </div>
+                </div>
+                <div class="col-4 pb-4"></div>
+                <!-- điều 1 -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.DIEU_1' | translate" nzOrientation="left"></nz-divider>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.LOAI_HOP_DONG' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.LOAI_HOP_DONG"
+                            [isDisabled]="action === isAction.VIEW || isCapNhatSau"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idLoaiHopDong"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.THOI_GIAN_HOP_DONG' | translate }} </label>
+                        <div class="d-flex">
+                            <div class="col-sm-6 pl-0 pr-0">
+                                <nz-date-picker
+                                    formControlName="hdTuNgay"
+                                    nzFormat="dd/MM/yyyy"
+                                    [nzDisabledDate]="disabledNgayBatDauHD"
+                                    [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                                    [nzDisabled]="action === isAction.VIEW || isCapNhatSau"
+                                    style="width: 100%"
+                                >
+                                </nz-date-picker>
+                            </div>
+                            <div class="col-sm-6 pl-1 pr-0">
+                                <nz-date-picker
+                                    formControlName="hdDenNgay"
+                                    nzFormat="dd/MM/yyyy"
+                                    [nzDisabledDate]="disabledNgayKetThucHD"
+                                    [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                                    [nzDisabled]="action === isAction.VIEW || isCapNhatSau"
+                                    style="width: 100%"
+                                >
+                                </nz-date-picker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 d-flex align-items-center">
+                    <div class="form-group m-form__group">
+                        <label>&nbsp;</label>
+                        <div class="m-checkbox-inline">
+                            <ng-container *ngIf="action === isAction.VIEW || isCapNhatSau; else thuViec">
+                                <label class="m-checkbox m-checkbox--disabled">
+                                    <input disabled type="checkbox" formControlName="isThuViec" />{{
+                                        'RECRUITMENT.HD.THU_VIEC' | translate
+                                    }}
+                                    <span></span>
+                                </label>
+                            </ng-container>
+                            <ng-template #thuViec>
+                                <label class="m-checkbox">
+                                    <input type="checkbox" formControlName="isThuViec" />{{ 'RECRUITMENT.HD.THU_VIEC' | translate }}
+                                    <span></span>
+                                </label>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <ng-container *ngIf="isChecked == true">
+                        <div class="form-group m-form__group">
+                            <label class="control-label">{{ 'RECRUITMENT.HD.THOI_GIAN_THU_VIEC' | translate }} </label>
+                            <div class="d-flex">
+                                <nz-date-picker
+                                    class="col-6"
+                                    formControlName="thuViecTuNgay"
+                                    nzFormat="dd/MM/yyyy"
+                                    [nzDisabledDate]="disabledNgayBatDauTV"
+                                    [nzDisabled]="action === isAction.VIEW || isCapNhatSau"
+                                    [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                                >
+                                </nz-date-picker>
+                                <label>&nbsp;</label>
+                                <nz-date-picker
+                                    class="col-6"
+                                    [nzDisabled]="action === isAction.VIEW || isCapNhatSau"
+                                    formControlName="thuViecDenNgay"
+                                    nzFormat="dd/MM/yyyy"
+                                    [nzDisabledDate]="disabledNgayKetThucTV"
+                                    [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                                >
+                                </nz-date-picker>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DIA_DIEM_LAM_VIEC' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="diaDiemLamViec"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CD_NGHE_NGHIEP' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                            [isDisabled]="action === isAction.VIEW || isCapNhatSau"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idNgachCongChuc"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CHUC_VU_NEU_CO' | translate }} </label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.CHUC_VU"
+                            [isDisabled]="action === isAction.VIEW || isCapNhatSau"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idChucVu"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-12 pb-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CONG_VIEC_PHAI_LAM' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="nhiemVu"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <!-- điều 2 -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.DIEU_2' | translate" nzOrientation="left"></nz-divider>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.THOI_GIAN_LAM_VIEC' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="thoiGianLamViec"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12 pb-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DUOC_CAP_DUNG_CU_LAM_VIEC' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="phuongTienLamViec"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <!-- điều 3 -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.DIEU_3' | translate" nzOrientation="left"></nz-divider>
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.QUYEN_LOI' | translate" nzOrientation="left"></nz-divider>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.PHUONG_TIEN_DI_LAI_LAM_VIEC' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="phuongTienDiLai"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.MUC_LUONG_CHINH_HOAC_TIEN_CONG' | translate }} </label>
+                        <textarea
+                            class="form-control"
+                            formControlName="mucLuongChinh"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.HINH_THUC_TRA_LUONG' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="hinhThucTraLuong"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.PHU_CAP_GOM' | translate }} </label>
+                        <textarea
+                            class="form-control"
+                            formControlName="phucLoi"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DUOC_TRA_LUONG_VAO_CAC_NGAY' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="ngayNhanLuong"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group"></div>
+                    <div class="form-group m-form__group" style="padding-top: 30px !important">
+                        <label style="font-weight: 400 !important">{{ 'RECRUITMENT.HD.HANG_THANG' | translate }}.</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.TIEN_THUONG' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="khoanThuongKhac"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CHE_DO_NANG_LUONG' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="cheDoNangLuong"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.DUOC_TRANG_BI_BAO_HO_LAO_DONG' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="thietBiBaoHo"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CHE_DO_NGHI_NGOI' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="soNgayNghiHuongLuong"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.BAO_HIEM_XA_HOI_VA_BAO_HIEM_Y_TE' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="cheDoBaoHiem"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.CHE_DO_DAO_TAO' | translate }} </label>
+                        <textarea
+                            class="form-control"
+                            formControlName="cheDoDaoTao"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.NHUNG_THOA_THUAN_KHAC' | translate }} </label>
+                        <textarea
+                            class="form-control"
+                            formControlName="thoaThuanKhac"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        ></textarea>
+                    </div>
+                </div>
+                <!-- nghĩa vụ -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.NGHIA_VU' | translate" nzOrientation="left"></nz-divider>
+                <div class="col-12 pb-4">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.BOI_THUONG_VI_PHAM_VA_VAT_CHAT' | translate }} </label>
+                        <textarea
+                            class="form-control"
+                            formControlName="nghiaVu"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        ></textarea>
+                    </div>
+                </div>
+                <!-- điều 5 -->
+                <nz-divider nzPlain [nzText]="'RECRUITMENT.HD.DIEU_5' | translate" nzOrientation="left"></nz-divider>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.HIEU_LUC_HOP_DONG_TU_NGAY' | translate }} </label>
+                        <nz-date-picker
+                            nzFormat="dd/MM/yyyy"
+                            formControlName="ngayHieuLuc"
+                            style="width: 100%"
+                            [nzDisabled]="action === isAction.VIEW || isCapNhatSau"
+                        >
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.NGAY_LAM_HOP_DONG' | translate }} </label>
+                        <nz-date-picker
+                            nzFormat="dd/MM/yyyy"
+                            formControlName="ngayHopDong"
+                            style="width: 100%"
+                            [nzDisabled]="action === isAction.VIEW || isCapNhatSau"
+                        >
+                        </nz-date-picker>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label class="control-label">{{ 'RECRUITMENT.HD.HOP_DONG_DUOC_LAM_TAI' | translate }} </label>
+                        <input
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="hopDongLamLai"
+                            [readOnly]="action === isAction.VIEW || isCapNhatSau"
+                        />
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <asc-upload
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput$ | async"
+                            [folderName]="folder.TD_HopDongTuyenDung"
+                            [multiple]="false"
+                        >
+                        </asc-upload>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="signature">
+                        <span>
+                            <b>
+                                {{ 'RECRUITMENT.HD.NGUOI_DAI_DIEN_BEN_B' | translate }}
+                            </b>
+                        </span>
+                        <span> </span>
+                        <span>
+                            {{ tenBenB }}
+                        </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="signature">
+                        <span>
+                            <b>
+                                {{ 'RECRUITMENT.HD.NGUOI_DAI_DIEN_BEN_A' | translate }}
+                            </b>
+                        </span>
+                        <span> </span>
+                        <span>
+                            {{ tenBenA }}
+                        </span>
+                    </div>
+                </div>
+                <!-- Bên B -->
+                <div class="col-6">
+                    <ng-container *ngIf="isHopDongXacNhan === true">
+                        <div class="col-12">
+                            <label>
+                                {{ 'LB.NOTE' | translate }}<small> {{ 'RECRUITMENT.TEXT.13' | translate }}</small>
+                            </label>
+                            <textarea
+                                class="form-control"
+                                [(ngModel)]="lydoXacNhanBenB"
+                                [ngModelOptions]="{ standalone: true }"
+                                rows="2"
+                            ></textarea>
+                        </div>
+                        <div class="col-12 pt-2 d-flex justify-content-center">
+                            <button type="button" class="btn_custom btn_add mr-2" (click)="XacNhanHopDong(2)">
+                                {{ 'RECRUITMENT.HDCN.KHONG_XAC_NHAN' | translate }}
+                            </button>
+                            <button type="button" class="btn_custom btn_add" (click)="XacNhanHopDong(1)">
+                                {{ 'RECRUITMENT.HDCN.XAC_NHAN' | translate }}
+                            </button>
+                        </div>
+                    </ng-container>
+                </div>
+                <!-- Bên A -->
+                <div class="col-6" [HideIfUnauthorized]="listRoleOption.HRM_0005">
+                    <ng-container *ngIf="isHopDongXacNhan === false">
+                        <div class="col-12">
+                            <label>
+                                {{ 'LB.NOTE' | translate }}<small> {{ 'RECRUITMENT.TEXT.13' | translate }}</small>
+                            </label>
+                            <textarea
+                                class="form-control"
+                                [(ngModel)]="lydoXacNhanBenA"
+                                [ngModelOptions]="{ standalone: true }"
+                                rows="2"
+                            ></textarea>
+                        </div>
+                        <div class="col-12 pt-2 d-flex justify-content-center">
+                            <button
+                                type="button"
+                                class="btn_custom btn_add mr-2"
+                                (click)="duyetHopDongTruongDonVi(trangThaiHopDongEnum.KHONG_DUYET)"
+                            >
+                                {{ 'RECRUITMENT.HDCN.KHONG_DUYET' | translate }}
+                            </button>
+                            <button type="button" class="btn_custom btn_add" (click)="duyetHopDongTruongDonVi(trangThaiHopDongEnum.DUYET)">
+                                {{ 'RECRUITMENT.HDCN.DUYET' | translate }}
+                            </button>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-6 row">
+                    <ng-container *ngIf="idTrangThaiHopDong == trangThaiHopDongEnum.TAO_MOI || idTrangThaiHopDong == null">
+                        <div class="col-12">
+                            <label>
+                                {{ 'RECRUITMENT.TEXT.30' | translate }}
+                            </label>
+                            <textarea
+                                class="form-control"
+                                formControlName="ghiChuNguoiGui" 
+                                rows="2"
+                            ></textarea>
+                        </div>
+                        <!-- <div class="col-12 pt-2 d-flex justify-content-center"> 
+                            <button type="button" class="btn_custom btn_add" (click)="guiVaLuuXacNhan()">
+                                {{ 'RECRUITMENT.HDCN.GUI' | translate }}
+                            </button>
+                        </div> -->
+                    </ng-container>
+                </div>
+                <div class="col-3"></div>
+
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.CANCEL' | translate }}</button>
+        <ng-container *ngIf="!(action == isAction.VIEW)">
+            <button type="submit" class="btn_custom btn_add mr-2">{{ 'BTN.SAVE' | translate }}</button>
+            <ng-container *ngIf="idTrangThaiHopDong == trangThaiHopDongEnum.TAO_MOI || idTrangThaiHopDong == null">
+                <button type="button" (click)="onSubmitAndSend()" class="btn_custom btn_update">{{ 'BTN.SAVE_AND_SEND' | translate }}</button> 
+            </ng-container>
+        </ng-container>
+    </div>
+</form>

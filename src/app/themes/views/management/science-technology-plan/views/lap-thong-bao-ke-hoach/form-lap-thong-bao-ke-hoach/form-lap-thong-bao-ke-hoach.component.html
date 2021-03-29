@@ -1,0 +1,135 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset [nzSelectedIndex]="tabCurrentIndex" (nzSelectChange)="changeTabIndex($event)">
+        <nz-tab [nzTitle]="'SPL.TAB.THONG_TIN_CHUNG' | translate">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.MA' | translate }}
+                        </label>
+                        <div>
+                            <input class="form-control" formControlName="maThongBao" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.TEN' | translate }}
+                        </label>
+                        <div>
+                            <input class="form-control" formControlName="tenThongBao" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.NGAY_BAT_DAU' | translate }}
+                        </label>
+                        <div>
+                            <div>
+                                <nz-date-picker
+                                    nzFormat="dd/MM/yyyy"
+                                    formControlName="ngayBatDau"
+                                    style="width: 100%"
+                                    [nzDisabledDate]="disabledNgayBatDau">
+                                </nz-date-picker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.NGAY_KET_THUC' | translate }}
+                        </label>
+                        <div>
+                            <div>
+                                <nz-date-picker
+                                    nzFormat="dd/MM/yyyy"
+                                    formControlName="ngayKetThuc"
+                                    style="width: 100%"
+                                    [nzDisabledDate]="disabledNgayKetThuc">
+                                </nz-date-picker>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.NAM' | translate }}
+                        </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.NAM"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="namThongBao"
+                                [isDisabled]="isDisabled">
+                            </asc-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.NOI_DUNG' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="noiDung" rows="8"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'SCIPLN.LKH.GHI_CHU' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="ghiChu" rows="8"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <div class="m-checkbox-inline">
+                            <label class="m-checkbox">
+                                <input type="checkbox" formControlName="isVisible" />
+                                {{ 'LB.CATALOG.VISIBLE' | translate }}
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <ke-hoach-khcn-upload
+                        [folderName]="folder.KHCN_KHOA_HOC_CONG_NGHE"
+                        (fileInput)="onSelectFile($event)"
+                        [file]="fileInput"
+                        [multiple]="true"
+                        >
+                        </ke-hoach-khcn-upload>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'SPL.TAB.PHAN_CONG' | translate">
+            <app-chon-phan-cong-ke-hoach 
+                [idThongBao]="form.get('id').value"
+                (changedData)="receiveDataNhanSu($event)">
+            </app-chon-phan-cong-ke-hoach>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>
+
+
+    

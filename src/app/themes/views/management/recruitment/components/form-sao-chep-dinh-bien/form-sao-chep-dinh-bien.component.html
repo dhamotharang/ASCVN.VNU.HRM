@@ -1,0 +1,32 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group row">
+        <div class="col-6">
+            <div class="form-group m-form__group" *ngIf="namHienTai">
+                <label> {{ 'RECRUITMENT.DINH_BIEN.TU_NAM' | translate }} </label>
+                <input class="form-control" [value]="namHienTai" disabled />
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'RECRUITMENT.DINH_BIEN.DEN_NAM' | translate }} </label>
+                <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear formControlName="nam">
+                    <ng-container *ngFor="let item of listOfOption">
+                        <nz-option [nzLabel]="item.text" [nzValue]="item.id"></nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="ghiChu"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.COPY' | translate }}</button>
+    </div>
+</form>

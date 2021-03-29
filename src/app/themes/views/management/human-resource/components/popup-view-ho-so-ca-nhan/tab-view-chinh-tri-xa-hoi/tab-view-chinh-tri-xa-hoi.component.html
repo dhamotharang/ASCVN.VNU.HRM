@@ -1,0 +1,434 @@
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ 'HR.MENU.DOAN_DANG' | translate }}
+                    <!-- <small *ngIf="model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT"
+                        class="text-normal text-danger font-italic">
+                        ({{ 'HR.MES.15' | translate }})
+                    </small> -->
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__body nztab-custom">
+        <nz-tabset>
+            <nz-tab [nzTitle]="'HR.DOAN_DANG.TITLE' | translate">
+                <div class="m-portlet__body p-3">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="col-desc col-lg-12 col-form-label lb-bold-info">{{ 'HR.DOAN_DANG.DOAN' |
+                                    translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_VAO_DOAN' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayVaoDoan | date:
+                                    'dd/MM/yyyy' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.CHUC_VU_DOAN' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.tenChucVuDoan }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NOI_KET_NAP_DOAN' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.noiKetNapDoan }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="col-desc col-lg-12 col-form-label lb-bold-info">{{ 'HR.DOAN_DANG.DANG' |
+                                    translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_VAO_DANG' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayVaoDang | date:
+                                    'dd/MM/yyyy' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_CHINH_THUC' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{
+                                    model?.ngayChinhThucVaoDang | date: 'dd/MM/yyyy'
+                                    }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NOI_KET_NAP_DANG' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.noiKetNapDang }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.CHUC_VU_DANG' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.tenChucVuDang }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NOI_SINH_HOAT_DANG' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.noiSinhHoatDangHienTai
+                                    }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                    CÔNG ĐOÀN-->
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="col-desc col-lg-12 col-form-label lb-bold-info">{{
+                                    'HR.DOAN_DANG.CONG_DOAN' | translate
+                                    }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_VAO_CONG_DOAN' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayVaoCongDoan | date:
+                                    'dd/MM/yyyy' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.CHUC_VU_CONG_DOAN' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.tenChucVuCongDoan }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="col-md-3 col-6 col-form-label">
+                                    {{ 'LB.NOTE' | translate }}<span class="float-right">:</span></label>
+                                <label class="col-md-9 col-6 col-form-label lb-bold-info">{{ model?.ghiChu }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <label class="col-desc col-lg-12 col-form-label lb-bold-info">{{
+                                    'HR.DOAN_DANG.THONG_TIN_KHAC' | translate
+                                    }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_XUAT_NGU' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayXuatNgu | date:
+                                    'dd/MM/yyyy' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_NHAP_NGU' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayNhapNgu | date:
+                                    'dd/MM/yyyy' }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.THUONG_BINH' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">
+                                    <i class="la la-check text-success" *ngIf="model?.isThuongBinh"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.LOAI_THUONG_BINH' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.tenLoaiThuongBinh }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.SO_THUONG_TAT' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.soThuongTat }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.HINH_THUC_THUONG_TAT' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.hinhThucThuongTat }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.CHUC_VU_CUU_CHIEN_BINH' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.noiDung }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.QUAN_HAM_CAO_NHAT' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.tenQuanHam }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label class="col-6 col-form-label">
+                                    {{ 'HR.DOAN_DANG.NGAY_THAM_GIA_CM' | translate }}<span
+                                        class="float-right">:</span></label>
+                                <label class="col-6 col-form-label lb-bold-info">{{ model?.ngayThamGiaCachMang | date:
+                                    'dd/MM/yyyy' }}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'HR.DOAN_DANG.QUA_TRINH_DOAN' | translate">
+                <ng-template nz-tab>
+
+                    <ng-template #templateDoan let-anchor>
+                        <span>{{ anchor.nativeElement.innerText }}</span>
+                    </ng-template>
+
+                    <div kendoTooltip showOn="none" [tooltipTemplate]="templateDoan" filter=".k-grid td"
+                        (mouseover)="showTooltip($event)">
+                        <div class="grid-wrapper">
+                            <kendo-grid [data]="gridViewDoan$ | async" [loading]="loadingDoan"
+                                [pageSize]="gridStateDoan.take" [skip]="gridStateDoan.skip" [pageable]="pageConfigDoan"
+                                [resizable]="true" [columnMenu]="false" [sortable]="true" [sort]="gridStateDoan.sort"
+                                [style.height]="'100%'" [selectable]="true" kendoGridSelectBy="id"
+                                (dataStateChange)="onStateChangeDoan($event)">
+                                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center">
+                                            {{ rowIndex + 1 }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="tenChucVuDoan" width="150"
+                                    [title]="'HR.DOAN_DANG.CHUC_VU_DOAN' | translate" [sortable]="false">
+                                </kendo-grid-column>
+                                <kendo-grid-column field="ngayBatDau" width="170"
+                                    [title]="'HR.DOAN_DANG.NGAY_VAO_DOAN' | translate">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center">
+                                            {{ dataItem?.ngayBatDau | date: 'dd/MM/yyyy' }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="noiSinhHoat"
+                                    [title]="'HR.DOAN_DANG.NOI_SINH_HOAT_DOAN' | translate">
+                                </kendo-grid-column>
+                                <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                                            {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <ng-template kendoGridDetailTemplate let-dataItem>
+                                    <section>
+                                        <div class="row">
+                                            <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }} <span
+                                                    class="float-right">:</span></label>
+                                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu
+                                                }}</label>
+                                        </div>
+                                    </section>
+                                </ng-template>
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </ng-template>
+            </nz-tab>
+            <nz-tab [nzTitle]="'HR.DOAN_DANG.QUA_TRINH_DANG' | translate">
+                <ng-template nz-tab>
+
+                    <ng-template #templateDang let-anchor>
+                        <span>{{ anchor.nativeElement.innerText }}</span>
+                    </ng-template>
+
+                    <div kendoTooltip showOn="none" [tooltipTemplate]="templateDang" filter=".k-grid td"
+                        (mouseover)="showTooltip($event)">
+                        <div class="grid-wrapper">
+                            <kendo-grid [data]="gridViewDang$ | async" [loading]="loadingDang"
+                                [pageSize]="gridStateDang.take" [skip]="gridStateDang.skip" [pageable]="pageConfigDang"
+                                [resizable]="true" [columnMenu]="false" [sortable]="true" [sort]="gridStateDang.sort"
+                                [style.height]="'100%'" [selectable]="true" kendoGridSelectBy="id"
+                                (dataStateChange)="onStateChangeDang($event)">
+                                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center">
+                                            {{ rowIndex + 1 }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="tenChucVuDang" width="150"
+                                    [title]="'HR.DOAN_DANG.CHUC_VU_DANG' | translate" [sortable]="false">
+                                </kendo-grid-column>
+                                <kendo-grid-column field="ngayBatDau" width="150"
+                                    [title]="'HR.DOAN_DANG.NGAY_CHINH_THUC' | translate">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center">
+                                            {{ dataItem?.ngayBatDau | date: 'dd/MM/yyyy' }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="noiSinhHoat"
+                                    [title]="'HR.DOAN_DANG.NOI_SINH_HOAT_DOAN' | translate">
+                                </kendo-grid-column>
+                                <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                                            {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <ng-template kendoGridDetailTemplate let-dataItem>
+                                    <section>
+                                        <div class="row">
+                                            <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span
+                                                    class="float-right">:</span></label>
+                                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu
+                                                }}</label>
+                                        </div>
+                                    </section>
+                                </ng-template>
+                            </kendo-grid>
+                        </div>
+                    </div>
+
+                </ng-template>
+            </nz-tab>
+            <nz-tab [nzTitle]="'HR.DOAN_DANG.QUA_TRINH_CONG_DOAN' | translate">
+                <ng-template nz-tab>
+
+                    <ng-template #templateCongDoan let-anchor>
+                        <span>{{ anchor.nativeElement.innerText }}</span>
+                    </ng-template>
+
+                    <div kendoTooltip showOn="none" [tooltipTemplate]="templateCongDoan" filter=".k-grid td"
+                        (mouseover)="showTooltip($event)">
+                        <div class="grid-wrapper">
+                            <kendo-grid [data]="gridViewCD$ | async" [loading]="loadingCD" [pageSize]="gridStateCD.take"
+                                [skip]="gridStateCD.skip" [pageable]="pageConfigCD" [resizable]="true"
+                                [columnMenu]="false" [sortable]="true" [sort]="gridStateCD.sort" [style.height]="'100%'"
+                                [selectable]="true" kendoGridSelectBy="id" (dataStateChange)="onStateChangeCD($event)">
+                                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center">
+                                            {{ rowIndex + 1 }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="tenChucVuCongDoan" width="200"
+                                    [title]="'HR.DOAN_DANG.CHUC_VU_CONG_DOAN' | translate" [sortable]="false">
+                                </kendo-grid-column>
+                                <kendo-grid-column field="ngayBatDau" width="200"
+                                    [title]="'HR.DOAN_DANG.NGAY_VAO_CONG_DOAN' | translate">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center">
+                                            {{ dataItem?.ngayBatDau | date: 'dd/MM/yyyy' }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column field="noiSinhHoat"
+                                    [title]="'HR.DOAN_DANG.NOI_SINH_HOAT_DOAN' | translate">
+                                </kendo-grid-column>
+                                <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                        <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                                            {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <ng-template kendoGridDetailTemplate let-dataItem>
+                                    <section>
+                                        <div class="row">
+                                            <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span
+                                                    class="float-right">:</span></label>
+                                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu
+                                                }}</label>
+                                        </div>
+                                    </section>
+                                </ng-template>
+                            </kendo-grid>
+                        </div>
+                    </div>
+
+
+                </ng-template>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="search-backdrop permissions" (click)="openAdvanceSearch()"></div>
+<div class="m-portlet m-portlet--mobile ql-don-tu mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption m-portlet__head-caption-title">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ tabName }}
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-caption"></div>
+    </div>
+    <div class="m-portlet__body">
+        <div class="row">
+            <div class="col-6"> 
+
+                <div class="form-search pb-3">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="m-input-icon m-input-icon--left m-input-icon--right">
+                            <input
+                                type="text"
+                                class="form-control m-input"
+                                [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                                [(ngModel)]="keyword"
+                                (change)="onSearchChange()"
+                                (keydown.enter)="onSearchChange()"
+                            />
+                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                <span>
+                                    <i class="la la-search"></i>
+                                </span>
+                            </span>
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span (click)="openAdvanceSearch()" class="dropbtn-search-advance">
+                                    <i class="la la-caret-down"></i>
+                                </span>
+                            </span>
+                            <div
+                                id="myDropdown"
+                                class="dropdown-content-search-advance w-180"
+                                [ngClass]="this.searchAdvance ? 'show-search-advance' : ''"
+                                *ngIf="openFirstTime"
+                            >
+                                <app-bo-loc-don [keyWord]="keyword" (itemFilter)="handlerItemFilter($event)"></app-bo-loc-don>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+            <div class="col-6 btn-group p-3">
+                <ng-container *ngIf="loaiDonSelected == cacLoaiQuyetDinhEnum.CHUA_CO_QD || loaiDonSelected === cacLoaiQuyetDinhEnum.DA_CO_QD">
+                    <div class="btn-option">
+                        <button class="btn_custom btn_df mr-1">
+                            <span class="text">
+                                {{ 'FM.BTN.IN_DON' | translate }}
+                            </span>
+                        </button>
+                    </div> 
+                </ng-container> 
+                <ng-container *ngIf="loaiDonSelected == cacLoaiQuyetDinhEnum.CHUA_CO_QD">
+                    <div class="btn-option">
+                        <button class="btn_custom btn_df mr-1">
+                            <span class="text">
+                                {{ 'FM.BTN.TAO_QUYET_DINH' | translate }}
+                            </span>
+                        </button>
+                    </div> 
+                </ng-container> 
+                <ng-container *ngIf="loaiDonSelected == cacLoaiQuyetDinhEnum.DA_CO_QD">
+                    <div class="btn-option">
+                        <button class="btn_custom btn_df mr-1">
+                            <span class="text">
+                                {{ 'FM.BTN.IN_QUYET_DINH' | translate }}
+                            </span>
+                        </button>
+                    </div> 
+                    <div class="btn-option">
+                        <button class="btn_custom btn_df mr-1">
+                            <span class="text">
+                                {{ 'FM.BTN.SUA_QUYET_DINH' | translate }}
+                            </span>
+                        </button>
+                    </div> 
+                </ng-container> 
+            </div>
+        </div>
+        <div class="row px-2">
+            <div class="col-6">
+                <div>
+                    <nz-tabset nzType="card" (nzSelectedIndexChange)="changeTabsGrid($event)">
+                        <nz-tab [nzTitle]="'FM.LABEL.CHUA_CO_QD' | translate">
+                            <app-danh-sach-quyet-dinh [idLoaiQD]="loaiDonSelected" (itemQuyetDinh)="handlerItemDonTu($event)"></app-danh-sach-quyet-dinh>
+                        </nz-tab>
+                        <nz-tab [nzTitle]="'FM.LABEL.DA_CO_QD' | translate">
+                            <app-danh-sach-quyet-dinh [idLoaiQD]="loaiDonSelected" (itemQuyetDinh)="handlerItemDonTu($event)"></app-danh-sach-quyet-dinh>
+                        </nz-tab> 
+                    </nz-tabset>
+                </div>
+            </div>
+            <div class="col-6 right-content">
+                <div>
+                    <nz-tabset nzType="card">
+                        <nz-tab [nzTitle]="'FM.LABEL.THONG_TIN_DON' | translate">
+                            <app-thong-tin-don [itemDonSelected]="itemDonSelected" [loaiDonSelected]="loaiDonSelected"></app-thong-tin-don>
+                        </nz-tab>
+                        <nz-tab  [nzTitle]="'FM.LABEL.NHAT_KY' | translate">
+                            <app-nhat-ky [itemDonSelected]="itemDonSelected" [loaiDonSelected]="loaiDonSelected"></app-nhat-ky>
+                        </nz-tab>
+                        <nz-tab
+                            *ngIf="idPhanLoaiDonSelected === phanLoaiDonEnum.CHAM_DUT_HDLD"
+                            [nzTitle]="'FM.LABEL.QUYET_DINH_CHAM_DUT_HDLD' | translate"
+                        >
+                            <app-quyet-dinh-cham-dut-hd-lao-dong [itemDonSelected]="itemDonSelected" [loaiDonSelected]="loaiDonSelected"></app-quyet-dinh-cham-dut-hd-lao-dong>
+                        </nz-tab>
+                    </nz-tabset>
+                </div>
+            </div>
+        </div>
+        <div class="k-overlay" *ngIf="opened"></div>
+        <div class="wrapper form-layouts">
+            <div kendoWindowContainer></div>
+        </div>
+    </div>
+</div>

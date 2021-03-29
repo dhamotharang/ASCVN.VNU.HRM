@@ -1,0 +1,123 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.TASK' | translate }} <span class="text-danger">(*)</span> </label>
+                <input type="text" class="m-input form-control" formControlName="tenNhiemVuMaSo" />
+                <app-field-error [control]="form.get('tenNhiemVuMaSo')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.CODE' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="maDeTai" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.ROLE' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="maVaiTro" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.PRODUCT' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="sanPham" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.ARRANGE' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="maDanhGiaXepLoai" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.MANAGE' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="coQuanQuanLyNhiemVu" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.SB.FIELD' | translate }}
+                </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.LINH_VUC"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idLinhVuc"
+                >
+                </asc-select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.TIME' | translate }}</label>
+
+                <div class="d-flex">
+                    <nz-date-picker
+                        class="col-6"
+                        formControlName="thoiGianBatDau"
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                        [nzDisabledDate]="disabledThoiGianBatDau"
+                    >
+                    </nz-date-picker>
+                    <label>&nbsp;</label>
+                    <nz-date-picker
+                        class="col-6"
+                        formControlName="thoiGianKetThuc"
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                        [nzDisabledDate]="disabledThoiGianKetThuc"
+                    ></nz-date-picker>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.DE_TAI_KHCN.STATUS' | translate }} </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.TINH_TRANG_NHIEM_VU"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idTinhTrangNhiemVu"
+                >
+                </asc-select>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group m-form__group">
+                <label class="mt-4"> </label>
+                <div class="m-checkbox-inline">
+                    <label class="m-checkbox">
+                        <input type="checkbox" formControlName="isTieuBieu" />
+                        {{ 'SB.DE_TAI_KHCN.TIEU_BIEU' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="ghiChu"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

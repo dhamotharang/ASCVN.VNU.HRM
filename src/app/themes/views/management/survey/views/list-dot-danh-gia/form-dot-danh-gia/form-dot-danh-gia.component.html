@@ -1,0 +1,138 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset [nzSelectedIndex]="updateAfterCreate">
+        <nz-tab [nzTitle]="'SURVEY.DOT_DANH_GIA.INFOR' | translate">
+            <div class="row">
+                <div class="col-md-3 col-12">
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">{{ 'SURVEY.DOT_DANH_GIA.TYPE' | translate }} <span
+                                class="text-danger">(*)</span></label>
+                        <asc-select [modeOfDropDowList]="dropdownListEnum.QUY" [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="quy"></asc-select>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold"> {{ 'LB.YEAR' | translate }} <span
+                                class="text-danger">(*)</span> </label><br />
+                        <nz-date-picker style="width: 100%"
+                            [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.SELECT_YEAR' | translate" formControlName="namDanhGia"
+                            nzMode="year" nzFormat="yyyy" nz></nz-date-picker>
+                        <app-field-error [control]="form.get('nam')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'SURVEY.DOT_DANH_GIA.DATE' | translate }} <span class="text-danger">(*)</span>
+                        </label>
+                        <div class="d-flex">
+                            <div class="w-50">
+                                <nz-date-picker formControlName="tuNgay" nzFormat="dd/MM/yyyy" class="w-100"
+                                    [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.DATE_FROM' | translate">
+                                </nz-date-picker>
+                                <app-field-error [control]="form.get('tuNgay')"></app-field-error>
+                            </div>
+                            <span class="px-1 pt-1"> - </span>
+                            <div class="w-50">
+                                <nz-date-picker formControlName="denNgay" nzFormat="dd/MM/yyyy" class="w-100"
+                                    [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.DATE_TO' | translate">
+                                </nz-date-picker>
+                                <app-field-error [control]="form.get('denNgay')"></app-field-error>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group m-form__group">
+                <label class="font-weight-bold">
+                    {{ 'SURVEY.DOT_DANH_GIA.NAME' | translate }} <span class="text-danger">(*)</span>
+                </label>
+                <input type="text" class="m-input form-control" formControlName="tenDotDanhGia" />
+                <app-field-error [control]="form.get('tenDotDanhGia')"></app-field-error>
+            </div>
+
+            <div class="form-group m-form__group">
+                <label class="font-weight-bold">
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="ghiChu"></textarea>
+            </div>
+            <div class="row mt-3 d-flex align-items-end">
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'SURVEY.DOT_DANH_GIA.ORDER' | translate }}
+                        </label>
+                        <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="stt" style="width: 100%">
+                        </nz-input-number>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="m-checkbox-inline">
+                        <label class="m-checkbox">
+                            <input type="checkbox" formControlName="isKichHoat" />
+                            {{ 'SURVEY.DOT_DANH_GIA.ACTIVE' | translate }}
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'SURVEY.DOT_DANH_GIA.DETAL_INFOR' | translate">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid [data]="gridViewDoiTuong" [resizable]="true" [columnMenu]="false" [sortable]="true"
+                    [sort]="gridState.sort" [height]="300" [selectable]="true">
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="ten" width="200" [title]="'SURVEY.DOT_DANH_GIA.OBJECT' | translate">
+                    </kendo-grid-column>
+                    <kendo-grid-column width="140" [title]="'SURVEY.DOT_DANH_GIA.CHOOSE_SERVEY' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center" (click)="selectSurvey(dataItem, rowIndex)">
+                                <div [innerHTML]="'selected-file.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="maPhieu" width="120" [title]="'SURVEY.DOT_DANH_GIA.CODE' | translate">
+                    </kendo-grid-column>
+                    <kendo-grid-command-column field="tenPhieu" [title]="'SURVEY.DOT_DANH_GIA.SERVEY_NAME' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div *ngIf="dataItem.phieuDanhGiaId">
+                                {{ dataItem.tenPhieu }}
+                                <span nz-tooltip [nzTooltipTitle]="'SURVEY.DOT_DANH_GIA.REMOVE' | translate"
+                                    (click)="removeSurvey(dataItem, rowIndex)"><i class="fa fa-times"></i></span>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-command-column>
+                    <ng-container *ngIf="action !== actionEnum.CREATE">
+                        <kendo-grid-column width="150" [title]="'SURVEY.DOT_DANH_GIA.ASSIGN' | translate">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <div class="text-center">
+                                    <a href="javascript:void(0)" (click)="selectUser(dataItem)">
+                                        <i class="fa fa-group"></i>
+                                    </a>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </ng-container>
+                </kendo-grid>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()"
+            class="btn_custom btn_remove btn_close  mr-1">
+            {{ 'BTN.CANCEL' | translate }}
+        </button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>
+<div class="k-overlay" *ngIf="openedDotDanhGia"></div>
+<!-- <div class="wrapper form-layouts k-duplicate-container">
+    <div kendoWindowContainer></div>
+</div> -->

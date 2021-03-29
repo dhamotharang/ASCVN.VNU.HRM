@@ -1,0 +1,213 @@
+<!-- <ng-container *ngIf="(isShowTabHRM(hrmkey.DaoTaoBoiDuongDaiHan) && isDuyetLyLichNhanSu) || !isDuyetLyLichNhanSu; else notfound"> -->
+<ng-container>
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <ng-container *ngIf="roles.isUpdate">
+                    <li class="m-portlet__nav-item" *ngIf="isDuyetLyLichNhanSu">
+                        <button class="btn_custom btn_update" [disabled]="selectionIds.length < 1" (click)="onApprove(true)">
+                            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item" *ngIf="isDuyetLyLichNhanSu">
+                        <button class="btn_custom btn_df mr-1" [disabled]="selectionIds.length < 1" (click)="onApprove(false)">
+                            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+                <li class="m-portlet__nav-item">
+                    <button class="btn_custom btn_add" (click)="addHandler()" scrollTop>
+                        <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <ng-template #template let-anchor>
+        <span>{{ anchor.nativeElement.innerText }}</span>
+    </ng-template>
+
+    <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+        <div class="grid-wrapper">
+            <kendo-grid
+                [data]="gridView"
+                [loading]="loading"
+                [pageSize]="gridState.take"
+                [skip]="gridState.skip"
+                [pageable]="pageConfig"
+                [resizable]="true"
+                [columnMenu]="false"
+                [sortable]="true"
+                [sort]="gridState.sort"
+                [height]="500"
+                [selectable]="true"
+                kendoGridSelectBy="id"
+                [selectedKeys]="selectionIds"
+                (dataStateChange)="onStateChange($event)"
+            >
+                <kendo-grid-checkbox-column showSelectAll="true" width="45" [columnMenu]="false" class="text-center" [headerStyle]="{'text-align': 'center'}"></kendo-grid-checkbox-column>
+                <kendo-grid-column  width="90" [title]="'LB.ACTION' | translate" class="text-center" [headerStyle]="{'text-align': 'center'}">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <nz-button-group>
+                            <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </nz-button-group>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <div class="m-dropdown__wrapper menu-dropdown-table">
+                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                <div class="m-dropdown__inner">
+                                    <div class="m-dropdown__body">
+                                        <div class="m-dropdown__content">
+                                            <ul class="m-nav">
+                                                <li class="m-nav__section m-nav__section--first">
+                                                    <span class="m-nav__section-text">
+                                                        {{ 'LB.ACTION' | translate }}
+                                                    </span>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a (click)="editHandler(dataItem)" class="m-nav__link" scrollTop>
+                                                        <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                                        <span class="m-nav__link-text">{{ 'BTN.EDIT' | translate }}</span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a (click)="removeHandler(dataItem)" class="m-nav__link">
+                                                        <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                        <span class="m-nav__link-text"> {{ 'BTN.DELETE' | translate }}</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nz-dropdown-menu>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column
+                    field="tenTrinhDoChuyenMon"
+                    [title]="'HR.TRINH_DO_CHUYEN_MON.TRINH_DO_CHUYEN_MON' | translate"
+                    [sortable]="false"
+                    [width]="150"
+                ></kendo-grid-column>
+                <kendo-grid-column
+                    field="tenHinhThucDaoTao"
+                    width="130"
+                    [title]="'HR.TRINH_DO_CHUYEN_MON.HINH_THUC_DAO_TAO' | translate"
+                    [sortable]="false"
+                ></kendo-grid-column>
+                <kendo-grid-column
+                    field="tenChuyenNganh"
+                    width="200"
+                    [title]="'HR.TRINH_DO_CHUYEN_MON.CHUYEN_NGANH' | translate"
+                ></kendo-grid-column>
+                <kendo-grid-column
+                    field="tenLinhVuc"
+                    width="200"
+                    [title]="'HR.TRINH_DO_CHUYEN_MON.LINH_VUC' | translate"
+                ></kendo-grid-column>
+                <kendo-grid-column
+                    field="ghiChu"
+                    width="150"
+                    [title]="'HR.TRINH_DO_CHUYEN_MON.GHI_CHU' | translate"
+                ></kendo-grid-column>
+
+                <kendo-grid-column width="130" [title]="'Trình độ cao nhất' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            <i class="la la-check text-success" *ngIf="dataItem.idTrangThaiDuLieu === trangThaiDuLieuEnum.SU_DUNG_CHINH"></i>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column width="90" [title]="'BTN.ATTACHMENT' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <ng-container *ngIf="dataItem.idFileDinhKem">
+                            <div class="text-center">
+                                <div
+                                    nz-popover
+                                    [nzPopoverTitle]="'BTN.ATTACHMENT' | translate"
+                                    [nzPopoverContent]="contentTemplate"
+                                    [innerHTML]="'selected-file.svg' | vnuIcon | safeHtml: 'html'"
+                                ></div>
+                            </div>
+                            <ng-template #contentTemplate>
+                                <a
+                                    href="javascript:void(0)"
+                                    class="md-view-file"
+                                    (click)="showModalViewFile(dataItem.guidId, dataItem.tenFile)"
+                                >
+                                    <span [innerHTML]="dataItem.tenFile | safeHtml: 'html'"></span>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                            {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <ng-template kendoGridDetailTemplate let-dataItem>
+                    <section>
+                     
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.NAM_BAT_DAU' | translate }} <span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.batDau_Nam }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.THANG_BAT_DAU' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.batDau_Thang }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.NAM_KET_THUC' | translate }} <span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ketThuc_Nam }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.THANG_KET_THUC' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ketThuc_Thang }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.MA_XEP_LOAI' | translate }} <span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.maXepLoai }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.NOI_DAO_TAO' | translate }} <span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.noiDaoTao }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.TRINH_DO_CHUYEN_MON.QUOC_GIA' | translate }} <span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.tenQuocGia }}</label>
+                        </div> 
+                    </section>
+                </ng-template>
+            </kendo-grid>
+        </div>
+    </div>
+</ng-container>
+<ng-template #notfound>
+    <p class="p-3">Không có dữ liệu đề xuất</p>
+</ng-template>
+
+<div class="k-overlay" *ngIf="opened"></div>
