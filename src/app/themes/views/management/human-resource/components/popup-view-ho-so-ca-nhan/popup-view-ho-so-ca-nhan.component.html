@@ -1,0 +1,153 @@
+<div class="profile-user px-3">
+    <div class="row">
+        <div class="col-lg-3 col-12 col-left">
+            <div class="profile">
+                <div class="m-card-profile mb-3">
+                    <div class="m-card-profile__pic">
+                        <div class="m-card-profile__pic-wrapper">
+                            <img [src]="userDetail?.pathHinhNhanSu | convertUrl" alt=""
+                                onerror="this.onerror=null;this.src='./assets/images/no-avatar.jpg';" />
+                        </div>
+                    </div>
+                    <div class="m-card-profile__details">
+                        <span class="m-card-profile__name"> {{ userDetail?.hoDem }} {{ userDetail?.ten }}
+                            <ng-container *ngIf="userDetail?.isSSO">
+                                <span nz-tooltip [nzTooltipTitle]="'HR.MENU.ISSSO' | translate"
+                                    class="m-card-profile__SSO"
+                                    [innerHTML]="'done-circle2.svg' | vnuIcon | safeHtml: 'html'"></span>
+                            </ng-container>
+                        </span>
+                        <a href="" class="m-card-profile__email m-link"> {{ userDetail?.userName }} </a>
+                    </div>
+                </div>
+                <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides m-0 hrm-nav nav" role="tablist">
+                    <li class="m-nav__item">
+                        <a class="m-nav__link active" data-toggle="tab" href="#thongtinnhansu">
+                            <i class="m-nav__link-icon flaticon-avatar"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.HO_SO_CA_NHAN' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#thongtintuyendung" (click)="isViewTuyenDung=true">
+                            <i class="m-nav__link-icon flaticon-folder-1"></i>
+                            <span class="m-nav__link-text"> {{'HR.MENU.TUYEN_DUNG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#quatrinhcongtac" (click)="isViewQTCT=true">
+                            <i class="m-nav__link-icon flaticon-suitcase"></i>
+                            <span class="m-nav__link-text">
+                                {{ 'HR.MENU.QUA_TRINH_CONG_TAC' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#trinhdochuyenmon" (click)="isViewDTBD=true">
+                            <i class="m-nav__link-icon flaticon-statistics"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.DAO_TAO_BOI_DUONG' |
+                                translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#chinhtrixahoi" (click)="isViewCTXH=true">
+                            <i class="m-nav__link-icon flaticon-users"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.DOAN_DANG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#thongtinluong" (click)="isViewLuong=true">
+                            <i class="m-nav__link-icon flaticon-piggy-bank"></i>
+                            <span class="m-nav__link-text">{{ 'HR.MENU.LUONG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#khenthuongkyluat" (click)="isViewThiDua=true">
+                            <i class="m-nav__link-icon flaticon-warning-2"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.KHEN_THUONG_KY_LUAT' | translate }} </span>
+                        </a>
+                    </li>
+
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#thongtinsuckhoe" (click)="isViewSucKhoe=true">
+                            <i class="m-nav__link-icon flaticon-like"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.SUC_KHOE' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#quanhegiadinh" (click)="isViewQHGD=true">
+                            <i class="m-nav__link-icon flaticon-network"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.QUAN_HE_GIA_DINH' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a class="m-nav__link" data-toggle="tab" href="#thongtinkhac" (click)="isViewKhac=true">
+                            <i class="m-nav__link-icon 	flaticon-mark"></i>
+                            <span class="m-nav__link-text"> {{ 'HR.MENU.KHAC' | translate }} </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 col-12 col-right">
+            <div class="tab-content">
+                <div class="tab-pane active" id="thongtinnhansu" role="tabpanel">
+                    <app-tab-view-thong-tin-chung [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                    </app-tab-view-thong-tin-chung>
+                </div>
+                <div class="tab-pane" id="thongtintuyendung" role="tabpanel">
+                    <ng-container *ngIf="isViewTuyenDung">
+                        <app-tab-view-thong-tin-tuyen-dung [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-thong-tin-tuyen-dung>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="quatrinhcongtac" role="tabpanel">
+                    <ng-container *ngIf="isViewQTCT">
+                        <app-tab-view-qua-trinh-cong-tac [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-qua-trinh-cong-tac>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="thongtinkhac" role="tabpanel">
+                    <ng-container *ngIf="isViewKhac">
+                        <app-tab-view-thong-tin-khac [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-thong-tin-khac>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="trinhdochuyenmon" role="tabpanel">
+                    <ng-container *ngIf="isViewDTBD">
+                        <app-tab-view-trinh-do-chuyen-mon [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-trinh-do-chuyen-mon>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="chinhtrixahoi" role="tabpanel">
+                    <ng-container *ngIf="isViewCTXH">
+                        <app-tab-view-chinh-tri-xa-hoi [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-chinh-tri-xa-hoi>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="thongtinluong" role="tabpanel">
+                    <ng-container *ngIf="isViewLuong">
+                        <app-tab-view-thong-tin-luong [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-thong-tin-luong>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="khenthuongkyluat" role="tabpanel">
+                    <ng-container *ngIf="isViewThiDua">
+                        <app-tab-view-khen-thuong-ky-luat [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-khen-thuong-ky-luat>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="thongtinsuckhoe" role="tabpanel">
+                    <ng-container *ngIf="isViewSucKhoe">
+                        <app-tab-view-thong-tin-suc-khoe [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-thong-tin-suc-khoe>
+                    </ng-container>
+                </div>
+                <div class="tab-pane" id="quanhegiadinh" role="tabpanel">
+                    <ng-container *ngIf="isViewQHGD">
+                        <app-tab-view-quan-he-gia-dinh [nhanSuId]="nhanSuId" [duLieuNhanSuEnum]="duLieuNhanSuEnum">
+                        </app-tab-view-quan-he-gia-dinh>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

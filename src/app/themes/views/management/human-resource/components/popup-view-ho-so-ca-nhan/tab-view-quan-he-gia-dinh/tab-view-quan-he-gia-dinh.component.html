@@ -1,0 +1,280 @@
+<div class="m-portlet m-portlet--mobile">
+  <div class="m-portlet__head">
+      <div class="m-portlet__head-caption">
+          <div class="m-portlet__head-title">
+              <h3 class="m-portlet__head-text">{{ 'HR.QUAN_HE_GIA_DINH.BAN_THAN' | translate }}
+                  <!-- <small *ngIf="isShowInfo" class="text-normal text-danger font-italic">
+                      ({{ 'HR.MES.15' | translate }})
+                  </small> -->
+              </h3>
+          </div>
+      </div>
+  </div>
+  <ng-template #template let-anchor>
+      <span>{{ anchor.nativeElement.innerText }}</span>
+  </ng-template>
+
+  <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+      <div class="grid-wrapper">
+          <kendo-grid
+              [data]="gridViewBT$ | async"
+              [loading]="loadingBT"
+              [pageSize]="gridStateBT.take"
+              [skip]="gridStateBT.skip"
+              [resizable]="true"
+              [columnMenu]="false"
+              [sortable]="true"
+              [sort]="gridStateBT.sort"
+              [pageable]="pageConfigBT"
+              kendoGridSelectBy="id"
+              (dataStateChange)="onStateChangeBT($event)"
+          >
+              <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false" [headerStyle]="{'text-align': 'center'}">
+                  <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      <div class="text-center">
+                          {{ rowIndex + 1 }}
+                      </div>
+                  </ng-template>
+              </kendo-grid-column>
+              <kendo-grid-column field="idQuanHe" width="100" [title]="'HR.QUAN_HE_GIA_DINH.QUAN_HE' | translate">
+                  <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      {{ dataItem.tenQuanHe }}
+                  </ng-template>
+              </kendo-grid-column>
+              <kendo-grid-column field="hoTen" [title]="'LB.HRM.HO_TEN' | translate" [width]="250"></kendo-grid-column>
+              <kendo-grid-column  class="text-center" field="namSinh" [width]="85" [title]="'HR.QUAN_HE_GIA_DINH.NAM_SINH' | translate"></kendo-grid-column>
+              <kendo-grid-column [title]="'HR.QUAN_HE_GIA_DINH.TEXT1' | translate">
+                  <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      {{
+                          (dataItem.queQuan === '' || dataItem.queQuan === null ? '' : dataItem.queQuan + ', ') +
+                          (dataItem.ngheNghiep === '' || dataItem.ngheNghiep === null ? '' : dataItem.ngheNghiep + ', ') +
+                          (dataItem.tenChucVu === '' || dataItem.tenChucVu === null ? '' : dataItem.tenChucVu + ', ') +
+                          (dataItem.noiCongTac === '' || dataItem.noiCongTac === null ? '' : dataItem.noiCongTac + ', ') +
+                          (dataItem.diaChi === '' || dataItem.diaChi === null ? '' : dataItem.diaChi + '; ') +
+                          (dataItem.ngayVaoDoan === null ? '' : ('HR.QUAN_HE_GIA_DINH.TEXT2' | translate) + ' ' + (dataItem.ngayVaoDoan | date: 'dd/MM/yyyy') + '- ') +
+                          (dataItem.noiKetNapDoan === '' || dataItem.noiKetNapDoan === null ? '' : dataItem.noiKetNapDoan + '; ') +
+                          (dataItem.ngayVaoDang === null ? '' : ('HR.QUAN_HE_GIA_DINH.TEXT3' | translate) + ' ' + (dataItem.ngayVaoDang | date: 'dd/MM/yyyy') + '- ') +
+                          (dataItem.noiKetNapDang === '' || dataItem.noiKetNapDang === null ? '' : dataItem.noiKetNapDang)
+                       }}
+                  </ng-template>
+              </kendo-grid-column>
+              <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                  <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                      <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                          {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                      </div>
+                  </ng-template>
+              </kendo-grid-column>
+
+              <ng-template kendoGridDetailTemplate let-dataItem>
+                  <section>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'LB.HRM.QUOC_TICH' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.tenQuocTich }}</label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'LB.HRM.QUE_QUAN' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.queQuan }}</label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'LB.HRM.SO_DIEN_THOAI' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.soDienThoai }}</label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'HR.QUAN_HE_GIA_DINH.DIA_CHI' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.diaChi }}</label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'HR.QUAN_HE_GIA_DINH.NGHE_NGHIEP' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ngheNghiep }}</label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'HR.QUAN_HE_GIA_DINH.NOI_CONG_TAC' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.noiCongTac }}</label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'HR.QUAN_HE_GIA_DINH.TEXT2' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">
+                              {{
+                                  (dataItem?.ngayVaoDoan === null ? '' : '' + (dataItem?.ngayVaoDoan | date: 'dd/MM/yyyy')) +
+                                  (dataItem?.noiKetNapDoan === '' || dataItem?.noiKetNapDoan === null ? '' : '- ' + dataItem?.noiKetNapDoan)
+                              }}
+                          </label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label"
+                              >{{ 'HR.QUAN_HE_GIA_DINH.TEXT3' | translate }}<span class="float-right">:</span></label
+                          >
+                          <label class="col-9 col-form-label lb-bold-info">
+                              {{
+                                  (dataItem?.ngayVaoDang === null ? '' : '' + (dataItem?.ngayVaoDang | date: 'dd/MM/yyyy')) +
+                                  (dataItem?.noiKetNapDang === '' || dataItem?.noiKetNapDang === null ? '' : '- ' + dataItem?.noiKetNapDang)
+                              }}
+                          </label>
+                      </div>
+                      <div class="row">
+                          <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span class="float-right">:</span></label>
+                          <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu }}</label>
+                      </div>
+                  </section>
+              </ng-template>
+          </kendo-grid>
+      </div>
+  </div>
+</div>
+
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">{{ 'HR.QUAN_HE_GIA_DINH.BEN_VO' | translate }}
+                    <!-- <small *ngIf="isShowInfo" class="text-normal text-danger font-italic">
+                        ({{ 'HR.MES.15' | translate }})
+                    </small> -->
+                </h3>
+            </div>
+        </div>
+    </div>
+    <ng-template #template let-anchor>
+        <span>{{ anchor.nativeElement.innerText }}</span>
+    </ng-template>
+
+    <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+        <div class="grid-wrapper">
+            <kendo-grid
+                [data]="gridView$ | async"
+                [loading]="loading"
+                [pageSize]="gridState.take"
+                [skip]="gridState.skip"
+                [resizable]="true"
+                [columnMenu]="false"
+                [sortable]="true"
+                [sort]="gridState.sort"
+                [pageable]="pageConfig"
+                kendoGridSelectBy="id"
+                (dataStateChange)="onStateChange($event)"
+            >
+                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false" [headerStyle]="{'text-align': 'center'}">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="idQuanHe" width="100" [title]="'HR.QUAN_HE_GIA_DINH.QUAN_HE' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.tenQuanHe }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="hoTen" [title]="'LB.HRM.HO_TEN' | translate" [width]="250"></kendo-grid-column>
+                <kendo-grid-column class="text-center" field="namSinh" [width]="85" [title]="'HR.QUAN_HE_GIA_DINH.NAM_SINH' | translate"></kendo-grid-column>
+                <kendo-grid-column [title]="'HR.QUAN_HE_GIA_DINH.TEXT1' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{
+                            (dataItem.queQuan === '' || dataItem.queQuan === null ? '' : dataItem.queQuan + ', ') +
+                            (dataItem.ngheNghiep === '' || dataItem.ngheNghiep === null ? '' : dataItem.ngheNghiep + ', ') +
+                            (dataItem.tenChucVu === '' || dataItem.tenChucVu === null ? '' : dataItem.tenChucVu + ', ') +
+                            (dataItem.noiCongTac === '' || dataItem.noiCongTac === null ? '' : dataItem.noiCongTac + ', ') +
+                            (dataItem.diaChi === '' || dataItem.diaChi === null ? '' : dataItem.diaChi + '; ') +
+                            (dataItem.ngayVaoDoan === null ? '' : ('HR.QUAN_HE_GIA_DINH.TEXT2' | translate) + ' ' + (dataItem.ngayVaoDoan | date: 'dd/MM/yyyy') + '- ') +
+                            (dataItem.noiKetNapDoan === '' || dataItem.noiKetNapDoan === null ? '' : dataItem.noiKetNapDoan + '; ') +
+                            (dataItem.ngayVaoDang === null ? '' : ('HR.QUAN_HE_GIA_DINH.TEXT3' | translate) + ' ' + (dataItem.ngayVaoDang | date: 'dd/MM/yyyy') + '- ') +
+                            (dataItem.noiKetNapDang === '' || dataItem.noiKetNapDang === null ? '' : dataItem.noiKetNapDang)
+                         }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column width="120" [title]="'LB.STATUS' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                            {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <ng-template kendoGridDetailTemplate let-dataItem>
+                    <section>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'LB.HRM.QUOC_TICH' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.tenQuocTich }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'LB.HRM.QUE_QUAN' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.queQuan }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'LB.HRM.SO_DIEN_THOAI' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.soDienThoai }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.QUAN_HE_GIA_DINH.DIA_CHI' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.diaChi }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.QUAN_HE_GIA_DINH.NGHE_NGHIEP' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ngheNghiep }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.QUAN_HE_GIA_DINH.NOI_CONG_TAC' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.noiCongTac }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.QUAN_HE_GIA_DINH.TEXT2' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">
+                                {{
+                                    (dataItem?.ngayVaoDoan === null ? '' : '' + (dataItem?.ngayVaoDoan | date: 'dd/MM/yyyy')) +
+                                    (dataItem?.noiKetNapDoan === '' || dataItem?.noiKetNapDoan === null ? '' : '- ' + dataItem?.noiKetNapDoan)
+                                }}
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label"
+                                >{{ 'HR.QUAN_HE_GIA_DINH.TEXT3' | translate }}<span class="float-right">:</span></label
+                            >
+                            <label class="col-9 col-form-label lb-bold-info">
+                                {{
+                                    (dataItem?.ngayVaoDang === null ? '' : '' + (dataItem?.ngayVaoDang | date: 'dd/MM/yyyy')) +
+                                    (dataItem?.noiKetNapDang === '' || dataItem?.noiKetNapDang === null ? '' : '- ' + dataItem?.noiKetNapDang)
+                                }}
+                            </label>
+                        </div>
+                        <div class="row">
+                            <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span class="float-right">:</span></label>
+                            <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu }}</label>
+                        </div>
+                    </section>
+                </ng-template>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>
+

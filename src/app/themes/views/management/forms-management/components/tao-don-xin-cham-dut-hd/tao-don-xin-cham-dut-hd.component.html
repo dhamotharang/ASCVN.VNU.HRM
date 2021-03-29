@@ -1,0 +1,173 @@
+<form class="m-form form-tt-don" novalidate>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>{{'MANAGEMENT.TEXT.5' | translate}}</h2>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+          <nz-divider></nz-divider>
+        </div>
+        <div class="col-4"></div>
+
+
+
+        <div class="col-6">
+          <label class="col-form-label">{{ 'MANAGEMENT.LABEL.KINH_GUI' | translate }}: </label>
+          <label class="pl-2 font-weight-bold">Trường Đại học Công Nghệ</label>
+        </div>
+
+        <div class="col-6">
+          <label class="col-form-label">{{ 'MANAGEMENT.DON.NGUOI_NHAN_DON' | translate }} </label>
+          <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC" [placeHolder]="'LB.SELECT' | translate">
+          </asc-select>
+        </div>
+
+        <div class="col-12"> 
+            <label class="col-form-label pr-2">{{ 'MANAGEMENT.LABEL.TIEU_DE' | translate }}: </label> 
+            <input type="text" class="col-lg-10 typeinput" [readOnly]="true" />
+        </div>
+
+        <div class="col-12 pb-4"></div>
+        <!-- Thông tin người đề xuất -->
+        <nz-card [nzTitle]="'MANAGEMENT.DON.THONG_TIN_NGUOI_DE_XUAT' | translate">
+
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <label>
+                  {{ 'MANAGEMENT.DON.HO_VA_TEN' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">Phạm Văn Long</label>
+              </div>
+
+              <div class="col-6">
+                <label> {{ 'MANAGEMENT.DON.NGAY_SINH' | translate }} : </label>
+                <label class="pl-2 font-weight-bold">15/08/1999</label>
+              </div>
+
+              <div class="col-6">
+                <label>
+                  {{ 'MANAGEMENT.DON.CO_QUAN_DON_VI' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">Đại học Công Nghệ</label>
+              </div>
+
+              <div class="col-6">
+
+                <label>
+                  {{ 'MANAGEMENT.DON.CHUC_VU_HIEN_TAI' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">Phó trưởng ban</label>
+              </div>
+
+              <div class="col-6">
+
+                <label>
+                  {{ 'MANAGEMENT.DON.CAN_CU_THEO_HD' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">Làm việc 3 năm 1 lần</label>
+              </div>
+
+              <div class="col-6">
+
+                <label>
+                  {{ 'MANAGEMENT.DON.SO_HOP_DONG' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">HD/VD/2019NTH</label>
+              </div>
+
+              <div class="col-12">
+                <label>
+                  {{ 'MANAGEMENT.DON.THOI_GIAN_HD_TU_NGAY' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">15/05/2019</label>
+                <label class="pl-3">
+                  {{ 'MANAGEMENT.DON.DEN_NGAY' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">15/05/2022</label>
+              </div>
+
+
+
+              <div class="col-6">
+                <label>
+                  {{ 'MANAGEMENT.DON.NGAY_KY' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">15/05/2019</label>
+              </div>
+
+              <div class="col-6">
+                <label>
+                  {{ 'MANAGEMENT.DON.SO_DIEN_THOAI' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">03698545632</label>
+              </div>
+
+              <div class="col-6">
+                <label>
+                  {{ 'MANAGEMENT.DON.CHUC_DANH_NGHE_NGHIEP' | translate }} :</label>
+                <label class="pl-2 font-weight-bold">Chuyên viên</label>
+              </div>
+
+            </div>
+          </div>
+        </nz-card><br />
+        <nz-card [nzTitle]="'MANAGEMENT.LABEL.NOI_DUNG' | translate">
+          <!-- Nội dung -->
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <label class="col-form-label">
+                  {{ 'MANAGEMENT.DON.LY_DO_XIN_CHAM_DUT_HD' | translate }}
+                </label>
+                <textarea class="form-control"></textarea>
+              </div>
+              <div class="col-12"></div>
+
+              <div class="col-6">
+                <label class="col-form-label">
+                  {{ 'MANAGEMENT.DON.XIN_CHAM_DUT_HD_TU_NGAY' | translate }} :</label>
+                <nz-date-picker nzFormat="dd/MM/yyyy" style="width: 100%">
+                </nz-date-picker>
+              </div>
+              <div class="col-6"></div>
+
+              <div class="col-6">
+                <label class="col-form-label">{{ 'MANAGEMENT.DON.BAN_GIAO_CHO' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                  [placeHolder]="'LB.SELECT' | translate">
+                </asc-select>
+              </div>
+
+              <div class="col-6">
+                <label class="col-form-label">
+                  {{ 'MANAGEMENT.DON.HOAN_TAT_BAN_GIAO_CV' | translate }} :</label>
+                <nz-date-picker nzFormat="dd/MM/yyyy" style="width: 100%">
+                </nz-date-picker>
+              </div>
+
+              <div class="col-6">
+              </div>
+
+              <div class="col-6">
+                <div class="signature">
+                  <span>
+                    Hà Nội, Ngày 05 tháng 05 năm 2020
+                  </span>
+                  <span>
+                    Phạm Văn Long
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="d-flex justify-content-center mt-3">
+    <button type="button" (click)="closeForm()" class="btn_custom btn_pink mr-2">{{ 'BTN.IN_DON' | translate }}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_blue mr-2">{{ 'BTN.XUAT_FILE' | translate
+      }}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_update mr-2">{{ 'BTN.LUU_NHAP' | translate
+      }}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_add mr-2">{{ 'BTN.GUI_DON' | translate }}</button>
+    <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-2">{{ 'BTN.CANCEL' | translate
+      }}</button>
+  </div>
+</form>

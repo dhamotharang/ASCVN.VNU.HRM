@@ -1,0 +1,166 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset [nzSelectedIndex]="tabCurrentIndex" (nzSelectChange)="changeTabIndex($event)">
+        <nz-tab [nzTitle]="'PTN.THONG_TIN_CHUNG' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.TB.PHONG_THI_NGHIEM' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                [permissionType]="isQuanLy ? 1 : 0"
+                                formControlName="idPhongThiNghiem"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.DON_VI' | translate }} </label>
+                        <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                            <div>
+                                <app-select-user-tree
+                                    [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                    formControlName="idCoQuanNhanSu"
+                                    [isMultiple]="false"
+                                ></app-select-user-tree>
+                            </div>
+                        </ng-container>
+                        <ng-template #personlTemplate1>
+                            <div>
+                                <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DK.NGUOI_SU_DUNG' | translate }}
+                        </label>
+                        <ng-container *ngIf="isQuanLy; else personlTemplate2" >
+                            <div class="select-user">
+                                <widget-select-user-for-filter
+                                    [userSelectedIds]="userSelected"
+                                    [placeholder]="'LB.SELECT' | translate"
+                                    formControlName="idNhanSu"
+
+                                >
+                                </widget-select-user-for-filter>
+                            </div>
+                        </ng-container>
+                        <ng-template #personlTemplate2>
+                            <div>
+                                <input [value]="user.firstName + ' ' + user.lastName" disabled class="form-control"/>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.SO_NGUOI_SU_DUNG' | translate }} </label>
+                        <div>
+                            <nz-input-number
+                                [nzMin]="1"
+                                [nzStep]="1"
+                                [nzMax]="99999999"
+                                formControlName="soNguoiThamGia"
+                                style="width: 100%"
+                            ></nz-input-number>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.THOI_GIAN_BAT_DAU' | translate }}  </label>
+                        <div>
+                            <nz-date-picker
+                                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                formControlName="ngayBatDau"
+                                nzFormat="dd/MM/yyyy HH:mm"
+                                style="width: 100%"
+                                [nzDisabledDate]="disabledNgayBatDau"
+                                [nzDefaultPickerValue]="defaultGioBatDau"
+                            >
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DK.THOI_GIAN_KET_THUC' | translate }}  </label>
+                        <div>
+                            <nz-date-picker
+                                [nzShowTime]="{ nzFormat: 'HH:mm' }"
+                                formControlName="ngayKetThuc"
+                                nzFormat="dd/MM/yyyy HH:mm"
+                                style="width: 100%"
+                                [nzDisabledDate]="disabledNgayKetThuc"
+                                [nzDefaultPickerValue]="defaultGioKetThuc"
+
+                            >
+                            </nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DK.MUC_TIEU' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="mucTieu"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DK.NANG_LUC_SU_DUNG' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="nangLucSuDung"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <ptn-upload
+                            [folderName]="folder.PTN_PHONG_THI_NGHIEM"
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput"
+                            [multiple]="false"
+                        >
+                        </ptn-upload>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+        <nz-tab [nzTitle]="'PTN.DMTH.THIET_BI' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div>
+                        <app-danh-sach-chon-thiet-bi
+                            formControlName="dangKySuDung_ThietBis"
+                            [idPhongThiNghiem]="form.get('idPhongThiNghiem').value"
+                            [idDangKySuDung]="form.get('id').value"
+                            [idsThietBi]="idsThietBiDaChon"
+                        >
+                        </app-danh-sach-chon-thiet-bi>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

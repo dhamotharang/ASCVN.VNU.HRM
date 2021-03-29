@@ -1,0 +1,94 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12" *ngIf="isDisabled != true">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.DMTH.THIET_BI' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.THIET_BI"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idThietBi"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.NCC.NHOM_CONG_CU' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.NHOM_CONG_CU"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        [isReference]="true"
+                        formControlName="idNhomCongCu"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.CONG_CU' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.CONG_CU"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idVatTu"
+                        [isReference]="true"
+                        [referenceId]="form.get('idNhomCongCu').value"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.LOAI_TIEU_HAO' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.LOAI_TIEU_HAO"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="loaiTieuHao"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.DMTH.TIEU_HAO' | translate }} </label>
+                <div>
+                    <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="tieuHao" style="width: 100%"></nz-input-number>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.DON_VI_TINH' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.DON_VI_TINH"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idDonViTinh"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DK.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

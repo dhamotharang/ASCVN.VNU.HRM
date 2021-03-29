@@ -1,0 +1,27 @@
+<div class="grid-wrapper">
+    <kendo-grid
+        [data]="gridView$ | async"
+        [pageSize]="gridState.take"
+        [loading]="isLoading"
+        [skip]="gridState.skip"
+        [pageable]="pageConfig"
+        [resizable]="true"
+        [columnMenu]="false"
+        [sortable]="true"
+        [sort]="gridState.sort"
+        [style.height]="'100%'"
+        [selectable]="true"
+        kendoGridSelectBy="id"
+        (dataStateChange)="onStateChange($event)"
+    >
+        <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="text-center">
+                    {{ rowIndex + 1 }}
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="maChuyenNganh" width="150" [title]="'PTN.CN.MA_CHUYEN_NGANH' | translate"></kendo-grid-column>
+        <kendo-grid-column field="tenChuyenNganh" [title]="'PTN.CN.TEN_CHUYEN_NGANH' | translate"></kendo-grid-column>
+    </kendo-grid>
+</div>

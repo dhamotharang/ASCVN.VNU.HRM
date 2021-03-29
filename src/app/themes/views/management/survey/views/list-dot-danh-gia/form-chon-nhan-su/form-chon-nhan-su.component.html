@@ -1,0 +1,193 @@
+<div class="search-backdrop" (click)="searchAdvanced()"></div>
+<div class="m-content">
+    <div class="m-portlet mb-0 m-portlet--mobile">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption m-portlet__head-caption-title" style="width: auto">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text">
+                        {{ 'SURVEY.DOT_DANH_GIA.LIST_MEMBER' | translate }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="box-border bg-round d-flex align-items-center">
+                <div class="d-flex" style="flex: auto">
+                    <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance">
+                        <input type="text" class="form-control m-input form-input-custom-border"
+                               placeholder="Nhập từ khóa" [(ngModel)]="modelSearch.keyword"
+                               (keyup.enter)="searchHandler()"/>
+                        <span class="m-input-icon__icon m-input-icon__icon--left">
+                            <span>
+                                <i class="la la-search"></i>
+                            </span>
+                        </span>
+                        <span class="m-input-icon__icon m-input-icon__icon--right">
+                            <span (click)="searchAdvanced()" class="dropbtn-search-advance">
+                                <i class="la la-caret-down"></i>
+                            </span>
+                        </span>
+                        <div id="myDropdown" class="dropdown-content-search-advance"
+                             [ngClass]="this.searchAdvance ? 'show-search-advance' : ''">
+                            <div class="custom-search-advance m-form text-left">
+                                <div class="form-group m-form__group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        {{ 'SURVEY.QUAN_LY_DANH_GIA.KEYWORD' | translate }}
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <div class="m-input-icon m-input-icon--left">
+                                            <input type="text" class="form-control m-input m-input--solid"
+                                                   placeholder="{{ 'BTN.SEARCH' | translate }}" id="generalSearch"
+                                                   [(ngModel)]="modelSearch.keyword"/>
+                                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                <span>
+                                                    <i class="la la-search"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-lg-4 col-form-label">
+                                        {{ 'SURVEY.QUAN_LY_DANH_GIA.GENDER' | translate }}
+                                    </label>
+                                    <div class="col-lg-8">
+                                        <asc-select [modeOfDropDowList]="dropdownListEnum.GIOI_TINH"
+                                                    [placeHolder]="'LB.SELECT' | translate"
+                                                    [(ngModel)]="modelSearch.gioiTinhId">
+                                        </asc-select>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row">
+                                    <label class="col-lg-4 col-form-label"> {{ 'SURVEY.QUAN_LY_DANH_GIA.UNIT' |
+                                        translate }} </label>
+                                    <div class="col-lg-8">
+                                        <app-select-user-tree [placeholder]="'SURVEY.QUAN_LY_DANH_GIA.UNIT' | translate"
+                                                              [(ngModel)]="chonDonVi" [userSelectedIds]="chonDonVi">
+                                        </app-select-user-tree>
+                                    </div>
+                                </div>
+                                <div class="form-group m-form__group row text-right">
+                                    <div class="col-12 text-right">
+                                        <div class="btn-actions">
+                                            <button type="button" class="btn_custom btn_add" (click)="searchHandler()">
+                                                <span class="text">
+                                                    {{ 'BTN.SEARCH' | translate }}
+                                                </span>
+                                            </button>
+                                            <button type="button" class="btn_custom btn_df ml-1"
+                                                    (click)="refresSearchhHandler()">
+                                                <span class="text">
+                                                    {{ 'BTN.RESET' | translate }}
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn_custom btn_remove" (click)="removeSelectedHandler()">
+                        <div [innerHTML]="'trash.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.DELETE' | translate }}</span>
+                    </button>
+                </div>
+                <div class="d-flex container-input">
+                    <div class="select-user" style="width: 400px">
+                        <widget-select-user-for-filter [placeholder]="'LB.SELECT' | translate" [(ngModel)]="chonNhanSu"
+                                                       [userSelectedIds]="chonNhanSu" [mode]="'multiple'"
+                                                       (listItems)="changeNhanSu($event)">
+                        </widget-select-user-for-filter>
+                    </div>
+                    <button class="btn_custom btn_add ml-1" (click)="createNhanSuThamGiaDanhGia()">
+                        <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">Thêm nhân sự</span>
+                    </button>
+                </div>
+            </div>
+            <div class="grid-wrapper grid-wrapper-border" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                        [data]="gridViewUser"
+                        [loading]="isLoading"
+                        [resizable]="true"
+                        [columnMenu]="true"
+                        [sortable]="true"
+                        [pageable]="pageConfig"
+                        [pageSize]="gridState.take"
+                        [skip]="gridState.skip"
+                        (dataStateChange)="onStateChange($event)"
+                        [sort]="gridState.sort"
+                        kendoGridSelectBy="nhanSuDanhGiaChiTietId"
+                        [selectedKeys]="selectionNhanSuDanhGiaChiTietId"
+                        (selectionChange)="selectRow($event)"
+                        [style.height]="'100%'"
+                    >
+                    <kendo-grid-column width="60" [columnMenu]="false" class="text-center">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center d-inline">
+                                <button nz-button class="btn-svg-danger" (click)="removeNhanSuThamGiaDanhGia(dataItem)">
+                                    <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                </button>
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-checkbox-column showSelectAll="true" width="60" [columnMenu]="false"
+                                                [headerStyle]="{'text-align': 'center'}"
+                                                class="text-center">
+                    </kendo-grid-checkbox-column>
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="userName" [width]="150" [title]="'LB.USERNAME' | translate"
+                                       [columnMenu]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="maNhanSu" width="150" [columnMenu]="false"
+                                       class="text-center"
+                                       [headerStyle]="{'text-align': 'center'}"
+                                       [title]="'SURVEY.DOT_DANH_GIA.PERSON_CODE' | translate">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="ten" class="text-left" [title]="'LB.FULLNAME' | translate" width="250"
+                                       [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="dark">
+                                <b>{{ dataItem.hoDem + ' ' + dataItem.ten }}</b>
+                            </div>
+                            <div class="grid-size12">
+                                {{
+                                (dataItem.tenChucVu ? dataItem.tenChucVu : '') +
+                                (dataItem.tenChucVu && dataItem.tenChucDanh ? ' - ' : '') +
+                                (dataItem.tenChucDanh ? dataItem.tenChucDanh : '')
+                                }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="ngaySinh" width="150" [columnMenu]="false"
+                                       [headerStyle]="{'text-align': 'center'}"
+                                       [title]="'SURVEY.DOT_DANH_GIA.PERSON_BIRTHDAY' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                {{ dataItem.ngaySinh | date: 'dd/MM/yyyy' }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="idGioiTinh" width="100" [columnMenu]="false"
+                                       [headerStyle]="{'text-align': 'center'}"
+                                       [title]="'SURVEY.DOT_DANH_GIA.PERSON_GENDER' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                {{ dataItem.tenGioiTinh }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="tenCoQuan" [columnMenu]="false"
+                                       [title]="'SURVEY.DOT_DANH_GIA.PERSON_DEPARTMENT' | translate" [sortable]="false">
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

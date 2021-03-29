@@ -1,0 +1,18 @@
+.table-col-border{
+    border-bottom: 1px solid #dedddd;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.none-border{
+    min-height: 70px;
+    height: auto;
+    border-bottom: none!important;
+    overflow: hidden;
+    text-overflow: ellipsis;  
+}
+.ke-hoach-td{
+    .k-grouping-row{
+        height: 30px;
+    }
+}

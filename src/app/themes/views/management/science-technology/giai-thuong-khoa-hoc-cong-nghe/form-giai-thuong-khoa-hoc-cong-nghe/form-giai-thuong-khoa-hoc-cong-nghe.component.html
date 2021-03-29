@@ -1,0 +1,121 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.TEN_GIAI_THUONG' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenGiaiThuongKHCN" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.DE_TAI' | translate }}
+                </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.KHCN_DE_TAI"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="idDeTai"
+                        [isDisabled]="isDisabled">
+                    </asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.DON_VI' | translate }}
+                </label>
+                <div>
+                    <!-- <app-select-user-tree [placeholder]="'LB.HRM.CO_QUAN' | translate" formControlName="idCoQuan"
+                        [isMultiple]="false"></app-select-user-tree> -->
+                    <!-- <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                        <div>
+                            <app-select-user-tree
+                                [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                formControlName="idCoQuan"
+                                [isMultiple]="false"
+                            ></app-select-user-tree>
+                        </div>
+                    </ng-container>
+                    <ng-template #personlTemplate1>
+                        <div>
+                            <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                        </div>
+                    </ng-template> -->
+                    <div>
+                        <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.LOAI_GIAI_THUONG' | translate }}
+                </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.DM_LOAI_GIAI_THUONG"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="idLoaiGiaiThuong"
+                        [isDisabled]="isDisabled">
+                    </asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.THU_HANG_GIAI_THUONG' | translate }}
+                </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.DM_THU_HANG_LOAI_GIAI_THUONG"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="idThuHangGiaiThuong"
+                        [isDisabled]="isDisabled">
+                    </asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.SO_QUYET_DINH' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="soQuyetDinh" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.GTKHCN.NGAY_QUYET_DINH' | translate }}
+                </label>
+                <div>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayQuyetDinh" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.ATTACH_FILE' | translate }}
+                </label>
+                <khcn-upload
+                    [folderName]="folder.KHCN_KHOA_HOC_CONG_NGHE"
+                    (fileInput)="onSelectFile($event)"
+                    [file]="fileInput"
+                    [multiple]="true"
+                >
+                </khcn-upload>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate
+            }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

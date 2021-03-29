@@ -1,0 +1,72 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.NGOAI_NGU' | translate }} <span class="text-danger">(*)</span> </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.NGOAI_NGU"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idNgoaiNgu"
+                >
+                </asc-select>
+                <app-field-error [control]="form.get('idNgoaiNgu')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.KY_NANG_NGOAI_NGU' | translate }}</label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.KY_NANG_NGOAI_NGU"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idKyNangNgoaiNgu"
+                >
+                </asc-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.TRINH_DO_NGOAI_NGU' | translate }} <span class="text-danger">(*)</span> </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.TRINH_DO_NGOAI_NGU"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idTrinhDoNgoaiNgu"
+                ></asc-select>
+                <app-field-error [control]="form.get('idTrinhDoNgoaiNgu')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.NOI_DAO_TAO' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="noiDaoTao" />
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.ATTACH_FILE' | translate }}
+        </label>
+        <asc-upload
+            (fileInput)="onSelectFile($event)"
+            [file]="fileInput"
+            [folderName]="folder.NS_NhanSu_TrinhDoNgoaiNgu"
+            [multiple]="false"
+        >
+        </asc-upload>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

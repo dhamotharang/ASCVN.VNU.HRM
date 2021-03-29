@@ -1,0 +1,67 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.SACH_GIAO_TRINH.BOOK' | translate }} <span class="text-danger">(*)</span> </label>
+                <input type="text" class="m-input form-control" formControlName="sach" />
+                <app-field-error [control]="form.get('sach')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.SACH_GIAO_TRINH.CURRICULUM' | translate }} <span class="text-danger">(*)</span> </label>
+                <input type="text" class="m-input form-control" formControlName="giaoTrinh" />
+                <app-field-error [control]="form.get('giaoTrinh')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.SACH_GIAO_TRINH.AUTHOR' | translate }} <span class="text-danger">(*)</span> </label>
+                <input type="text" class="m-input form-control" formControlName="tacGia" />
+                <app-field-error [control]="form.get('tacGia')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.SACH_GIAO_TRINH.PUBLISHING_YEAR' | translate }} <span class="text-danger">(*)</span> </label>
+                <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="namXuatBan" style="width: 100%"> </nz-input-number>
+                <app-field-error [control]="form.get('namXuatBan')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.SB.FIELD' | translate }} </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.LINH_VUC"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idLinhVuc"
+                >
+                </asc-select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.SACH_GIAO_TRINH.PUBLISHING_COMPANY' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="nhaXuatBan" />
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="ghiChu"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

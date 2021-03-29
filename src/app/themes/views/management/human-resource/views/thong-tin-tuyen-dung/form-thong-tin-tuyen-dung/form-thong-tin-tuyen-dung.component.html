@@ -1,0 +1,173 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NGUON_TUYEN' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.NGUON_TUYEN" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idNguonTuyenDung">
+                </asc-select>
+                <app-field-error [control]="form.get('idNguonTuyenDung')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NGUOI_TUYEN' | translate }} </label>
+                <widget-select-user-for-filter [userSelectedIds]="userSelected" [placeholder]="'LB.SELECT' | translate"
+                    formControlName="idNguoiTuyenDung">
+                </widget-select-user-for-filter>
+                <app-field-error [control]="form.get('idNguoiTuyenDung')"></app-field-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NN_TUYEN_DUNG' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="ngheNghiepTuyenDung" />
+                <app-field-error [control]="form.get('ngheNghiepTuyenDung')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.CO_QUAN_TUYEN_DUNG' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="coQuanTuyenDung" />
+            </div>
+        </div>
+    </div>
+
+    <!-- NHOM VIEC LAM & VI TRI VIEC LAM -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NHOM_VIEC_LAM' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.NHOM_VIEC_LAM" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idNhomViTriViecLam">
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.VI_TRI_VIEC_LAM' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.VI_TRI_VIEC_LAM" [isReference]="true"
+                    [referenceId]="form.get('idNhomViTriViecLam').value" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idViTriViecLam">
+                </asc-select>
+            </div>
+        </div>
+    </div>
+    <!-- KE HOACH TUYEN DUNG -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.KE_HOACH_TUYEN_DUNG' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.KE_HOACH_TUYEN_DUNG"
+                    [placeHolder]="'LB.SELECT' | translate" formControlName="idKeHoachTuyenDung">
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>&nbsp;</label>
+                <div class="m-radio-inline">
+                    <label class="m-radio">
+                        <input type="radio" [value]="hinhThuTraLuongs.CAP_LUONG" formControlName="hinhThucTraLuong" />
+                        {{ 'HR.TUYEN_DUNG.CAP_LUONG' | translate }}
+                        <span></span>
+                    </label>
+                    <label class="m-radio">
+                        <input type="radio" [value]="hinhThuTraLuongs.TU_TRA" formControlName="hinhThucTraLuong" />
+                        {{ 'HR.TUYEN_DUNG.TU_TRA' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NGAY_TUYEN_DUNG' | translate }} </label>
+                <div>
+                    <nz-date-picker formControlName="ngayTuyenDung" nzFormat="dd/MM/yyyy" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NGAY_NHAN_VIEC' | translate }} </label>
+                <div>
+                    <nz-date-picker formControlName="ngayNhanViec" nzFormat="dd/MM/yyyy" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NAM_GIAO_DUC' | translate }} </label>
+                <div>
+                    <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="namVaoNganhGiaoDuc" style="width: 100%"></nz-input-number>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NGAY_BAT_DAU_DHQGHN' | translate }} </label>
+                <div>
+                    <nz-date-picker formControlName="ngayBatDauDHQG" nzFormat="dd/MM/yyyy" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.CONG_VIEC_DUOC_GIAO' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="congViecDuocGiao" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.SO_TRUONG_CONG_TAC' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="soTruongCongTac" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.NGAY_BAT_DAU_NN' | translate }} </label>
+                <div>
+                    <nz-date-picker formControlName="ngayBatDauNN" nzFormat="dd/MM/yyyy" style="width: 100%">
+                    </nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TUYEN_DUNG.VIEC_LAM_LAU_NHAT' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="viecLamLauNhat" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' |
+            translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

@@ -1,0 +1,195 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset>
+        <nz-tab [nzTitle]="'PTN.THONG_TIN_CHUNG' | translate">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.MA' | translate }} </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="maPhongThiNghiem" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.LOAI' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.PTN_LOAI_HINH_PHONG"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="idLoaiHinhPhong"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.TEN' | translate }} </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="tenPhongThiNghiem" />
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.NGANH_DAO_TAO' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.PTN_NGANH"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="idNganh"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.CHUYEN_NGANH' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.PTN_CHUYEN_NGANH"
+                                mode="multiple"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                formControlName="idChuyenNganh"
+                            ></asc-select>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.MO_TA' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="moTa"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'PTN.CHUYEN_NGANH' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <app-chon-chuyen-nganh
+                        (changedData)="receiveDataChuyenNganh($event)"
+                        [idThamChieu]="form.get('id').value"
+                        [fnganhs]="this.fnganhs"
+                        ></app-chon-chuyen-nganh>
+                </div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'PTN.DON_VI' | translate">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'PTN.DON_VI' | translate }} </label>
+                        <div>
+                            <!-- <app-select-user-tree
+                                [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                formControlName="idCoQuan"
+                                [isMultiple]="false"
+                            ></app-select-user-tree> -->
+                            <div>
+                                <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.CHUNG_CHI' | translate }}
+                        </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="chungChi" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.TU_CACH_PHAP_NHAN' | translate }}
+                        </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="tuCachPhapNhan" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.SO_TAI_KHOAN' | translate }}
+                        </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="soTaiKhoan" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.CHU_TAI_KHOAN' | translate }}
+                        </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="chuTaiKhoan" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.NGAN_HANG' | translate }}
+                        </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="nganHang" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DIEN_THOAI' | translate }}
+                        </label>
+                        <div>
+                            <input type="text" class="m-input form-control" formControlName="soDienThoai" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'PTN.DIA_CHI' | translate }}
+                        </label>
+                        <div>
+                            <textarea class="form-control" formControlName="diaChi"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <ptn-upload
+                            [folderName]="folder.PTN_PHONG_THI_NGHIEM"
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput"
+                            [multiple]="false"
+                        >
+                        </ptn-upload>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

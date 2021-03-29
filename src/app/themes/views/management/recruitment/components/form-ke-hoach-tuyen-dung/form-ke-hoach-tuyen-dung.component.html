@@ -1,0 +1,406 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmitKeHoach()">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group m-form__group" *ngIf="coQuanUser">
+                <label class="font-weight-bold"> {{ 'LB.DEPARTMENT' | translate }} :</label>
+                {{ coQuanUser.tenDonViTrucThuoc + '/ ' + coQuanUser.tenCoQuanCap1 }}
+            </div>
+        </div>
+    </div>
+    <nz-tabset [nzSelectedIndex]="tabCurrentIndex" (nzSelectChange)="changeTabIndex($event)">
+        <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE1' | translate">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold">
+                                    {{ 'RECRUITMENT.KE_HOACH.MA' | translate }}
+                                </label>
+                                <input type="text" class="m-input form-control" formControlName="maKeHoach" />
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'LB.YEAR' | translate }} </label><br />
+                                <asc-select
+                                    [modeOfDropDowList]="dropdownListEnum.NAM"
+                                    [placeHolder]="'LB.SELECT' | translate"
+                                    formControlName="nam"
+                                >
+                                </asc-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold">
+                                    {{ 'SURVEY.DOT_DANH_GIA.DATE' | translate }}
+                                </label>
+                                <div class="d-flex">
+                                    <div class="error-block">
+                                        <nz-date-picker
+                                            formControlName="ngayBatDau"
+                                            nzFormat="dd/MM/yyyy"
+                                            [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.DATE_FROM' | translate"
+                                            [nzDisabledDate]="disabledNgayBatDau"
+                                        >
+                                        </nz-date-picker>
+                                    </div>
+
+                                    <span class="px-1 pt-1"> - </span>
+
+                                    <div class="error-block">
+                                        <nz-date-picker
+                                            formControlName="ngayKetThuc"
+                                            nzFormat="dd/MM/yyyy"
+                                            [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.DATE_TO' | translate"
+                                            [nzDisabledDate]="disabledNgayKetThuc"
+                                        >
+                                        </nz-date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'RECRUITMENT.KE_HOACH.TEN' | translate }}
+                        </label>
+                        <input type="text" class="form-control m-input" formControlName="tenKeHoach" />
+                        <!-- <textarea type="text" class="m-input form-control" formControlName="tenKeHoach"></textarea> -->
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'RECRUITMENT.KE_HOACH.MON_THI' | translate }}
+                        </label>
+                        <textarea type="text" class="m-input form-control" formControlName="tomTatMonThi"></textarea>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'RECRUITMENT.KE_HOACH.NGUON_TUYEN' | translate }}
+                        </label>
+                        <textarea type="text" class="m-input form-control" formControlName="nguonTuyenDung"></textarea>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'RECRUITMENT.KE_HOACH.HOI_DONG' | translate }}
+                        </label>
+                        <textarea type="text" class="m-input form-control" formControlName="hoiDongThamGia"></textarea>
+                    </div>
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold">
+                            {{ 'LB.NOTE' | translate }}
+                        </label>
+                        <textarea class="form-control" formControlName="ghiChu"></textarea>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE4' | translate" [nzDisabled]="action === actionEnum.CREATE">
+            <div class="text-right mb-3">
+                <button type="button" class="btn_custom btn_add mr-2" (click)="addChiTietViTriCanTuyenHandler()">
+                    <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                </button>
+                <button type="button" class="btn_custom btn_remove" [disabled]="" (click)="removeSelectedChiTietViTriCanTuyenHandler()">
+                    <div [innerHTML]="'trash.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">{{ 'BTN.DELETE' | translate }}</span>
+                </button>
+            </div>
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid
+                    [data]="gridChiTietViTriCanTuyen"
+                    [pageSize]="gridState.take"
+                    [skip]="gridState.skip"
+                    [loading]="loading"
+                    [pageable]="pageConfig"
+                    [resizable]="true"
+                    [columnMenu]="true"
+                    [sortable]="true"
+                    [sort]="gridState.sort"
+                    (sortChange)="sortChange($event)"
+                    [style.height]="'100%'"
+                    kendoGridSelectBy="idkhtdDeXuat"
+                    [selectedKeys]="selectionChiTietViTriCanTuyenIds"
+                    (dataStateChange)="onStateChange($event)"
+                    [selectable]="true"
+                    [group]="groups"
+                >
+                    <kendo-grid-column
+                        field="tenNhomViTriViecLam"
+                        [title]="'RECRUITMENT.TEXT.01' | translate"
+                        class="text-left"
+                        hidden="true"
+                    >
+                        <ng-template kendoGridGroupHeaderTemplate let-group let-value="value">
+                            {{ value }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-checkbox-column
+                        showSelectAll="true"
+                        width="50"
+                        [columnMenu]="false"
+                        class="text-center"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                    </kendo-grid-checkbox-column>
+                    <kendo-grid-column [title]="'RECRUITMENT.DINH_BIEN.VTVL' | translate" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            {{ dataItem.tenViTriViecLam }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column-group
+                        [title]="'RECRUITMENT.DINH_BIEN.TITLE' | translate"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <kendo-grid-column
+                            field="dinhBienCapLuong"
+                            [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                            [width]="100"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.dinhBienCapLuong > 0 ? dataItem.dinhBienCapLuong : 0 }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="dinhBienTuTra"
+                            [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                            [width]="80"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.dinhBienTuTra > 0 ? dataItem.dinhBienTuTra : 0 }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [title]="'RECRUITMENT.THONG_KE.TONG_SO' | translate"
+                            [width]="80"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.dinhBienCapLuong + dataItem.dinhBienTuTra }}
+                            </ng-template>
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group
+                        [title]="'RECRUITMENT.KE_HOACH.HIEN_HANH' | translate"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <kendo-grid-column
+                            field="hienTaiCapLuong"
+                            [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                            [width]="100"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.hienTaiCapLuong > 0 ? dataItem.hienTaiCapLuong : 0 }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="hienTaiTuTra"
+                            [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                            [width]="80"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.hienTaiTuTra > 0 ? dataItem.hienTaiTuTra : 0 }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [title]="'RECRUITMENT.THONG_KE.TONG_SO' | translate"
+                            [width]="80"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.hienTaiCapLuong + dataItem.hienTaiTuTra }}
+                            </ng-template>
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column-group
+                        [title]="'RECRUITMENT.KE_HOACH.DE_XUAT' | translate"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <kendo-grid-column
+                            field="capLuong"
+                            [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                            class="bg-yellow"
+                            [width]="100"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="tuTra"
+                            [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                            class="bg-yellow"
+                            [width]="80"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            [title]="'RECRUITMENT.THONG_KE.TONG_SO' | translate"
+                            [width]="80"
+                            class="bg-yellow"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.capLuong + dataItem.tuTra }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="nguonTuyen"
+                            [title]="'RECRUITMENT.DINH_BIEN.NGUON_TUYEN' | translate"
+                            class="bg-yellow"
+                            [width]="200"
+                            [columnMenu]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+                </kendo-grid>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE2' | translate" [nzDisabled]="action === actionEnum.CREATE">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid
+                    [kendoGridInCellEditing]="createFormGroupTieuChuan"
+                    [kendoGridBinding]="gridViewTieuChuanTuyenDung"
+                    [columnMenu]="false"
+                >
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'RECRUITMENT.KE_HOACH.TIEU_CHUAN' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            {{ dataItem.tenYeuCau }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column width="500" [title]="'RECRUITMENT.KE_HOACH.YEU_CAU' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <input class="m-input form-control" [(ngModel)]="dataItem.yeuCau" [ngModelOptions]="{ standalone: true }" />
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column width="200" [title]="'LB.NOTE' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <input class="m-input form-control" [(ngModel)]="dataItem.ghiChu" [ngModelOptions]="{ standalone: true }" />
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </nz-tab>
+
+        <nz-tab [nzTitle]="'RECRUITMENT.KE_HOACH.TAB_TITLE3' | translate" [nzDisabled]="action === actionEnum.CREATE">
+            <div class="text-right mb-3">
+                <button type="button" class="btn_custom btn_add" (click)="taoChiTiet()">
+                    <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">{{ 'RECRUITMENT.KE_HOACH.THEM_TIEN_DO' | translate }}</span>
+                </button>
+            </div>
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid [data]="lstChiTiet" [resizable]="true" [columnMenu]="false">
+                    <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" [width]="90" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <button type="button" nz-button class="btn-svg-danger d-inline-block" (click)="xoaChiTiet(dataItem, rowIndex)">
+                                <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'LB.STT' | translate" [width]="70" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'RECRUITMENT.KE_HOACH.NOI_DUNG' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <input
+                                [(ngModel)]="dataItem.noiDungCongViec"
+                                class="m-input form-control"
+                                [ngModelOptions]="{ standalone: true }"
+                            />
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [width]="150" [title]="'LB.DATE_FROM' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-date-picker
+                                [nzDisabledDate]="disabledDateFrom"
+                                [(ngModel)]="dataItem.ngayBatDau"
+                                nzFormat="dd/MM/yyyy"
+                                [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.DATE_FROM' | translate"
+                                [ngModelOptions]="{ standalone: true }"
+                            >
+                            </nz-date-picker>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [width]="150" [title]="'LB.DATE_TO' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-date-picker
+                                [nzDisabledDate]="disabledDateTo"
+                                [(ngModel)]="dataItem.ngayKetThuc"
+                                nzFormat="dd/MM/yyyy"
+                                [nzPlaceHolder]="'SURVEY.DOT_DANH_GIA.DATE_TO' | translate"
+                                [ngModelOptions]="{ standalone: true }"
+                            >
+                            </nz-date-picker>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [width]="200" [title]="'LB.NOTE' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <input
+                                type="text"
+                                class="m-input form-control"
+                                [(ngModel)]="dataItem.ghiChu"
+                                [ngModelOptions]="{ standalone: true }"
+                            />
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer" *ngIf="action === actionEnum.CREATE || action === actionEnum.UPDATE">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add" *ngIf="tabCurrentIndex === 0" [disabled]="isSubmit">
+            {{ 'BTN.SAVE' | translate }}
+        </button>
+        <button type="button" (click)="onSubmitTieuChuan()" class="btn_custom btn_add" *ngIf="tabCurrentIndex === 2" [disabled]="isSubmit">
+            {{ 'RECRUITMENT.TEXT.20' | translate }}
+        </button>
+        <button type="button" (click)="onSubmitTienDo()" class="btn_custom btn_add" *ngIf="tabCurrentIndex === 3" [disabled]="isSubmit">
+            {{ 'RECRUITMENT.TEXT.21' | translate }}
+        </button>
+    </div>
+    <div class="text-right border-form-footer" *ngIf="action === actionEnum.APPROVE">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="button" (click)="onDuyet(trangThaiKeHoachEnum.TRUONG_DV_DUYET)" class="btn_custom btn_add mr-1">
+            {{ 'RECRUITMENT.KE_HOACH.DUYET' | translate }}
+        </button>
+        <button type="button" (click)="onDuyet(trangThaiKeHoachEnum.TRUONG_DV_DUYET_GUI)" class="btn_custom btn_update mr-1">
+            {{ 'RECRUITMENT.KE_HOACH.DUYET_GUI' | translate }}
+        </button>
+        <button type="button" (click)="onDuyet(trangThaiKeHoachEnum.TRUONG_DV_KO_DUYET)" class="btn_custom btn_remove">
+            {{ 'RECRUITMENT.KE_HOACH.KO_DUYET' | translate }}
+        </button>
+    </div>
+</form>

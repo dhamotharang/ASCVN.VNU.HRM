@@ -1,0 +1,241 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="m-card-profile">
+                <div class="m-card-profile__title m--hide">{{ 'LB.HRM.THONG_TIN_CA_NHAN' | translate }}</div>
+                <div class="m-card-profile__pic">
+                    <div class="m-card-profile__pic-wrapper">
+                        <img
+                            [src]="file ? (file.path | convertUrl) : './assets/images/no-avatar.jpg'"
+                            alt=""
+                            onerror="this.onerror=null;this.src='./assets/images/no-avatar.jpg';"
+                        />
+                    </div>
+                    <nz-upload [nzAction]="uploadMediaUrl" nzName="formFiles" [nzShowUploadList]="false" (nzChange)="handleChange($event)">
+                        <button type="button" nz-button><i nz-icon nzType="upload"></i>{{ 'LB.HRM.UPDATE_AVATAR' | translate }}</button>
+                    </nz-upload>
+                </div>
+                <div class="m-card-profile__details" *ngIf="!isTuyenDung">
+                    <span class="m-card-profile__name"></span>
+                    <div>
+                        <div class="form-group m-form__group">
+                            <label> {{ 'LB.HRM.USERNAME' | translate }} </label>
+                            <input type="text" class="m-input form-control" formControlName="userName" />
+                            <app-field-error [control]="form.get('userName')"></app-field-error>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.CO_QUAN' | translate }} <span class="text-danger">*</span></label>
+                        <app-select-user-tree
+                            [placeholder]="'LB.SELECT' | translate"
+                            formControlName="idCoQuan"
+                            [isMultiple]="false"
+                            [isDisabled]="isTuyenDung"
+                        ></app-select-user-tree>
+                        <app-field-error [control]="form.get('idCoQuan')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.CHUC_VU' | translate }}</label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.CHUC_VU"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idChucVu"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.HO_DEM' | translate }} <span class="text-danger">*</span></label>
+                        <input type="text" class="m-input form-control" formControlName="hoDem" />
+                        <app-field-error [control]="form.get('hoDem')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TEN' | translate }} <span class="text-danger">*</span></label>
+                        <input type="text" class="m-input form-control" formControlName="ten" />
+                        <app-field-error [control]="form.get('ten')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <!-- <label> {{ 'LB.HRM.MA_CAN_BO' | translate }} <span class="text-danger" *ngIf="!isTuyenDung">*</span></label> -->
+                        <label> {{ 'LB.HRM.MA_CAN_BO' | translate }} <span class="text-danger">*</span></label>
+                        <input type="text" class="m-input form-control" formControlName="maNhanSu" />
+                        <app-field-error [control]="form.get('maNhanSu')"></app-field-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label class="font-weight-bold"> {{ 'LB.HRM.GIOI_TINH' | translate }} <span class="text-danger">*</span></label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.GIOI_TINH"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idGioiTinh"
+                        >
+                        </asc-select>
+                        <app-field-error [control]="form.get('idGioiTinh')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.NGAY_SINH' | translate }} <span class="text-danger">*</span></label>
+                        <div>
+                            <nz-date-picker
+                                [nzDisabledDate]="disabledDate"
+                                formControlName="ngaySinh"
+                                nzFormat="dd/MM/yyyy"
+                                [nzPlaceHolder]="'LB.SELECT' | translate"
+                                style="width: 100%"
+                            >
+                            </nz-date-picker>
+                        </div>
+                        <app-field-error [control]="form.get('ngaySinh')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.SO_DIEN_THOAI' | translate }} <span class="text-danger">*</span></label>
+                        <input type="text" class="m-input form-control" formControlName="soDienThoai" />
+                        <app-field-error [control]="form.get('soDienThoai')"></app-field-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.EMAIL_NOI_BO' | translate }} <span class="text-danger">*</span></label>
+                        <input type="text" class="m-input form-control" formControlName="emailNoiBo" />
+                        <app-field-error [control]="form.get('emailNoiBo')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.EMAIL' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="email" />
+                        <app-field-error [control]="form.get('email')"></app-field-error>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.LOAI_NHAN_SU' | translate }} <span class="text-danger">*</span></label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.LOAI_NHAN_SU"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idLoaiNhanSu"
+                        >
+                        </asc-select>
+                        <app-field-error [control]="form.get('idLoaiNhanSu')"></app-field-error>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.LOAI_HOP_DONG' | translate }} <span class="text-danger">*</span></label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.LOAI_HOP_DONG"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idLoaiHopDong"
+                        >
+                        </asc-select>
+                        <app-field-error [control]="form.get('idLoaiHopDong')"></app-field-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TRINH_DO_DAO_TAO' | translate }}</label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TRINH_DO_CHUYEN_MON"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idTrinhDoChuyenMon"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.CHUC_DANH_NGHE_NGHIEP' | translate }}</label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idNgach"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+
+            <!--            <div class="row">-->
+            <!--                <div class="col-sm-6">-->
+            <!--                    <div class="form-group m-form__group">-->
+            <!--                        <label> {{ 'LB.HRM.DOI_TUONG_DANH_GIA' | translate }}</label>-->
+            <!--                        <asc-select-->
+            <!--                            [modeOfDropDowList]="dropdownListEnum.DOI_TUONG_DANH_GIA"-->
+            <!--                            [placeHolder]="'LB.SELECT' | translate"-->
+            <!--                            formControlName="idDoiTuongDanhGia"-->
+            <!--                        >-->
+            <!--                        </asc-select>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <div class="col-sm-6">-->
+            <!--                    <div class="form-group m-form__group">-->
+            <!--                        <label> {{ 'LB.HRM.LOAI_NS_DANH_GIA' | translate }}</label>-->
+            <!--                        <asc-select-->
+            <!--                            [modeOfDropDowList]="dropdownListEnum.LOAI_NHAN_SU_DANH_GIA"-->
+            <!--                            [placeHolder]="'LB.SELECT' | translate"-->
+            <!--                            formControlName="idLoaiNhanSuDanhGia"-->
+            <!--                        >-->
+            <!--                        </asc-select>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            BỔ SUNG CHỨC DANH KHOA HỌC & TRÌNH ĐỘ CHÍNH TRỊ-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.CHUC_DANH_KHOA_HOC' | translate }}</label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.CHUC_DANH_KHOA_HOC"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idChucDanhKhoaHoc"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.TRINH_DO_CHINH_TRI' | translate }}</label>
+                        <asc-select
+                            [modeOfDropDowList]="dropdownListEnum.TRINH_DO_CHINH_TRI"
+                            [placeHolder]="'LB.SELECT' | translate"
+                            formControlName="idTrinhDoChinhTri"
+                        >
+                        </asc-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm(false)" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

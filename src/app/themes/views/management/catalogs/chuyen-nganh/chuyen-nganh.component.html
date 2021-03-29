@@ -1,0 +1,255 @@
+<div class="container-fluid-">
+    <div class="row">
+        <div class="col-6">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                {{ 'CATALOG.NGANH.TITLE' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools" *ngIf="roles.isCreate">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item">
+                                <button class="btn_custom btn_add" (click)="addHandler(chuyenNganhEnum.Nganh)">
+                                    <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="grid-wrapper table-border" [ngStyle]="{ 'height.px': pageHeight }">
+                        <kendo-grid
+                            [data]="gridViewNganh"
+                            [resizable]="true"
+                            [columnMenu]="true"
+                            [sortable]="true"
+                            [pageable]="pageConfigNganh"
+                            [pageSize]="gridStateNganh.take"
+                            [skip]="gridStateNganh.skip"
+                            (dataStateChange)="onStateChangeNganh($event)"
+                            (cellClick)="cellClickNganhHandler($event)"
+                            [sort]="gridStateNganh.sort"
+                            [style.height]="'100%'"
+                            [selectable]="true"
+                            kendoGridSelectBy="id"
+                            (sortChange)="sortChange(chuyenNganhEnum.Nganh, $event)"
+                        >
+                            <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        {{ rowIndex + 1 }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                [title]="'LB.ACTION' | translate"
+                                class="text-center"
+                                width="90"
+                                [columnMenu]="false"
+                                *ngIf="roles.isUpdate || roles.isDelete"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <nz-button-group>
+                                        <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                            <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                        </button>
+                                    </nz-button-group>
+                                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                                        <div class="m-dropdown__wrapper menu-dropdown-table">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                        <ul class="m-nav">
+                                                            <li class="m-nav__section m-nav__section--first">
+                                                                <span class="m-nav__section-text">
+                                                                    {{ 'LB.ACTION' | translate }}
+                                                                </span>
+                                                            </li>
+                                                            <li class="m-nav__item" *ngIf="roles.isUpdate">
+                                                                <a
+                                                                    href="javascript:void(0)"
+                                                                    (click)="editHandler(chuyenNganhEnum.Nganh, dataItem)"
+                                                                    class="m-nav__link"
+                                                                >
+                                                                    <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                                                    <span class="m-nav__link-text">
+                                                                        {{ 'BTN.EDIT' | translate }}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="m-nav__item" *ngIf="roles.isDelete">
+                                                                <a
+                                                                    href="javascript:void(0)"
+                                                                    (click)="removeHandler(chuyenNganhEnum.Nganh, dataItem)"
+                                                                    class="m-nav__link"
+                                                                >
+                                                                    <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                                    <span class="m-nav__link-text">
+                                                                        {{ 'BTN.DELETE' | translate }}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nz-dropdown-menu>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="ma" [columnMenu]="false" width="100" [title]="'LB.CATALOG.CODE' | translate">
+                            </kendo-grid-column>
+                            <kendo-grid-column [columnMenu]="false" field="ten" [title]="'LB.CATALOG.NAME' | translate">
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="isVisible"
+                                width="100"
+                                [columnMenu]="false"
+                                [title]="'LB.CATALOG.VISIBLE' | translate"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center" *ngIf="dataItem.isVisible">
+                                        <span class="label_Visible">{{ 'LB.SU_DUNG' | translate }}</span>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="m-portlet">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                {{ 'CATALOG.CHUYEN_NGANH.TITLE' | translate }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="m-portlet__head-tools">
+                        <ul class="m-portlet__nav">
+                            <li class="m-portlet__nav-item" *ngIf="roles.isCreate">
+                                <button class="btn_custom btn_add" (click)="addHandler(chuyenNganhEnum.ChuyenNganh)">
+                                    <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="grid-wrapper table-border" [ngStyle]="{ 'height.px': pageHeight }">
+                        <kendo-grid
+                            [data]="gridViewChuyenNganh"
+                            [resizable]="true"
+                            [columnMenu]="true"
+                            [sortable]="true"
+                            [pageable]="pageConfigChuyenNganh"
+                            [pageSize]="gridStateChuyenNganh.take"
+                            [skip]="gridStateChuyenNganh.skip"
+                            (dataStateChange)="onStateChangeChuyenNganh($event)"
+                            [sort]="gridStateChuyenNganh.sort"
+                            [style.height]="'100%'"
+                            [selectable]="true"
+                            kendoGridSelectBy="id"
+                            (sortChange)="sortChange(chuyenNganhEnum.ChuyenNganh, $event)"
+                        >
+                            <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center">
+                                        {{ rowIndex + 1 }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                [title]="'LB.ACTION' | translate"
+                                class="text-center"
+                                width="90"
+                                [columnMenu]="false"
+                                *ngIf="roles.isUpdate || roles.isDelete"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <nz-button-group>
+                                        <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                            <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                        </button>
+                                    </nz-button-group>
+                                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                                        <div class="m-dropdown__wrapper menu-dropdown-table">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                        <ul class="m-nav">
+                                                            <li class="m-nav__section m-nav__section--first">
+                                                                <span class="m-nav__section-text">
+                                                                    {{ 'LB.ACTION' | translate }}
+                                                                </span>
+                                                            </li>
+                                                            <li class="m-nav__item" *ngIf="roles.isUpdate">
+                                                                <a
+                                                                    href="javascript:void(0)"
+                                                                    (click)="editHandler(chuyenNganhEnum.ChuyenNganh, dataItem)"
+                                                                    class="m-nav__link"
+                                                                >
+                                                                    <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                                                    <span class="m-nav__link-text">
+                                                                        {{ 'BTN.EDIT' | translate }}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="m-nav__item" *ngIf="roles.isDelete">
+                                                                <a
+                                                                    href="javascript:void(0)"
+                                                                    (click)="removeHandler(chuyenNganhEnum.ChuyenNganh, dataItem)"
+                                                                    class="m-nav__link"
+                                                                >
+                                                                    <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                                    <span class="m-nav__link-text">
+                                                                        {{ 'BTN.DELETE' | translate }}
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </nz-dropdown-menu>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column field="ma" width="150" [columnMenu]="false" [title]="'LB.CATALOG.CODE' | translate">
+                            </kendo-grid-column>
+                            <kendo-grid-column [columnMenu]="false" field="ten" [title]="'LB.CATALOG.NAME' | translate">
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                field="isVisible"
+                                width="100"
+                                [columnMenu]="false"
+                                [title]="'LB.CATALOG.VISIBLE' | translate"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                    <div class="text-center" *ngIf="dataItem.isVisible">
+                                        <span class="label_Visible">{{ 'LB.SU_DUNG' | translate }}</span>
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                        </kendo-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

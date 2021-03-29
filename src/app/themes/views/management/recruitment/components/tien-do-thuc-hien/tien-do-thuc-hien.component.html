@@ -1,0 +1,35 @@
+<div class="row d-block-max">
+    <div class="col-sm-12">
+        <div class="grid-wrapper grid-wrapper-border">
+            <kendo-grid
+                [data]="gridView$ | async"
+                [pageSize]="gridState.take"
+                [skip]="gridState.skip"
+                [loading]="loading"
+                [pageable]="pageConfig"
+                [resizable]="true"
+                [columnMenu]="false"
+                [sortable]="true"
+                [sort]="gridState.sort"
+                [style.height]="'100%'"
+                (dataStateChange)="onStateChange($event)"
+                [selectable]="true"
+            >
+                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="noiDungCongViec" [title]="'RECRUITMENT.KE_HOACH.NOI_DUNG' | translate"> </kendo-grid-column>
+                <kendo-grid-column width="250" [title]="'RECRUITMENT.KE_HOACH.TG_THUC_HIEN' | translate">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ (dataItem.ngayBatDau | date: 'dd/MM/yyyy') + ' - ' + (dataItem.ngayKetThuc | date: 'dd/MM/yyyy') }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="ghiChu" width="200" [title]="'LB.NOTE' | translate" [sortable]="false"> </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>

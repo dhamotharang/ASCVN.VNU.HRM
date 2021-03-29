@@ -1,0 +1,124 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.SPDT.DE_TAI' | translate }}
+                </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.KHCN_DE_TAI"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="idDeTai" [isDisabled]="isDisabled">
+                    </asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.SPDT.DON_VI' | translate }}
+                </label>
+                <div>
+                    <!-- <app-select-user-tree [placeholder]="'LB.HRM.CO_QUAN' | translate" formControlName="idCoQuan"
+                        [isMultiple]="false"></app-select-user-tree> -->
+                    <!-- <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                        <div>
+                            <app-select-user-tree
+                                [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                formControlName="idCoQuan"
+                                [isMultiple]="false"
+                            ></app-select-user-tree>
+                        </div>
+                    </ng-container>
+                    <ng-template #personlTemplate1>
+                        <div>
+                            <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                        </div>
+                    </ng-template> -->
+                    <div>
+                        <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.SPDT.NGUOI_HUONG_DAN' | translate }}
+                </label>
+                <div class="select-user">
+                    <widget-select-user-for-filter
+                        [userSelectedIds]="userSelected"
+                        [placeholder]="'LB.SELECT' | translate"
+                        formControlName="idNguoiHuongDan"
+                    >
+                    </widget-select-user-for-filter>
+                </div>
+                <!-- <ng-container *ngIf="isQuanLy; else personlTemplate2" >
+                    <div class="select-user">
+                        <widget-select-user-for-filter
+                            [userSelectedIds]="userSelected"
+                            [placeholder]="'LB.SELECT' | translate"
+                            formControlName="idNguoiHuongDan"
+                        >
+                        </widget-select-user-for-filter>
+                    </div>
+                </ng-container>
+                <ng-template #personlTemplate2>
+                    <div>
+                        <input [value]="user.firstName + ' ' + user.lastName" disabled class="form-control"/>
+                    </div>
+                </ng-template> -->
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.SPDT.SO_TIEN_SI' | translate }}
+                </label>
+                <div>
+                    <div>
+                        <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="soTienSi" style="width: 100%"></nz-input-number>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.SPDT.SO_NGHIEN_CUU_SINH' | translate }}
+                </label>
+                <div>
+                    <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="soNghienCuuSinh" style="width: 100%"></nz-input-number>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SCI.SPDT.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div> -->
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.ATTACH_FILE' | translate }}
+                </label>
+                <khcn-upload
+                    [folderName]="folder.KHCN_KHOA_HOC_CONG_NGHE"
+                    (fileInput)="onSelectFile($event)"
+                    [file]="fileInput"
+                    [multiple]="true"
+                >
+                </khcn-upload>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

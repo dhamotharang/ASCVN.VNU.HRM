@@ -1,0 +1,107 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.SP.MA_SAN_PHAM' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="maSanPham"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.SP.TEN_SAN_PHAM' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenSanPham"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.SP.TEN_TAC_GIA' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenTacGia"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.PHONG_THI_NGHIEM' | translate }} </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="idPhongThiNghiem"
+                        [isDisabled]="isDisabled">
+                    </asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.SP.CHUYEN_GIAO' | translate }} </label>
+                <div>
+                    <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear
+                        formControlName = "isChuyenGiao">
+                        <nz-option [nzLabel]="'Có'" [nzValue]="true"></nz-option>
+                        <nz-option [nzLabel]="'Không'" [nzValue]="false"></nz-option>
+                    </nz-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.SP.NAM_HOAN_THANH' | translate }}
+                </label>
+                <div>
+                    <asc-select [modeOfDropDowList]="dropdownListEnum.NAM"
+                        [placeHolder]="'LB.SELECT' | translate" formControlName="namHoanThanh"
+                        [isDisabled]="isDisabled">
+                    </asc-select>
+                </div>
+            </div>
+        </div>  
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.SP.DON_NHAN_CHUYEN_GIAO' | translate }} </label>
+                <div>
+                    <app-select-user-tree [placeholder]="'LB.HRM.CO_QUAN' | translate" formControlName="idCoQuanNhanChuyenGiao"
+                        [isMultiple]="false"></app-select-user-tree>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.SP.DON_NHAN_CHUYEN_GIAO_KHAC' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="donNhanChuyenGiaoKhac"/>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.SP.MO_TA_SAN_PHAM' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="moTa"></textarea>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate
+            }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

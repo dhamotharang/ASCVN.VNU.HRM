@@ -1,0 +1,31 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.DMTH.THIET_BI' | translate }}  </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.THIET_BI"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idThietBi"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.DK.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

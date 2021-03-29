@@ -1,0 +1,138 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group row">
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.HRM.CO_QUAN' | translate }} <span class="text-danger">(*)</span> </label>
+                <app-select-user-tree
+                    [placeholder]="'LB.SELECT' | translate"
+                    [(ngModel)]="chonDonVi"
+                    [userSelectedIds]="chonDonVi"
+                    [ngModelOptions]="{ standalone: true }"
+                    [isLoadCapDonVi]="true"
+                    [isMultiple]="false"
+                >
+                </app-select-user-tree>
+                <app-field-error [control]="form.get('idCoQuan')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.YEAR' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.NAM" [placeHolder]="'LB.SELECT' | translate" formControlName="nam">
+                </asc-select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'RECRUITMENT.DINH_BIEN.CCVC' | translate }} </label>
+                <nz-input-number
+                    [nzMin]="0"
+                    [nzStep]="1"
+                    style="width: 100%"
+                    [nzPlaceHolder]="'RECRUITMENT.DINH_BIEN.CCVC' | translate"
+                    formControlName="lH_CCVC"
+                >
+                </nz-input-number>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'RECRUITMENT.DINH_BIEN.HDLD' | translate }} </label>
+                <nz-input-number
+                    [nzMin]="0"
+                    [nzStep]="1"
+                    style="width: 100%"
+                    [nzPlaceHolder]="'RECRUITMENT.DINH_BIEN.HDLD' | translate"
+                    formControlName="lH_HDLD"
+                >
+                </nz-input-number>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'RECRUITMENT.DINH_BIEN.HD68' | translate }} </label>
+                <nz-input-number
+                    [nzMin]="0"
+                    [nzStep]="1"
+                    style="width: 100%"
+                    [nzPlaceHolder]="'RECRUITMENT.DINH_BIEN.HD68' | translate"
+                    formControlName="lH_HD68"
+                >
+                </nz-input-number>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'RECRUITMENT.DINH_BIEN.PHE_DUYET' | translate }}
+                </label>
+                <input class="form-control" formControlName="pheDuyet" />
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.ATTACH_FILE' | translate }}
+                </label>
+                <asc-upload
+                    (fileInput)="onSelectFile($event)"
+                    [file]="fileInput$ | async"
+                    [folderName]="folder.TD_DINH_BIEN"
+                    [multiple]="false"
+                >
+                </asc-upload>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="ghiChu"></textarea>
+            </div>
+        </div>
+        <div class="col-12 mt-3">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid [data]="gridViTriViecLam" [resizable]="true" [columnMenu]="false" [selectable]="true" [group]="groups">
+                    <kendo-grid-column field="tenNhomViecLam" [title]="'RECRUITMENT.TEXT.01' | translate" class="text-left" hidden="true">
+                        <ng-template kendoGridGroupHeaderTemplate let-group let-value="value">
+                            {{ value }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="ten" [title]="'RECRUITMENT.DINH_BIEN.VTVL' | translate" class="text-left">
+                    </kendo-grid-column>
+                    <kendo-grid-column width="150" [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-input-number
+                                [nzMin]="0"
+                                [nzStep]="1"
+                                style="width: 100%"
+                                [nzPlaceHolder]="'' | translate"
+                                [(ngModel)]="dataItem.capLuong"
+                                [ngModelOptions]="{ standalone: true }"
+                            >
+                            </nz-input-number>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column width="150" [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-input-number
+                                [nzMin]="0"
+                                [nzStep]="1"
+                                style="width: 100%"
+                                [nzPlaceHolder]="'' | translate"
+                                [(ngModel)]="dataItem.tuTra"
+                                [ngModelOptions]="{ standalone: true }"
+                            >
+                            </nz-input-number>
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

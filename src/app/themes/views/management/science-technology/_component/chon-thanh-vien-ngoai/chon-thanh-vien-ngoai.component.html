@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-sm-9">
+        <div class="form-group m-form__group">
+            <label> {{ 'SCI.BBKH.TV_NGOAI_DHQG' | translate }} </label>
+            <div class="select-user">
+                <!-- <nz-select style="width: 100% !important;"
+                    nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate"
+                    nzAllowClear [(ngModel)]="listNhanSu"
+                    [nzDropdownRender]="renderThemTVN"
+                    nzMode="multiple"
+                    (nzScrollToBottom)="loadThanhVienNgoai()"
+                    >
+                    <ng-container *ngFor="let item of listDropThanhVienNgoai">
+                        <nz-option nzCustomContent [nzLabel]="item.maThanhVien + ' - ' + item.hoTenThanhVien" [nzValue]="item">
+                            <label>{{item.maThanhVien + ' - ' + item.hoTenThanhVien}}</label>
+                            <div class="float-right" *ngIf="roles.isUpdate">
+                                <a href="javascript:void(0)" (click)="editHandler(item)" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                </a>
+                            </div>
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+                <ng-template #renderThemTVN>
+                    <div class="container" *ngIf="roles.isCreate">
+                        <a type="button" class="btn_custom btn_add m-1 mr-0 float-right" (click)="addHandler()">
+                            <span class="text"><i nz-icon nzType="plus"></i> {{'SCI.THEM_NHAN_SU' | translate}}</span>
+                        </a>
+                    </div>
+                </ng-template>  -->
+                <nz-select style="width: 100% !important;"
+                    nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate"
+                    nzAllowClear [(ngModel)]="listNhanSu"
+                    nzMode="multiple"
+                    (nzScrollToBottom)="loadThanhVienNgoai()"
+                    >
+                    <ng-container *ngFor="let item of listDropThanhVienNgoai">
+                        <nz-option nzCustomContent [nzLabel]="item.maThanhVien + ' - ' + item.hoTenThanhVien" [nzValue]="item">
+                            <label>{{item.maThanhVien + ' - ' + item.hoTenThanhVien}}</label>
+                            <div class="float-right" *ngIf="roles.isUpdate">
+                                <a href="javascript:void(0)" (click)="editHandler(item)" class="m-nav__link">
+                                    <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                </a>
+                            </div>
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group m-form__group">
+            <label style="color: white">.</label>
+            <div>
+                <a type="button" class="btn_custom btn_add ml-1" (click)="addNhanSuHandler()">
+                    <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">{{'SCI.CHON_NHAN_SU' | translate}}</span>
+                </a>
+                <a type="button" class="btn_custom btn_add ml-2 mr-0" (click)="addHandler()" *ngIf="roles.isCreate">
+                    <span class="text"><i nz-icon nzType="plus"></i> {{'SCI.THEM_NHAN_SU' | translate}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group m-form__group">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid [data]="viewNhanSu" [resizable]="true" [columnMenu]="false">
+                    <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" [width]="90"
+                        [columnMenu]="false" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <button type="button" nz-button class="btn-svg-danger d-inline-block"
+                                (click)="removeNhanSuHandler(dataItem, rowIndex)">
+                                <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="maThanhVien" [columnMenu]="false" [title]="'NV.MA_NHAN_SU' | translate"
+                        width="120" [sortable]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column [columnMenu]="false" field="ten" [title]="'NV.FULL_NHAN_SU' | translate"
+                        width="150" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{
+                            dataItem.hoTenThanhVien != null && dataItem.hoTenThanhVien != undefined
+                            ? dataItem.hoTenThanhVien
+                            : dataItem.hoDem + ' ' + dataItem.ten
+                            }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [columnMenu]="false" field="donVi" [title]="'SCI.DON_VI' | translate" width="150"
+                        [sortable]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column [columnMenu]="false" field="trinhDoChuyenMon"
+                        [title]="'SCI.TRINH_DO_CHUYEN_MON' | translate" width="150" [sortable]="false">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [width]="200" [title]="'NV.VAI_TRO' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear
+                                [(ngModel)]="dataItem.idVaiTro">
+                                <ng-container *ngFor="let item of listDropVaiTro">
+                                    <nz-option [nzLabel]="item.ma + ' - ' + item.ten" [nzValue]="item.id"></nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

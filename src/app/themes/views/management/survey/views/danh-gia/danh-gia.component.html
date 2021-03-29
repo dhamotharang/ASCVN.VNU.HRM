@@ -1,0 +1,959 @@
+<div class="m-content" *ngIf="phieuDanhGia; else elseBlock">
+    <div class="phieuDanhGia">
+        <div class="m-portlet m-portlet--tab">
+            <div class="m-portlet__body form_wapper">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title text-center">
+                        <h3 class="m-portlet__head-text mb-0">{{ phieuDanhGia.tenPhieu }}</h3>
+                        <!-- <small>
+                            <div [innerHTML]="phieuDanhGia.ghiChuPhieuDanhGia | safeHtml: 'html'"></div>
+                        </small> -->
+                    </div>
+                </div>
+                <div class="m-portlet--tab portlet-PKS">
+                    <div [innerHTML]="phieuDanhGia.ghiChuDauTrang | safeHtml: 'html'"></div>
+
+                    <ng-container *ngFor="let itemNhomCauHoi of phieuDanhGia.nhomCauHois; trackBy: trackByFn; let nhomCauHoiIndex = index">
+                        <!-- *ngIf="itemNhomCauHoi.doiTuongThucHienId < phieuDanhGia.typePhieu + 1" -->
+                        <ng-container *ngIf="!itemNhomCauHoi.isDisabled">
+                            <div class="m-portlet__body">
+                                <div class="m-portlet__head-title">
+                                    <h5 class="m-portlet__head-text">
+                                        <div [innerHTML]="itemNhomCauHoi.noiDung | safeHtml: 'html'"></div>
+                                    </h5>
+                                </div>
+                                <div>
+                                    <ng-container
+                                        *ngFor="let itemCauHoi of itemNhomCauHoi.cauHois; trackBy: trackByFn; let cauHoiIndex = index"
+                                    >
+                                        <div class="noiDungCauHoi">
+                                            <div class="d-inline-block" [innerHTML]="itemCauHoi.noiDungCauHoi | safeHtml: 'html'"></div>
+                                            <ng-container *ngIf="itemCauHoi.tieuChiDanhGia && itemCauHoi.tieuChiDanhGia !== ''">
+                                                <span nz-popover [nzPopoverContent]="contentTieuChiDanhGia">
+                                                    <span class="text-danger font-weight-bold"> ( i )</span>
+                                                </span>
+                                                <ng-template #contentTieuChiDanhGia>
+                                                    <pre class="note-tieuChiDanhGia">{{ itemCauHoi.tieuChiDanhGia }}</pre>
+                                                </ng-template>
+                                            </ng-container>
+                                        </div>
+                                        <ng-container [ngSwitch]="itemCauHoi.hinhThucTraLoiId">
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.TEXT">
+                                                <div class="form-group m-form__group">
+                                                    <div *ngIf="!itemCauHoi.isView">
+                                                        <!--                                                            <div-->
+                                                        <!--                                                                contenteditable="true"-->
+                                                        <!--                                                                class="f-control"-->
+                                                        <!--                                                                [(ngModel)]="itemCauHoi.yKien"-->
+                                                        <!--                                                            ></div>-->
+
+                                                        <textarea class="f-control" [(ngModel)]="itemCauHoi.yKien" rows="2"></textarea>
+                                                    </div>
+                                                    <div *ngIf="itemCauHoi.isView">
+                                                        <pre [innerHTML]="itemCauHoi.yKien"></pre>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.Y_KIEN">
+                                                <div class="form-group m-form__group">
+                                                    <div *ngIf="!itemCauHoi.isView">
+                                                        <!--                                                            <div-->
+                                                        <!--                                                                contenteditable="true"-->
+                                                        <!--                                                                class="f-control"-->
+                                                        <!--                                                                [(ngModel)]="itemCauHoi.yKien"-->
+                                                        <!--                                                            ></div>-->
+
+                                                        <textarea class="f-control" [(ngModel)]="itemCauHoi.yKien" rows="2"></textarea>
+                                                    </div>
+                                                    <div *ngIf="itemCauHoi.isView">
+                                                        <pre [innerHTML]="itemCauHoi.yKien"></pre>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.SELECT">
+                                                <div class="form-group m-form__group">
+                                                    <div>
+                                                        <ng-container
+                                                            *ngFor="
+                                                                let ketQuaDanhGia of xepLoaiKetQuaDanhGias;
+                                                                let ketQuaDanhGiaIndex = index
+                                                            "
+                                                        >
+                                                            <div class="m-radio-inline">
+                                                                <label class="m-radio">
+                                                                    <input
+                                                                        type="radio"
+                                                                        [name]="'ketQuaDanhGia-' + itemCauHoi.cauHoiId"
+                                                                        [disabled]="itemCauHoi.isView"
+                                                                        [value]="ketQuaDanhGia.xepLoaiKetQuaDanhGiaId"
+                                                                        [(ngModel)]="itemCauHoi.xepLoaiKetQuaDanhGiaId"
+                                                                    />
+                                                                    {{ ketQuaDanhGia.ten }}
+                                                                    <span></span>
+                                                                </label>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_CONGVIEC">
+                                                <div class="form-group m-form__group">
+                                                    <div class="d-flex justify-content-end" *ngIf="!itemCauHoi.isView">
+                                                        <div class="btn-actions">
+                                                            <a
+                                                                href="javascript:void(0)"
+                                                                class="btn_custom btn_add"
+                                                                (click)="addCongViec(nhomCauHoiIndex, cauHoiIndex)"
+                                                            >
+                                                                <div [innerHTML]="'write.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                                                <span class="text">{{ 'BTN.ADD_ROW' | translate }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <table class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="50">STT</th>
+                                                                    <th width="100">{{ 'LB.ACTION' | translate }}</th>
+                                                                    <th>Công việc được giao và thực hiện trong năm</th>
+                                                                    <th width="150">Tiến độ</th>
+                                                                    <th width="150">Chất lượng</th>
+                                                                    <th>Đính kèm</th>
+                                                                    <th>Ghi Chú</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <ng-container
+                                                                    *ngFor="
+                                                                        let congViec of itemCauHoi.congViecs;
+                                                                        trackBy: trackByFn;
+                                                                        let congViecIndex = index
+                                                                    "
+                                                                >
+                                                                    <tr *ngIf="!congViec.isDelete">
+                                                                        <td class="text-center">{{ congViec.stt }}</td>
+                                                                        <td scope="row" class="text-center">
+                                                                            <button
+                                                                                *ngIf="!itemCauHoi.isView"
+                                                                                nz-button
+                                                                                class="btn-svg-danger d-inline-block"
+                                                                                (click)="
+                                                                                    removeCongViec(
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        congViecIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                                <div
+                                                                                    [innerHTML]="
+                                                                                        'trash-danger.svg' | vnuIcon | safeHtml: 'html'
+                                                                                    "
+                                                                                ></div>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="congViec.tieuDe"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ congViec.tieuDe }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td>
+                                                                            <nz-select [(ngModel)]="congViec.trangThaiTienDoId">
+                                                                                <nz-option
+                                                                                    *ngFor="let tienDo of trangThaiTienDos"
+                                                                                    [nzValue]="tienDo.trangThaiTienDoId"
+                                                                                    [nzLabel]="tienDo.ten"
+                                                                                    [nzDisabled]="itemCauHoi.isView"
+                                                                                >
+                                                                                </nz-option>
+                                                                            </nz-select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <nz-select [(ngModel)]="congViec.mucDoHoanThanhId">
+                                                                                <nz-option
+                                                                                    *ngFor="let mucDo of mucDoHoanThanhs"
+                                                                                    [nzValue]="mucDo.mucDoHoanThanhId"
+                                                                                    [nzLabel]="mucDo.ten"
+                                                                                    [nzDisabled]="itemCauHoi.isView"
+                                                                                >
+                                                                                </nz-option>
+                                                                            </nz-select>
+                                                                        </td>
+                                                                        <td width="200px">
+                                                                            <asc-upload
+                                                                                [isDisabled]="itemCauHoi.isView"
+                                                                                [file]="congViec.fileAttachCongViecs"
+                                                                                [folderName]="folder.PDG_CongViec"
+                                                                                [fileSize]="0"
+                                                                                (fileInput)="
+                                                                                    fileCongViecSelected(
+                                                                                        $event,
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        congViecIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                            </asc-upload>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="congViec.ghiChu"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ congViec.ghiChu }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="itemCauHoi.congViecs.length < 1">
+                                                                    <td colspan="7" class="text-center">Chưa có dữ liệu</td>
+                                                                </ng-container>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_GIOGIANG">
+                                                <div class="form-group m-form__group">
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="btn-actions">
+                                                            <a
+                                                                *ngIf="!itemCauHoi.isView"
+                                                                href="javascript:void(0)"
+                                                                class="btn_custom btn_add"
+                                                                (click)="addNhiemVu(nhomCauHoiIndex, cauHoiIndex)"
+                                                            >
+                                                                <div [innerHTML]="'write.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                                                <span class="text">{{ 'BTN.ADD_ROW' | translate }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <table class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="50">STT</th>
+                                                                    <th width="100">{{ 'LB.ACTION' | translate }}</th>
+                                                                    <th>Nhiệm vụ Giảng dạy</th>
+                                                                    <th width="200">Số giờ chuẩn quy đổi</th>
+                                                                    <th>Đính kèm</th>
+                                                                    <th>Ghi Chú</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <ng-container
+                                                                    *ngFor="
+                                                                        let nhiemVu of itemCauHoi.nhiemVuThucHiens;
+                                                                        trackBy: trackByFn;
+                                                                        let nhiemVuIndex = index
+                                                                    "
+                                                                >
+                                                                    <tr *ngIf="!nhiemVu.isDelete">
+                                                                        <td class="text-center">{{ nhiemVu.stt }}</td>
+                                                                        <td scope="row" class="text-center">
+                                                                            <button
+                                                                                *ngIf="!itemCauHoi.isView"
+                                                                                nz-button
+                                                                                class="btn-svg-danger d-inline-block"
+                                                                                (click)="
+                                                                                    removeNhiemVuThucHien(
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        nhiemVuIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                                <div
+                                                                                    [innerHTML]="
+                                                                                        'trash-danger.svg' | vnuIcon | safeHtml: 'html'
+                                                                                    "
+                                                                                ></div>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="nhiemVu.tieuDe"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ nhiemVu.tieuDe }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <nz-input-number
+                                                                                    [(ngModel)]="nhiemVu.soGio"
+                                                                                    (ngModelChange)="
+                                                                                        caculatorSoGio($event, nhomCauHoiIndex, cauHoiIndex)
+                                                                                    "
+                                                                                    [nzMin]="1"
+                                                                                    [nzStep]="1"
+                                                                                    style="width: 100%"
+                                                                                >
+                                                                                </nz-input-number>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ nhiemVu.soGio }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td width="200px">
+                                                                            <asc-upload
+                                                                                [isDisabled]="itemCauHoi.isView"
+                                                                                [file]="nhiemVu.fileAttachNhiemVus"
+                                                                                [folderName]="folder.PDG_NhiemVu"
+                                                                                [fileSize]="0"
+                                                                                (fileInput)="
+                                                                                    fileNhiemVuThucHienSelected(
+                                                                                        $event,
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        nhiemVuIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                            </asc-upload>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="nhiemVu.ghiChu"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ nhiemVu.ghiChu }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="itemCauHoi.nhiemVuThucHiens.length < 1">
+                                                                    <td colspan="6" class="text-center">Chưa có dữ liệu</td>
+                                                                </ng-container>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <table class="table borderless table-trans">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <!-- <td>Số giờ chuẩn</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioChuan"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            <div>
+                                                                                {{ itemCauHoi.tongHopNhiemVu?.soGioChuan }}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </td> -->
+                                                                    <td>Số giờ phải thực hiện (1)</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioPhaiThucHien"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                                (ngModelChange)="
+                                                                                    caculatorSoGio($event, nhomCauHoiIndex, cauHoiIndex)
+                                                                                "
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            <div>
+                                                                                {{ itemCauHoi.tongHopNhiemVu?.soGioPhaiThucHien }}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </td>
+                                                                    <td>Số giờ đã thực hiện (2)</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioDaThucHien"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            <div>
+                                                                                {{ itemCauHoi.tongHopNhiemVu?.soGioDaThucHien }}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </td>
+                                                                    <td>Số giờ thừa thiếu (2-1)</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioThuaThieu"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                                [disabled]="true"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            <div>
+                                                                                {{ itemCauHoi.tongHopNhiemVu?.soGioThuaThieu }}
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_NCKH">
+                                                <div class="form-group m-form__group">
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="btn-actions">
+                                                            <a
+                                                                *ngIf="!itemCauHoi.isView"
+                                                                href="javascript:void(0)"
+                                                                class="btn_custom btn_add"
+                                                                (click)="addNhiemVu(nhomCauHoiIndex, cauHoiIndex)"
+                                                            >
+                                                                <div [innerHTML]="'write.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                                                <span class="text">{{ 'BTN.ADD_ROW' | translate }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <table class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="50">STT</th>
+                                                                    <th width="100">{{ 'LB.ACTION' | translate }}</th>
+                                                                    <th>Nhiệm vụ NCKH</th>
+                                                                    <th width="200">Số giờ NCKH quy đổi</th>
+                                                                    <th>Đính kèm</th>
+                                                                    <th>Ghi Chú</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <ng-container
+                                                                    *ngFor="
+                                                                        let nhiemVu of itemCauHoi.nhiemVuThucHiens;
+                                                                        trackBy: trackByFn;
+                                                                        let nhiemVuIndex = index
+                                                                    "
+                                                                >
+                                                                    <tr *ngIf="!nhiemVu.isDelete">
+                                                                        <td class="text-center">{{ nhiemVu.stt }}</td>
+                                                                        <td scope="row" class="text-center">
+                                                                            <button
+                                                                                *ngIf="!itemCauHoi.isView"
+                                                                                nz-button
+                                                                                class="btn-svg-danger d-inline-block"
+                                                                                (click)="
+                                                                                    removeNhiemVuThucHien(
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        nhiemVuIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                                <div
+                                                                                    [innerHTML]="
+                                                                                        'trash-danger.svg' | vnuIcon | safeHtml: 'html'
+                                                                                    "
+                                                                                ></div>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="nhiemVu.tieuDe"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ nhiemVu.tieuDe }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td>
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="nhiemVu.soGio"
+                                                                                (ngModelChange)="
+                                                                                    caculatorSoGio($event, nhomCauHoiIndex, cauHoiIndex)
+                                                                                "
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                                [nzDisabled]="itemCauHoi.isView"
+                                                                                style="width: 100%"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </td>
+                                                                        <td width="200px">
+                                                                            <asc-upload
+                                                                                [isDisabled]="itemCauHoi.isView"
+                                                                                [file]="nhiemVu.fileAttachNhiemVus"
+                                                                                [file]="nhiemVu.fileAttachNhiemVus"
+                                                                                [folderName]="folder.PDG_NhiemVu"
+                                                                                (fileInput)="
+                                                                                    fileNhiemVuThucHienSelected(
+                                                                                        $event,
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        nhiemVuIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                            </asc-upload>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="nhiemVu.ghiChu"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ nhiemVu.ghiChu }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="itemCauHoi.nhiemVuThucHiens.length < 1">
+                                                                    <td colspan="6" class="text-center">Chưa có dữ liệu</td>
+                                                                </ng-container>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <table class="table borderless table-trans">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <!-- <td>Số giờ chuẩn</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioChuan"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            {{ itemCauHoi.tongHopNhiemVu.soGioChuan }}
+                                                                        </ng-container>
+                                                                    </td> -->
+                                                                    <td>Số giờ phải thực hiện (1)</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioPhaiThucHien"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                                (ngModelChange)="
+                                                                                    caculatorSoGio($event, nhomCauHoiIndex, cauHoiIndex)
+                                                                                "
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            {{ itemCauHoi.tongHopNhiemVu?.soGioPhaiThucHien }}
+                                                                        </ng-container>
+                                                                    </td>
+                                                                    <td>Số giờ đã thực hiện (2)</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioDaThucHien"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            {{ itemCauHoi.tongHopNhiemVu?.soGioDaThucHien }}
+                                                                        </ng-container>
+                                                                    </td>
+                                                                    <td>Số giờ thừa thiếu (2-1)</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioThuaThieu"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                                [disabled]="true"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            {{ itemCauHoi.tongHopNhiemVu?.soGioThuaThieu }}
+                                                                        </ng-container>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <!-- <td>Số giờ được giảm trừ</td>
+                                                                    <td>
+                                                                        <ng-container *ngIf="!itemCauHoi.isView">
+                                                                            <nz-input-number
+                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioGiamTru"
+                                                                                [nzMin]="1"
+                                                                                [nzStep]="1"
+                                                                            >
+                                                                            </nz-input-number>
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="itemCauHoi.isView">
+                                                                            {{ itemCauHoi.tongHopNhiemVu?.soGioGiamTru }}
+                                                                        </ng-container>
+                                                                    </td> -->
+                                                                    <!--                                                                    <td>Số giờ đã thực hiện (2)</td>-->
+                                                                    <!--                                                                    <td>-->
+                                                                    <!--                                                                        <ng-container *ngIf="!itemCauHoi.isView">-->
+                                                                    <!--                                                                            <nz-input-number-->
+                                                                    <!--                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioDaThucHien"-->
+                                                                    <!--                                                                                [nzMin]="1"-->
+                                                                    <!--                                                                                [nzStep]="1"-->
+                                                                    <!--                                                                            >-->
+                                                                    <!--                                                                            </nz-input-number>-->
+                                                                    <!--                                                                        </ng-container>-->
+                                                                    <!--                                                                        <ng-container *ngIf="itemCauHoi.isView">-->
+                                                                    <!--                                                                            {{ itemCauHoi.tongHopNhiemVu?.soGioDaThucHien }}-->
+                                                                    <!--                                                                        </ng-container>-->
+                                                                    <!--                                                                    </td>-->
+                                                                    <!--                                                                    <td>Số giờ thừa thiếu (2-1)</td>-->
+                                                                    <!--                                                                    <td>-->
+                                                                    <!--                                                                        <ng-container *ngIf="!itemCauHoi.isView">-->
+                                                                    <!--                                                                            <nz-input-number-->
+                                                                    <!--                                                                                [(ngModel)]="itemCauHoi.tongHopNhiemVu.soGioThuaThieu"-->
+                                                                    <!--                                                                                [nzMin]="1"-->
+                                                                    <!--                                                                                [nzStep]="1"-->
+                                                                    <!--                                                                                [disabled]="true"-->
+                                                                    <!--                                                                            >-->
+                                                                    <!--                                                                            </nz-input-number>-->
+                                                                    <!--                                                                        </ng-container>-->
+                                                                    <!--                                                                        <ng-container *ngIf="itemCauHoi.isView">-->
+                                                                    <!--                                                                            {{ itemCauHoi.tongHopNhiemVu?.soGioThuaThieu }}-->
+                                                                    <!--                                                                        </ng-container>-->
+                                                                    <!--                                                                    </td>-->
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_CONG_TAC_KHAC">
+                                                <div class="form-group m-form__group">
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="btn-actions">
+                                                            <a
+                                                                *ngIf="!itemCauHoi.isView"
+                                                                href="javascript:void(0)"
+                                                                class="btn_custom btn_add"
+                                                                (click)="addCongViec(nhomCauHoiIndex, cauHoiIndex)"
+                                                            >
+                                                                <div [innerHTML]="'write.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                                                <span class="text">{{ 'BTN.ADD_ROW' | translate }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <table class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th width="50">STT</th>
+                                                                    <th width="100">{{ 'LB.ACTION' | translate }}</th>
+                                                                    <th>Công việc được giao khác</th>
+                                                                    <th width="150">Tiến độ</th>
+                                                                    <th width="150">Chất lượng</th>
+                                                                    <th>Đính kèm</th>
+                                                                    <th>Ghi Chú</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <ng-container
+                                                                    *ngFor="
+                                                                        let congViec of itemCauHoi.congViecs;
+                                                                        let congViecIndex = index;
+                                                                        trackBy: trackByFn
+                                                                    "
+                                                                >
+                                                                    <tr *ngIf="!congViec.isDelete">
+                                                                        <td class="text-center">{{ congViec.stt }}</td>
+                                                                        <td scope="row" class="text-center">
+                                                                            <button
+                                                                                *ngIf="!itemCauHoi.isView"
+                                                                                nz-button
+                                                                                class="btn-svg-danger d-inline-block"
+                                                                                (click)="
+                                                                                    removeCongViec(
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        congViecIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                                <div
+                                                                                    [innerHTML]="
+                                                                                        'trash-danger.svg' | vnuIcon | safeHtml: 'html'
+                                                                                    "
+                                                                                ></div>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="congViec.tieuDe"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ congViec.tieuDe }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                        <td>
+                                                                            <nz-select [(ngModel)]="congViec.trangThaiTienDoId">
+                                                                                <nz-option
+                                                                                    *ngFor="let tienDo of trangThaiTienDos"
+                                                                                    [nzValue]="tienDo.trangThaiTienDoId"
+                                                                                    [nzLabel]="tienDo.ten"
+                                                                                    [nzDisabled]="itemCauHoi.isView"
+                                                                                >
+                                                                                </nz-option>
+                                                                            </nz-select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <nz-select [(ngModel)]="congViec.mucDoHoanThanhId">
+                                                                                <nz-option
+                                                                                    *ngFor="let mucDo of mucDoHoanThanhs"
+                                                                                    [nzValue]="mucDo.mucDoHoanThanhId"
+                                                                                    [nzLabel]="mucDo.ten"
+                                                                                    [nzDisabled]="itemCauHoi.isView"
+                                                                                >
+                                                                                </nz-option>
+                                                                            </nz-select>
+                                                                        </td>
+                                                                        <td width="200px">
+                                                                            <asc-upload
+                                                                                [isDisabled]="itemCauHoi.isView"
+                                                                                [file]="congViec.fileAttachCongViecs"
+                                                                                (fileInput)="
+                                                                                    fileCongViecSelected(
+                                                                                        $event,
+                                                                                        nhomCauHoiIndex,
+                                                                                        cauHoiIndex,
+                                                                                        congViecIndex
+                                                                                    )
+                                                                                "
+                                                                            >
+                                                                            </asc-upload>
+                                                                        </td>
+                                                                        <td>
+                                                                            <ng-container *ngIf="!itemCauHoi.isView">
+                                                                                <div
+                                                                                    class="m-input form-control"
+                                                                                    [(ngModel)]="congViec.ghiChu"
+                                                                                    contenteditable="true"
+                                                                                ></div>
+                                                                            </ng-container>
+
+                                                                            <ng-container *ngIf="itemCauHoi.isView">
+                                                                                <div>{{ congViec.ghiChu }}</div>
+                                                                            </ng-container>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="itemCauHoi.congViecs.length < 1">
+                                                                    <td colspan="7" class="text-center">Chưa có dữ liệu</td>
+                                                                </ng-container>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </ng-container>
+                                        <div>
+                                            <!-- <div class="row"> -->
+                                            <span class="text-ghi-chu-phieu-danh-gia">{{ itemCauHoi.ghiChuCauHoi }}</span>
+                                            <!-- </div> -->
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+
+                    <div [innerHTML]="phieuDanhGia.ghiChuCuoiTrang | safeHtml: 'html'"></div>
+
+                    <!-- /// danh gia cap 2 -->
+                    <ng-container *ngIf="isDuyetByDonVi && (is2Cap || (isPhieu3Cap && phieuDanhGia.typePhieu != 3))">
+                        <div class="form-xetduyet">
+                            <div class="m-portlet__head-title">
+                                <h5 class="m-portlet__head-text uppercase">Xét duyệt</h5>
+                            </div>
+                            <div class="form-group m-form__group">
+                                <div>
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio">
+                                            <input
+                                                type="radio"
+                                                name="dongY"
+                                                [value]="true"
+                                                [(ngModel)]="modelXepLoai.isDongYKetQua"
+                                                (change)="clearXetDuyet()"
+                                            />
+                                            Đồng ý với kết quả đánh giá của cấp trực tiếp
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio">
+                                            <input type="radio" name="dongY" [value]="false" [(ngModel)]="modelXepLoai.isDongYKetQua" />
+                                            Nhập ý kiến, đánh giá khác
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="form-group m-form__group"
+                                [ngClass]="modelXepLoai.isDongYKetQua ? 'custom-view-assign-hide' : 'custom-view-assign-show'"
+                            >
+                                <label>Ý kiến </label>
+                                <textarea class="form-control" [(ngModel)]="modelXepLoai.yKien"></textarea>
+                            </div>
+
+                            <div
+                                class="form-group m-form__group"
+                                [ngClass]="modelXepLoai.isDongYKetQua ? 'custom-view-assign-hide' : 'custom-view-assign-show'"
+                            >
+                                <label>Xếp loại </label>
+                                <ng-container *ngFor="let ketQuaDanhGia of xepLoaiKetQuaDanhGias">
+                                    <div class="m-radio-inline">
+                                        <label class="m-radio">
+                                            <input
+                                                type="radio"
+                                                [value]="ketQuaDanhGia.xepLoaiKetQuaDanhGiaId"
+                                                [(ngModel)]="modelXepLoai.idKetQuaDanhGia"
+                                                name="xeploai"
+                                            />
+                                            {{ ketQuaDanhGia.ten }}
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div class="text-center">
+                                <ng-container>
+                                    <button class="btn_custom btn_add" (click)="xetDuyetPhieu2Cap()">
+                                        <div [innerHTML]="'save.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                        <span class="text">{{ 'Xét duyệt' | translate }}</span>
+                                    </button>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <!-- /// danh gia cap 2 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mb-3 border-form-footer">
+        <ng-container *ngIf="!isView && !(isDuyetByDonVi && (is2Cap || (isPhieu3Cap && phieuDanhGia.typePhieu != 3)))">
+            <ng-container [ngSwitch]="phieuDanhGia.typePhieu">
+                <ng-container *ngSwitchCase="doiTuongThucHienEnum.TU_DANH_GIA">
+                    <button class="btn_custom btn_add" (click)="onSubmit()">
+                        <div [innerHTML]="'save.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.SAVE' | translate }}</span>
+                    </button>
+                    <button class="btn_custom btn_update ml-1" (click)="onSendNhanSuDanhGia()">
+                        <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.SEND' | translate }}</span>
+                    </button>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="doiTuongThucHienEnum.THU_TRUONG_DON_VI">
+                    <button class="btn_custom btn_add ml-1" (click)="onSubmit()">
+                        <div [innerHTML]="'save.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.SAVE' | translate }}</span>
+                    </button>
+                    <button class="btn_custom btn_update ml-1" (click)="onChuyenDanhGia()">
+                        <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'Chuyển đánh giá' | translate }}</span>
+                    </button>
+                    <button class="btn_custom btn_update ml-1" (click)="onSendNhanSuDanhGia()">
+                        <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.SEND' | translate }}</span>
+                    </button>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="doiTuongThucHienEnum.BAN_GIAM_DOC_DHQG">
+                    <button class="btn_custom btn_add ml-1" (click)="onSubmit()">
+                        <div [innerHTML]="'save.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.SAVE' | translate }}</span>
+                    </button>
+                    <button class="btn_custom btn_update ml-1" (click)="onChuyenDanhGia()">
+                        <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'Chuyển đánh giá' | translate }}</span>
+                    </button>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+        <!-- <button class="btn_custom btn_df ml-1" (click)="onExport()">
+            <div [innerHTML]="'printer.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'Xem mẫu in' | translate }}</span>
+        </button> -->
+        <button class="btn_custom btn_df ml-1" (click)="onPrint()">
+            <div [innerHTML]="'printer.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'BTN.PRINT' | translate }}</span>
+        </button>
+        <button class="btn_custom btn_df ml-1" (click)="goBack()">
+            <span class="text">{{ 'BTN.CANCEL' | translate }}</span>
+        </button>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+</ng-template>
+
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

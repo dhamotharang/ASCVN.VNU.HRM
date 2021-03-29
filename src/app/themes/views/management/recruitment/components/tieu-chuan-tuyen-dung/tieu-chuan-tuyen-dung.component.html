@@ -1,0 +1,22 @@
+<div class="row d-block-max">
+    <div class="col-sm-12">
+        <div class="grid-wrapper grid-wrapper-border">
+            <kendo-grid [data]="keHoachTuyenDungTieuChuans" [columnMenu]="false">
+                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.KE_HOACH.TIEU_CHUAN' | translate" width="350">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.tenYeuCau }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="yeuCau" [title]="'RECRUITMENT.KE_HOACH.YEU_CAU' | translate"> </kendo-grid-column>
+                <kendo-grid-column field="ghiChu" width="200" [title]="'LB.NOTE' | translate"> </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>

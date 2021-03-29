@@ -1,0 +1,114 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.THAM_GIA_DAO_TAO_SDH.THESIS_NAME3' | translate }} <span class="text-danger">(*)</span> </label>
+                <input type="text" class="m-input form-control" formControlName="tenLuanAn" />
+                <app-field-error [control]="form.get('tenLuanAn')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.THAM_GIA_DAO_TAO_SDH.STUDY_NAME' | translate }} <span class="text-danger">(*)</span> </label>
+                <input type="text" class="m-input form-control" formControlName="hoTen" />
+                <app-field-error [control]="form.get('hoTen')"></app-field-error>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.SB.FIELD' | translate }}
+                </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.LINH_VUC"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idLinhVuc"
+                >
+                </asc-select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SB.THAM_GIA_DAO_TAO_SDH.ROLE' | translate }}
+                </label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.VAI_TRO_HUONG_DAN"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idVaiTroHuongDan"
+                >
+                </asc-select>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.THAM_GIA_DAO_TAO_SDH.TIME' | translate }}</label>
+
+                <div class="d-flex">
+                    <nz-date-picker
+                        class="col-6"
+                        formControlName="thoiGianBatDau"
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                        [nzDisabledDate]="disabledThoiGianBatDau"
+                    >
+                    </nz-date-picker>
+                    <label>&nbsp;</label>
+                    <nz-date-picker
+                        class="col-6"
+                        formControlName="thoiGianKetThuc"
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                        [nzDisabledDate]="disabledThoiGianKetThuc"
+                    ></nz-date-picker>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'SB.THAM_GIA_DAO_TAO_SDH.ADDRESS2' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="coQuanCongTac" />
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.STATUS' | translate }} </label>
+                <div>
+                    <div class="m-radio-inline">
+                        <label class="m-radio">
+                            <input type="radio" [value]="true" formControlName="isDaBaoVeThanhCong" />
+                            {{ 'SB.THAM_GIA_DAO_TAO_SDH.STATUS_ITEM1' | translate }}
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="m-radio-inline">
+                        <label class="m-radio">
+                            <input type="radio" [value]="false" formControlName="isDaBaoVeThanhCong" />
+                            {{ 'SB.THAM_GIA_DAO_TAO_SDH.STATUS_ITEM2' | translate }}
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'LB.NOTE' | translate }}
+                </label>
+                <textarea class="form-control" formControlName="ghiChu"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

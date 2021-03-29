@@ -1,0 +1,35 @@
+<div class="grid-wrapper grid-wrapper-border">
+    <kendo-grid
+        [data]="gridView$ | async"
+        [pageSize]="gridState.take"
+        [skip]="gridState.skip"
+        [loading]="isLoading"
+        [pageable]="pageConfig"
+        [resizable]="true"
+        [columnMenu]="false"
+        [sortable]="true"
+        [sort]="gridState.sort"
+        [height]="400"
+    >
+        <kendo-grid-column width="100" [columnMenu]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="text-center">
+                    <button (click)="selectItem(dataItem)" class="btn_custom btn_add">
+                        {{ 'BTN.SELECT' | translate }}
+                    </button>
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                <div class="text-center">
+                    {{ rowIndex + 1 }}
+                </div>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column field="maPhieu" width="200" 
+            [title]="'SURVEY.PHIEU_DANH_GIA.CODE' | translate"> </kendo-grid-column>
+        <kendo-grid-column field="tenPhieu" 
+            [title]="'SURVEY.PHIEU_DANH_GIA.NAME' | translate"> </kendo-grid-column>
+    </kendo-grid>
+</div>

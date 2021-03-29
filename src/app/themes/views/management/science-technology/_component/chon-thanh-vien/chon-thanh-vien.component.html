@@ -1,0 +1,175 @@
+<div class="row">
+    <div class="col-sm-9">
+        <div class="form-group m-form__group">
+            <label> {{ 'SCI.BBKH.TV_THUOC_DHQG' | translate }} </label>
+            <div>
+                <div class="select-user">
+                    <widget-select-user-for-filter
+                        [placeholder]="'LB.SELECT' | translate"
+                        formControlName="idNhanSu"
+                        [(ngModel)]="chonNhanSu"
+                        [userSelectedIds]="chonNhanSu"
+                        [mode]="'multiple'"
+                        (listItems)="changeNhanSu($event)"
+                    >
+                    </widget-select-user-for-filter>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group m-form__group">
+            <label style="color: white">.</label>
+            <div>
+                <a type="button" class="btn_custom btn_add ml-1" (click)="addNhanSuHandler()">
+                    <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">Chọn nhân sự</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group m-form__group">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid [data]="viewNhanSu" [resizable]="true" [columnMenu]="false">
+                    <kendo-grid-column
+                        [title]="'LB.ACTION' | translate"
+                        class="text-center"
+                        [width]="90"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <button
+                                type="button"
+                                nz-button
+                                class="btn-svg-danger d-inline-block"
+                                (click)="removeNhanSuHandler(dataItem, rowIndex)"
+                            >
+                                <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        field="maNhanSu"
+                        [columnMenu]="false"
+                        [title]="'NV.MA_NHAN_SU' | translate"
+                        width="120"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column
+                        [columnMenu]="false"
+                        field="hoTenNhanSu"
+                        [title]="'NV.FULL_NHAN_SU' | translate"
+                        width="150"
+                        [sortable]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{
+                                dataItem.hoTenNhanSu != null && dataItem.hoTenNhanSu != undefined
+                                    ? dataItem.hoTenNhanSu
+                                    : dataItem.hoDem + ' ' + dataItem.ten
+                            }}
+                        </ng-template>
+                    </kendo-grid-column> -->
+
+                    <kendo-grid-column
+                        field="ten"
+                        class="text-left"
+                        [title]="'NV.FULL_NHAN_SU' | translate"
+                        width="180"
+                        [columnMenu]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="dark">
+                                <b>
+                                    {{
+                                        dataItem.hoTenNhanSu != null && dataItem.hoTenNhanSu != undefined
+                                            ? dataItem.hoTenNhanSu
+                                            : dataItem.hoDem + ' ' + dataItem.ten
+                                    }}</b
+                                >
+                            </div>
+                            <div class="grid-size12">
+                                {{
+                                    (dataItem.tenChucVu ? dataItem.tenChucVu : '') +
+                                        (dataItem.tenChucVu && dataItem.tenChucDanh ? ' - ' : '') +
+                                        (dataItem.tenChucDanh ? dataItem.tenChucDanh : '')
+                                }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="tenGioiTinh"
+                        [title]="'NV.TEN_GIOI_TINH' | translate"
+                        width="80"
+                        [sortable]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                {{ dataItem.tenGioiTinh }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="ngaySinh"
+                        [title]="'NV.NGAY_SINH' | translate"
+                        width="130"
+                        [sortable]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                {{ dataItem.ngaySinh | date: 'dd/MM/yyyy' }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="email"
+                        [title]="'LB.EMAIL' | translate"
+                        width="180"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="soDienThoai"
+                        [title]="'LB.HRM.SO_DIEN_THOAI' | translate"
+                        width="120"
+                        [sortable]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="text-center">
+                                {{ dataItem.soDienThoai }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [width]="200" [title]="'NV.VAI_TRO' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear [(ngModel)]="dataItem.idVaiTro">
+                                <ng-container *ngFor="let item of listDropVaiTro">
+                                    <nz-option [nzLabel]="item.ma + ' - ' + item.ten" [nzValue]="item.id"></nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </ng-template>
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

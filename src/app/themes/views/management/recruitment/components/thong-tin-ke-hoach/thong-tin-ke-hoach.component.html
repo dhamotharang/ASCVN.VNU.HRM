@@ -1,0 +1,40 @@
+<div class="p-3">
+    <div class="col-sm-12">
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'LB.YEAR' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.nam }} </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'RECRUITMENT.KE_HOACH.TG_TUYEN' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info">
+                {{ (itemKeHoach.ngayBatDau | date: 'dd/MM/yyyy') + ' - ' + (itemKeHoach.ngayKetThuc | date: 'dd/MM/yyyy') }}
+            </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'RECRUITMENT.KE_HOACH.MA' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.maKeHoach }} </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'RECRUITMENT.KE_HOACH.TEN' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.tenKeHoach }} </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'RECRUITMENT.KE_HOACH.MON_THI' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.tomTatMonThi }} </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label"
+                >{{ 'RECRUITMENT.KE_HOACH.NGUON_TUYEN' | translate }}<span class="float-right">:</span></label
+            >
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.nguonTuyenDung }} </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'RECRUITMENT.KE_HOACH.HOI_DONG' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.hoiDongThamGia }} </label>
+        </div>
+        <div class="row">
+            <label class="col-2 col-form-label">{{ 'LB.NOTE' | translate }}<span class="float-right">:</span></label>
+            <label class="col-10 col-form-label lb-bold-info"> {{ itemKeHoach.ghiChu }} </label>
+        </div>
+    </div>
+</div>

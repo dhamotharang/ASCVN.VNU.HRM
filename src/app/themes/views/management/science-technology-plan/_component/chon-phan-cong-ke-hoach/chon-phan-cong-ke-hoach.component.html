@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group m-form__group">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid 
+                    [data]="listLoaiKeHoach" 
+                    [resizable]="true" 
+                    [columnMenu]="false">
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="30" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column 
+                        field="ma" 
+                        [columnMenu]="false" 
+                        [title]="'SCI.LKH.MA' | translate"
+                        width="60" 
+                        [sortable]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column 
+                        [columnMenu]="false" 
+                        field="ten" 
+                        [title]="'SCI.LKH.TEN' | translate" width="200"
+                        [sortable]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column [width]="100" [title]="'SPL.LABEL.PHAN_CONG' | translate">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-select
+                                [nzPlaceHolder]="'SPL.LABEL.CHON_NHAN_SU' | translate"
+                                [(ngModel)]="dataItem.idNhanSu"
+                                (ngModelChange)="onChange($event, dataItem.id)"
+                                nzAllowClear
+                                nzShowSearch 
+                                >
+                                <ng-container *ngFor="let item of nhanSuCoQuanChucVus">
+                                    <nz-option nzCustomContent [nzLabel]="item.hoDem + ' ' + item.ten" [nzValue]="item.nhanSuId">
+                                        <div class="dark">
+                                            <b>{{item.hoDem + ' ' + item.ten}}</b>
+                                        </div>
+                                        <div class="grid-size12">
+                                            {{
+                                                (item.tenChucVu ? item.tenChucVu : '') +
+                                                (item.tenChucVu && item.tenChucDanh ? ' - ' : '') +
+                                                (item.tenChucDanh ? item.tenChucDanh : '')
+                                            }}
+                                        </div>
+                                    </nz-option>
+                                </ng-container>
+                            </nz-select>
+                        </ng-template>  
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

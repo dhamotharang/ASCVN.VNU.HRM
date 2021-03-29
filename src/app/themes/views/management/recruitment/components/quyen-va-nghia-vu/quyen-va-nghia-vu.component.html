@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Phương tiện đi lại' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.phuongTienDiLai }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Thời gian nhận lương' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info">
+                        {{ model?.nhanLuongTuNgay | date: 'dd/MM/yyyy' }} - {{ model?.nhanLuongDenNgay | date: 'dd/MM/yyyy' }}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">
+                        {{ 'Chức danh nghề nghiệp' | translate }} <span class="float-right">:</span></label
+                    >
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenNgachCongChuc }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Bậc' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.bacLuong }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Hệ số lương' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.heSoLuong }}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label"> {{ 'Thời gian nâng lương' | translate }} <span class="float-right">:</span></label>
+                    <label class="col-8 col-form-label lb-bold-info"> {{ model?.ngayNangLuongTiepTheo | date: 'dd/MM/yyyy' }}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label">
+                        {{ 'RECRUITMENT.HD.BAO_HO_LD' | translate }}<span class="float-right">:</span>
+                    </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.thietBiBaoHo }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label">
+                        {{ 'RECRUITMENT.HD.NGAY_NGHI_PHEP' | translate }}<span class="float-right">:</span>
+                    </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.soNgayNghiHuongLuong }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label">
+                        {{ 'RECRUITMENT.HD.BAO_HIEM' | translate }}<span class="float-right">:</span>
+                    </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.cheDoBaoHiem }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label">
+                        {{ 'RECRUITMENT.HD.PHUC_LOI' | translate }}<span class="float-right">:</span>
+                    </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.phucLoi }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label">
+                        {{ 'RECRUITMENT.HD.KHOAN_KHAC' | translate }}<span class="float-right">:</span>
+                    </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.khoanThuongKhac }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <label class="col-md-2 col-4 col-form-label">
+                        {{ 'RECRUITMENT.HD.THOA_THUAN_KHAC' | translate }}<span class="float-right">:</span>
+                    </label>
+                    <label class="col-md-10 col-8 col-form-label lb-bold-info">{{ model?.thoaThuanKhac }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

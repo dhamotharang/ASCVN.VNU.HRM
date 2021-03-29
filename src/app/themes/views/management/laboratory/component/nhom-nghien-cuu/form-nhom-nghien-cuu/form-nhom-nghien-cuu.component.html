@@ -1,0 +1,103 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.NNC.PHONG_THI_NGHIEM' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        [permissionType]="1"
+                        formControlName="idPhongThiNghiem"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NNC.MA' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="maNhomNghienCuu" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NNC.TEN' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenNhomNghienCuu" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NNC.NAM_CONG_NHAN' | translate }}
+                </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.NAM"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="namCongNhan"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NNC.TEN_NHOM_TRUONG' | translate }}
+                </label>
+                <div>
+                    <input class="form-control" formControlName="tenNhomTruong" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NNC.MO_TA' | translate }}
+                </label>
+                <div>
+                    <div>
+                        <input class="form-control" formControlName="moTa" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.NNC.GHI_CHU' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="ghiChu"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <div class="m-checkbox-inline">
+                    <label class="m-checkbox">
+                        <input type="checkbox" formControlName="isVisible" />
+                        {{ 'LB.PTN.VISIBLE' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

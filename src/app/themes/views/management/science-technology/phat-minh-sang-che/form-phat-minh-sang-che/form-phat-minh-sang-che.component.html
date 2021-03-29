@@ -1,0 +1,262 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <section>
+        <nz-tabset>
+            <nz-tab [nzTitle]="'SCI.PMSC.TAB_THONG_TIN_CHUNG' | translate">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.MA' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="maCapBang" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.TEN' | translate }}
+                            </label>
+                            <div>
+                                <input class="form-control" formControlName="tenPhatMinhSangChe" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.HINH_THUC' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.DM_HINH_THUC"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idHinhThuc"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.TINH_TRANG_DANG_KY' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.DM_TINH_TRANG_DANG_KY"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idTinhTrangDangKy"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.DE_TAI' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.KHCN_DE_TAI"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idDeTai"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.DON_VI' | translate }}
+                            </label>
+                            <div>
+                                <!-- <app-select-user-tree [placeholder]="'LB.HRM.CO_QUAN' | translate" formControlName="idCoQuan"
+                                    [isMultiple]="false"></app-select-user-tree> -->
+                                <!-- <ng-container *ngIf="isQuanLy; else personlTemplate1" >
+                                    <div>
+                                        <app-select-user-tree
+                                            [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                            formControlName="idCoQuan"
+                                            [isMultiple]="false"
+                                        ></app-select-user-tree>
+                                    </div>
+                                </ng-container>
+                                <ng-template #personlTemplate1>
+                                    <div>
+                                        <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                    </div>
+                                </ng-template> -->
+                                <div>
+                                    <input [value]="tenCoQuanCap1" disabled class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.QUOC_GIA_CAP_BANG' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idQuocGiaCapBang"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.TO_CHUC_CAP_BANG' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.DM_TO_CHUC_CAP_BANG"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idToChucCapBang"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.NGAY_CAP_BANG' | translate }}
+                            </label>
+                            <div>
+                                <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayCapBang" style="width: 100%">
+                                </nz-date-picker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.TINH_TRANG_SAN_PHAM' | translate }}
+                            </label>
+                            <div>
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.DM_TINH_TRANG_SAN_PHAM"
+                                    [placeHolder]="'LB.SELECT' | translate" formControlName="idTinhTrangSanPham"
+                                    [isDisabled]="isDisabled">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'SCI.PMSC.TAB_THONG_TIN_CHI_TIET' | translate">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label> 
+                                {{ 'SCI.PMSC.KHA_NANG_UNG_DUNG' | translate }} 
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="khaNangUngDung" rows="8"></textarea>
+                            </div>
+                        </div>
+                    </div>       
+                    <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.DE_NGHI_HO_TRO' | translate }}
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="deNghiHoTro" rows="8"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label> 
+                                {{ 'SCI.PMSC.NHU_CAU_CHUYEN_GIAO' | translate }} 
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="nhuCauChuyenGiao" rows="8"></textarea>
+                            </div>
+                        </div>
+                    </div>       
+                    <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.NHU_CAU_GOI_VON' | translate }}
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="nhuCauGoiVon" rows="8"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.MO_TA' | translate }}
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="moTa" rows="8"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'SCI.PMSC.GHI_CHU' | translate }}
+                            </label>
+                            <div>
+                                <textarea class="form-control" formControlName="ghiChu"></textarea>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <label>
+                                {{ 'LB.ATTACH_FILE' | translate }}
+                            </label>
+                            <khcn-upload
+                                [folderName]="folder.KHCN_KHOA_HOC_CONG_NGHE"
+                                (fileInput)="onSelectFile($event)"
+                                [file]="fileInput"
+                                [multiple]="false"
+                            >
+                            </khcn-upload>
+                        </div>
+                    </div> -->
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'SCI.BBKH.PTN' | translate">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <app-chon-phong-thi-nghiem
+                            (changedData)="receiveDataPhongThiNghiem($event)"
+                            [idThamChieu]="form.get('id').value"
+                            [suDungPTN]="this.fsuDung"
+                            >
+                            </app-chon-phong-thi-nghiem>
+                    </div>
+                </div>
+            </nz-tab>
+            <nz-tab [nzTitle]="'NV.THANH_VIEN' | translate">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <app-chon-thanh-vien (changedData)="receiveDataThanhVien($event)"
+                            [idThamChieu]="form.get('id').value"
+                            [thanhPhanThamGia]="this.fthanhPhanThamGia"
+                            >
+                            </app-chon-thanh-vien>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group m-form__group">
+                            <chon-thanh-vien-ngoai (changedData)="receiveDataThanhVienNgoai($event)"  
+                                [idThamChieu]="form.get('id').value"
+                                [thanhPhanThamGiaNgoai]="this.fthanhPhanThamGiaNgoai"> 
+                            </chon-thanh-vien-ngoai>
+                        </div>
+                    </div>
+                </div>
+            </nz-tab>
+        </nz-tabset>
+    </section>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

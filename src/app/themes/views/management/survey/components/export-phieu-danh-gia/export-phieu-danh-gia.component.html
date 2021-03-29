@@ -1,0 +1,516 @@
+<div class="m-content p-3 mx" *ngIf="phieuDanhGia; else elseBlock">
+    <div class="custom-page-start">
+        <div class="m-portlet m-portlet--tab">
+            <div class="m-portlet__body form_wapper form_wapper_print" print-section>
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <td>
+                                <div class="print-section-header">&nbsp;</div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="print-section-content">
+                                    <div class="row">
+                                        <div class="col-6"></div>
+                                        <div class="col-6 text-center">
+                                            <div class="float-right maPhieuDG">
+                                                <p class="mb-0" style="color: #005795; font-weight: 700">Mẫu: {{ phieuDanhGia.maPhieu }}</p>
+                                                <p style="font-style: italic" *ngIf="phieuDanhGia.maPhieu === 'ĐG.01'">
+                                                    (Căn cứ mẫu số 02 và 03<br />
+                                                    của Nghị định số 90/2020/NĐ-CP,<br />
+                                                    ngày 13/8/2020 của Chính phủ)
+                                                </p>
+                                                <p style="font-style: italic" *ngIf="phieuDanhGia.maPhieu !== 'ĐG.01'">
+                                                    (Căn cứ mẫu số 03 của Nghị định số 90/2020/<br />
+                                                    NĐ-CP, ngày 13/8/2020 của Chính phủ)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-5 text-center">
+                                            <div>ĐẠI HỌC QUỐC GIA HÀ NỘI</div>
+                                            <div class="font-weight-bold text-uppercase export-title1">
+                                                {{ phieuDanhGia.tenCoQuanPrint }}
+                                            </div>
+                                            <div class="linehead"></div>
+                                        </div>
+                                        <div class="col-7 text-center">
+                                            <div class="font-weight-bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                                            <div class="font-weight-bold export-title1">Độc lập - Tự do - Hạnh phúc</div>
+                                            <div class="linehead linehead-print"></div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__head-caption">
+                                        <div class="m-portlet__head-title text-center">
+                                            <h3 class="m-portlet__head-text export-tenPhieu mb-0">{{ phieuDanhGia.tenPhieu }}</h3>
+                                            <div>Năm {{ phieuDanhGia.nam }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet--tab portlet-PKS">
+                                        <div class="form-group m-form__group">
+                                            Họ và tên: <b>{{ phieuDanhGia.hoTenNhanSu1 }}</b>
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            Chức vụ, chức danh: <b>{{ phieuDanhGia.tenChucVu1 }}</b>
+                                        </div>
+                                        <div class="form-group m-form__group">
+                                            Đơn vị công tác: <b>{{ phieuDanhGia.tenCoQuan1 }}</b>
+                                        </div>
+                                        <ng-container
+                                            *ngFor="
+                                                let itemNhomCauHoi of phieuDanhGia.nhomCauHois;
+                                                trackBy: trackByFn;
+                                                let nhomCauHoiIndex = index
+                                            "
+                                        >
+                                            <div class="m-portlet__body clearfix">
+                                                <div class="m-portlet__head-title">
+                                                    <h5 class="m-portlet__head-text">
+                                                        <div [innerHTML]="itemNhomCauHoi.noiDung | safeHtml: 'html'"></div>
+                                                    </h5>
+                                                </div>
+                                                <ng-container
+                                                    *ngFor="
+                                                        let itemCauHoi of itemNhomCauHoi.cauHois;
+                                                        trackBy: trackByFn;
+                                                        let cauHoiIndex = index
+                                                    "
+                                                >
+                                                    <div class="">
+                                                        <div [innerHTML]="itemCauHoi.noiDungCauHoi | safeHtml: 'html'"></div>
+                                                    </div>
+                                                    <ng-container [ngSwitch]="itemCauHoi.hinhThucTraLoiId">
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.TEXT">
+                                                            <div class="form-group m-form__group">
+                                                                <div *ngIf="!itemCauHoi.isView">
+                                                                    <pre [innerHTML]="itemCauHoi.yKien"></pre>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.Y_KIEN">
+                                                            <div class="form-group m-form__group">
+                                                                <div *ngIf="!itemCauHoi.isView">
+                                                                    <pre [innerHTML]="itemCauHoi.yKien"></pre>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.SELECT">
+                                                            <div class="form-group m-form__group">
+                                                                <div>
+                                                                    <ng-container
+                                                                        *ngFor="
+                                                                            let ketQuaDanhGia of xepLoaiKetQuaDanhGias;
+                                                                            let ketQuaDanhGiaIndex = index
+                                                                        "
+                                                                    >
+                                                                        <div
+                                                                            *ngIf="
+                                                                                ketQuaDanhGia.xepLoaiKetQuaDanhGiaId ===
+                                                                                itemCauHoi.xepLoaiKetQuaDanhGiaId
+                                                                            "
+                                                                        >
+                                                                            {{ ketQuaDanhGia.ten }}
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_CONGVIEC">
+                                                            <div class="form-group m-form__group">
+                                                                <div class="mt-3">
+                                                                    <table class="table table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th width="50">STT</th>
+                                                                                <th>Công việc được giao và thực hiện trong năm</th>
+                                                                                <th width="150">Tiến độ</th>
+                                                                                <th width="150">Chất lượng</th>
+                                                                                <th>Ghi Chú</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <ng-container
+                                                                                *ngFor="
+                                                                                    let congViec of itemCauHoi.congViecs;
+                                                                                    trackBy: trackByFn;
+                                                                                    let congViecIndex = index
+                                                                                "
+                                                                            >
+                                                                                <tr>
+                                                                                    <td class="text-center">{{ congViec.stt }}</td>
+
+                                                                                    <td>
+                                                                                        <div>{{ congViec.tieuDe }}</div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ng-container
+                                                                                            *ngFor="let tienDo of trangThaiTienDos"
+                                                                                        >
+                                                                                            <div
+                                                                                                *ngIf="
+                                                                                                    tienDo.trangThaiTienDoId ===
+                                                                                                    congViec.trangThaiTienDoId
+                                                                                                "
+                                                                                            >
+                                                                                                {{ tienDo.ten }}
+                                                                                            </div>
+                                                                                        </ng-container>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ng-container *ngFor="let mucDo of mucDoHoanThanhs">
+                                                                                            <div
+                                                                                                *ngIf="
+                                                                                                    mucDo.mucDoHoanThanhId ===
+                                                                                                    congViec.mucDoHoanThanhId
+                                                                                                "
+                                                                                            >
+                                                                                                {{ mucDo.ten }}
+                                                                                            </div>
+                                                                                        </ng-container>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>{{ congViec.ghiChu }}</div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.congViecs.length < 1">
+                                                                                <td colspan="5" class="text-center">Chưa có dữ liệu</td>
+                                                                            </ng-container>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_GIOGIANG">
+                                                            <div class="form-group m-form__group">
+                                                                <div class="mt-3">
+                                                                    <table class="table table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th width="50">STT</th>
+                                                                                <th>Nhiệm vụ Giảng dạy</th>
+                                                                                <th width="200">Số giờ chuẩn quy đổi</th>
+                                                                                <th>Ghi Chú</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <ng-container
+                                                                                *ngFor="
+                                                                                    let nhiemVu of itemCauHoi.nhiemVuThucHiens;
+                                                                                    trackBy: trackByFn;
+                                                                                    let nhiemVuIndex = index
+                                                                                "
+                                                                            >
+                                                                                <tr *ngIf="!nhiemVu.isDelete">
+                                                                                    <td class="text-center">{{ nhiemVu.stt }}</td>
+                                                                                    <td>
+                                                                                        <div>{{ nhiemVu.tieuDe }}</div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>{{ nhiemVu.soGio }}</div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>{{ nhiemVu.ghiChu }}</div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.nhiemVuThucHiens.length < 1">
+                                                                                <td colspan="6" class="text-center">Chưa có dữ liệu</td>
+                                                                            </ng-container>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <table class="table borderless table-trans">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>Số giờ phải thực hiện (1)</td>
+                                                                                <td>
+                                                                                    {{ itemCauHoi.tongHopNhiemVu?.soGioPhaiThucHien }}
+                                                                                </td>
+                                                                                <td>Số giờ đã thực hiện (2)</td>
+                                                                                <td>
+                                                                                    {{ itemCauHoi.tongHopNhiemVu?.soGioDaThucHien }}
+                                                                                </td>
+                                                                                <td>Số giờ thừa thiếu (2-1)</td>
+                                                                                <td>
+                                                                                    {{ itemCauHoi.tongHopNhiemVu?.soGioThuaThieu }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_NCKH">
+                                                            <div class="form-group m-form__group">
+                                                                <div class="mt-3">
+                                                                    <table class="table table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th width="50">STT</th>
+                                                                                <th>Nhiệm vụ NCKH</th>
+                                                                                <th width="200">Số giờ NCKH quy đổi</th>
+                                                                                <th>Ghi Chú</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <ng-container
+                                                                                *ngFor="
+                                                                                    let nhiemVu of itemCauHoi.nhiemVuThucHiens;
+                                                                                    trackBy: trackByFn;
+                                                                                    let nhiemVuIndex = index
+                                                                                "
+                                                                            >
+                                                                                <tr>
+                                                                                    <td class="text-center">{{ nhiemVu.stt }}</td>
+                                                                                    <td>
+                                                                                        <div>{{ nhiemVu.tieuDe }}</div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ nhiemVu.soGio }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div>{{ nhiemVu.ghiChu }}</div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.nhiemVuThucHiens.length < 1">
+                                                                                <td colspan="4" class="text-center">Chưa có dữ liệu</td>
+                                                                            </ng-container>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <table class="table borderless table-trans">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>Số giờ phải thực hiện (1)</td>
+                                                                                <td>
+                                                                                    {{ itemCauHoi.tongHopNhiemVu?.soGioPhaiThucHien }}
+                                                                                </td>
+                                                                                <td>Số giờ đã thực hiện (2)</td>
+                                                                                <td>
+                                                                                    {{ itemCauHoi.tongHopNhiemVu?.soGioDaThucHien }}
+                                                                                </td>
+                                                                                <td>Số giờ thừa thiếu (2-1)</td>
+                                                                                <td>
+                                                                                    {{ itemCauHoi.tongHopNhiemVu?.soGioThuaThieu }}
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <ng-container *ngSwitchCase="hinhThucTraLoiEnum.LIST_CONG_TAC_KHAC">
+                                                            <div class="form-group m-form__group">
+                                                                <div class="mt-3">
+                                                                    <table class="table table-bordered table-hover">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th width="50">STT</th>
+                                                                                <th>Công việc được giao khác</th>
+                                                                                <th width="150">Tiến độ</th>
+                                                                                <th width="150">Chất lượng</th>
+                                                                                <th>Ghi Chú</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <ng-container
+                                                                                *ngFor="
+                                                                                    let congViec of itemCauHoi.congViecs;
+                                                                                    let congViecIndex = index;
+                                                                                    trackBy: trackByFn
+                                                                                "
+                                                                            >
+                                                                                <tr *ngIf="!congViec.isDelete">
+                                                                                    <td class="text-center">{{ congViec.stt }}</td>
+
+                                                                                    <td>
+                                                                                        {{ congViec.tieuDe }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ng-container
+                                                                                            *ngFor="let tienDo of trangThaiTienDos"
+                                                                                        >
+                                                                                            <div
+                                                                                                *ngIf="
+                                                                                                    tienDo.trangThaiTienDoId ===
+                                                                                                    congViec.trangThaiTienDoId
+                                                                                                "
+                                                                                            >
+                                                                                                {{ tienDo.ten }}
+                                                                                            </div>
+                                                                                        </ng-container>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <ng-container *ngFor="let mucDo of mucDoHoanThanhs">
+                                                                                            <div
+                                                                                                *ngIf="
+                                                                                                    mucDo.mucDoHoanThanhId ===
+                                                                                                    congViec.mucDoHoanThanhId
+                                                                                                "
+                                                                                            >
+                                                                                                {{ mucDo.ten }}
+                                                                                            </div>
+                                                                                        </ng-container>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ congViec.ghiChu }}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="itemCauHoi.congViecs.length < 1">
+                                                                                <td colspan="5" class="text-center">Chưa có dữ liệu</td>
+                                                                            </ng-container>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <div>
+                                                        <!-- <div class="row"> -->
+                                                        <span style="font-style: italic">{{ itemCauHoi.ghiChuCauHoi }}</span>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="checkExistSelectQuestion(itemNhomCauHoi.cauHois)">
+                                                    <div class="m-portlet__foot-title text-center">
+                                                        <div>
+                                                            <ng-container *ngIf="itemNhomCauHoi.doiTuongThucHienId === 1; else loai1">
+                                                                <ng-container *ngIf="phieuDanhGia.ngayDanhGia1; else contentLoai1">
+                                                                    {{ 'Hà Nội, ngày ' + '...' + ' tháng ' + '...' + ' năm ' + '...' }}
+                                                                </ng-container>
+                                                                <ng-template #contentLoai1>
+                                                                    Hà Nội, ngày ... tháng ... năm ...
+                                                                </ng-template>
+                                                            </ng-container>
+                                                            <ng-template #loai1>
+                                                                <ng-container *ngIf="itemNhomCauHoi.doiTuongThucHienId === 2; else loai2">
+                                                                    <ng-container *ngIf="phieuDanhGia.ngayDanhGia3; else contentLoai2">
+                                                                        {{ 'Hà Nội, ngày ' + '...' + ' tháng ' + '...' + ' năm ' + '...' }}
+                                                                    </ng-container>
+                                                                    <ng-template #contentLoai2>
+                                                                        Hà Nội, ngày ... tháng ... năm ...
+                                                                    </ng-template>
+                                                                </ng-container>
+                                                                <ng-template #loai2>
+                                                                    <ng-container *ngIf="phieuDanhGia.ngayDanhGia3; else contentLoai3">
+                                                                        {{ 'Hà Nội, ngày ' + '...' + ' tháng ' + '...' + ' năm ' + '...' }}
+                                                                    </ng-container>
+                                                                    <ng-template #contentLoai3>
+                                                                        Hà Nội, ngày ... tháng ... năm ...
+                                                                    </ng-template>
+                                                                </ng-template>
+                                                            </ng-template>
+                                                        </div>
+
+                                                        <div class="font-weight-bold text-uppercase">
+                                                            <ng-container
+                                                                *ngIf="
+                                                                    phieuDanhGia.maPhieu === 'ĐG.01' &&
+                                                                        itemNhomCauHoi.doiTuongThucHienId === 2;
+                                                                    else other_content1
+                                                                "
+                                                            >
+                                                                Người nhận xét, đánh giá
+                                                            </ng-container>
+                                                            <ng-template #other_content1>
+                                                                <ng-container
+                                                                    *ngIf="
+                                                                        (phieuDanhGia.maPhieu === 'ĐG.01' &&
+                                                                            itemNhomCauHoi.doiTuongThucHienId === 3) ||
+                                                                            (phieuDanhGia.maPhieu !== 'ĐG.01' &&
+                                                                                itemNhomCauHoi.doiTuongThucHienId > 1);
+                                                                        else other_content2
+                                                                    "
+                                                                >
+                                                                    NGƯỜI CÓ THẨM QUYỀN ĐÁNH GIÁ
+                                                                </ng-container>
+                                                                <ng-template #other_content2> Người tự nhận xét </ng-template>
+                                                            </ng-template>
+                                                        </div>
+
+                                                        <ng-container *ngIf="itemNhomCauHoi.doiTuongThucHienId === 1">
+                                                            <div class="font-italic">(Ký, ghi rõ họ tên)</div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="itemNhomCauHoi.doiTuongThucHienId > 1">
+                                                            <div class="font-italic">(Ký, ghi rõ họ tên và đóng dấu)</div>
+                                                        </ng-container>
+                                                        <br /><br />
+
+                                                        <div class="sign">
+                                                            <span *ngIf="itemNhomCauHoi.doiTuongThucHienId === 1">{{
+                                                                phieuDanhGia.hoTenNhanSu1
+                                                            }}</span>
+                                                            <span *ngIf="itemNhomCauHoi.doiTuongThucHienId === 2">{{
+                                                                phieuDanhGia.hoTenNhanSu2
+                                                            }}</span>
+                                                            <span *ngIf="itemNhomCauHoi.doiTuongThucHienId === 3">{{
+                                                                phieuDanhGia.hoTenNhanSu3
+                                                            }}</span>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <div class="print-section-footer">&nbsp;</div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="footer-space">
+                    <div class="export-footer d-none" *ngIf="currentUser">
+                        In từ hệ thống vào lúc
+                        {{
+                            (currentDate | date: 'hh') +
+                                ' giờ ' +
+                                (currentDate | date: 'mm') +
+                                ' phút, ' +
+                                ' ngày ' +
+                                (currentDate | date: 'dd') +
+                                ' tháng ' +
+                                (currentDate | date: 'MM') +
+                                ' năm ' +
+                                (currentDate | date: 'yyyy')
+                        }}
+                        từ hệ thống hrm.vnu.edu.vn
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-0 text-center border-form-footer">
+        <button class="btn_custom btn_df" (click)="onPrintHtml()">
+            <div [innerHTML]="'printer.svg' | vnuIcon | safeHtml: 'html'"></div>
+            <span class="text">{{ 'BTN.PRINT' | translate }}</span>
+        </button>
+        <button class="btn_custom btn_df ml-1" (click)="close()">
+            <span class="text">{{ 'BTN.CLOSE' | translate }}</span>
+        </button>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+    <nz-skeleton [nzActive]="true"></nz-skeleton>
+</ng-template>

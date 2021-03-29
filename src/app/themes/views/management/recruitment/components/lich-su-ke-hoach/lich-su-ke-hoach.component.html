@@ -1,0 +1,58 @@
+<div class="form-group m-form__group">
+    <label>
+        <b>{{ 'RECRUITMENT.KE_HOACH.TAB_TITLE1' | translate }}</b
+        >: {{ keHoach?.maKeHoach + ' - ' + keHoach?.tenKeHoach }}</label
+    >
+</div>
+<div class="form-group m-form__group">
+    <div class="grid-wrapper grid-wrapper-border">
+        <kendo-grid
+            [data]="gridView$ | async"
+            [pageSize]="gridState.take"
+            [skip]="gridState.skip"
+            [loading]="loading"
+            [pageable]="pageConfig"
+            [resizable]="true"
+            [columnMenu]="true"
+            [sortable]="true"
+            [sort]="gridState.sort"
+            [height]="600"
+            (dataStateChange)="onStateChange($event)"
+            [selectable]="true"
+        >
+            <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        {{ rowIndex + 1 }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [columnMenu]="false" [title]="'LB.STATUS' | translate" [sortable]="false" [width]="250">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    {{ dataItem.loaiNoiDung | noiDungLichSuKeHoach }}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="tenNguoiDuyet"
+                [columnMenu]="false"
+                [title]="'Người duyệt' | translate"
+                [sortable]="false"
+                [width]="250"
+            >
+            </kendo-grid-column>
+            <kendo-grid-column [columnMenu]="false" [title]="'Thời gian' | translate" [width]="200">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        {{ dataItem.ngayDuyet | date: 'HH:mm - dd/MM/yyyy' }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="noiDung" [columnMenu]="false" [title]="'LB.NOTE' | translate" [sortable]="false"> </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>
+<div class="form-group m-form__group">
+    <div class="text-center order-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df">{{ 'BTN.CLOSE' | translate }}</button>
+    </div>
+</div>

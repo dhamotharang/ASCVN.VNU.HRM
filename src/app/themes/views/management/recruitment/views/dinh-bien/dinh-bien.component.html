@@ -1,0 +1,392 @@
+<div class="m-portlet m-portlet--mobile mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption m-portlet__head-caption-title">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ tabName }}
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-caption"></div>
+
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item" *ngIf="roles.isCreate">
+                    <button class="btn_custom btn_add" (click)="addHandler()">
+                        <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isCreate">
+                    <button class="btn_custom btn_df" (click)="copyMultiHandler()" [disabled]="selectionIds.length <= 0">
+                        <div [innerHTML]="'duplicate.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.COPY' | translate }}</span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <nz-button-group>
+                        <button nz-button nz-dropdown class="btn_custom btn_df" [nzDropdownMenu]="menu" nzPlacement="right">
+                            <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.EXCEL' | translate }}</span>
+                        </button>
+                    </nz-button-group>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <div class="m-dropdown__wrapper menu-dropdown-table">
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav">
+                                            <li class="m-nav__item">
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="m-nav__link"
+                                                    (click)="onExportExcel(exportEnum.ExportExcelTongHopDinhBien)"
+                                                >
+                                                    <span class="m-nav__link-text">
+                                                        {{ 'RECRUITMENT.DINH_BIEN.EXPORT1' | translate }}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="m-nav__link"
+                                                    (click)="onExportExcel(exportEnum.ExportExcelDinhBienTheoViTriViecLam)"
+                                                >
+                                                    <span class="m-nav__link-text">
+                                                        {{ 'RECRUITMENT.DINH_BIEN.EXPORT2' | translate }}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nz-dropdown-menu>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isDelete">
+                    <button class="btn_custom btn_remove" (click)="removeSelectedHandler()">
+                        <div [innerHTML]="'trash.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.DELETE' | translate }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="m-portlet__body">
+        <div class="box-search-body px-3">
+            <div class="pt-3 row">
+                <div class="col-lg-4">
+                    <div class="form-group m-form__group">
+                        <label>{{ 'LB.SEARCH' | translate }}</label>
+                        <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance" style="width: 100%">
+                            <input
+                                type="text"
+                                class="form-control m-input"
+                                [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                                [(ngModel)]="modelSearch.keyword"
+                            />
+                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                <span>
+                                    <i class="la la-search"></i>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.HRM.CO_QUAN' | translate }} </label>
+                        <div>
+                            <app-select-user-tree
+                                [placeholder]="'LB.SELECT' | translate"
+                                [(ngModel)]="chonDonVi"
+                                [userSelectedIds]="chonDonVi"
+                                [isLoadCapDonVi]="true"
+                            ></app-select-user-tree>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.YEAR' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.NAM"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                [(ngModel)]="modelSearch.nam"
+                            >
+                            </asc-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 pl-0">
+                    <div class="form-group m-form__group text-right">
+                        <label>&nbsp;</label>
+                        <div class="btn-actions">
+                            <button type="button" class="btn_custom btn_add mr-1" (click)="searchHandler()">
+                                <span class="text">
+                                    {{ 'BTN.SEARCH' | translate }}
+                                </span>
+                            </button>
+                            <button type="button" class="btn_custom btn_df" (click)="refreshHandler()">
+                                <span class="text">
+                                    {{ 'BTN.RESET' | translate }}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #template let-anchor>
+            <span>{{ anchor.nativeElement.innerText }}</span>
+        </ng-template>
+        <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td" (mouseover)="showTooltip($event)">
+            <div class="grid-wrapper" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                    [data]="gridView$ | async"
+                    [pageSize]="gridState.take"
+                    [skip]="gridState.skip"
+                    [loading]="loading"
+                    [pageable]="pageConfig"
+                    [resizable]="true"
+                    [columnMenu]="true"
+                    [sortable]="true"
+                    [sort]="gridState.sort"
+                    [style.height]="'100%'"
+                    kendoGridSelectBy="id"
+                    [selectedKeys]="selectionIds"
+                    (dataStateChange)="onStateChange($event)"
+                    [selectable]="true"
+                >
+                    <kendo-grid-checkbox-column showSelectAll="true" width="50" [columnMenu]="false"> </kendo-grid-checkbox-column>
+                    <kendo-grid-column
+                        [title]="'LB.ACTION' | translate"
+                        class="text-center"
+                        width="80"
+                        [columnMenu]="false"
+                        *ngIf="roles.isCreate || roles.isUpdate || roles.isDelete"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <ng-container>
+                                <nz-button-group>
+                                    <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                        <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    </button>
+                                </nz-button-group>
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <div class="m-dropdown__wrapper menu-dropdown-table">
+                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                        <div class="m-dropdown__inner">
+                                            <div class="m-dropdown__body">
+                                                <div class="m-dropdown__content">
+                                                    <ul class="m-nav">
+                                                        <li class="m-nav__section m-nav__section--first">
+                                                            <span class="m-nav__section-text">
+                                                                {{ 'LB.ACTION' | translate }}
+                                                            </span>
+                                                        </li>
+                                                        <li class="m-nav__item" *ngIf="roles.isUpdate">
+                                                            <a
+                                                                href="javascript:void(0)"
+                                                                (click)="editHandler(dataItem)"
+                                                                class="m-nav__link"
+                                                            >
+                                                                <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    {{ 'BTN.EDIT' | translate }}
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item" *ngIf="roles.isCreate">
+                                                            <a
+                                                                href="javascript:void(0)"
+                                                                (click)="copyHandler(dataItem)"
+                                                                class="m-nav__link"
+                                                            >
+                                                                <i class="m-nav__link-icon flaticon-file"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    {{ 'BTN.COPY' | translate }}
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item" *ngIf="roles.isDelete">
+                                                            <a
+                                                                href="javascript:void(0)"
+                                                                (click)="removeHandler(dataItem)"
+                                                                class="m-nav__link"
+                                                            >
+                                                                <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    {{ 'BTN.DELETE' | translate }}
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nz-dropdown-menu>
+                            </ng-container>
+                            <ng-template #btnDisabled>
+                                <div class="text-center">
+                                    <button nz-button class="btn-disabled">
+                                        <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="50" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="tenCoQuan" [title]="'LB.HRM.CO_QUAN' | translate" [width]="200" [columnMenu]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            {{ dataItem.tenCoQuan }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column field="nam" [title]="'LB.YEAR' | translate" [width]="80" [columnMenu]="false"> </kendo-grid-column> -->
+                    <kendo-grid-column-group
+                        [title]="'RECRUITMENT.DINH_BIEN.DOI_TUONG' | translate"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <kendo-grid-column
+                            field="lH_CCVC"
+                            [title]="'RECRUITMENT.DINH_BIEN.CCVC' | translate"
+                            [width]="60"
+                            [columnMenu]="false"
+                            [sortable]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-right">
+                                    {{ dataItem.lH_CCVC > 0 ? dataItem.lH_CCVC : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="lH_HDLD"
+                            [title]="'RECRUITMENT.DINH_BIEN.HDLD' | translate"
+                            [width]="60"
+                            [columnMenu]="false"
+                            [sortable]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-right">
+                                    {{ dataItem.lH_HDLD > 0 ? dataItem.lH_HDLD : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column
+                            field="lH_HD68"
+                            [title]="'RECRUITMENT.DINH_BIEN.HD68' | translate"
+                            [width]="130"
+                            [columnMenu]="false"
+                            [sortable]="false"
+                            [headerStyle]="{ 'text-align': 'center' }"
+                        >
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-right">
+                                    {{ dataItem.lH_HD68 > 0 ? dataItem.lH_HD68 : '-' }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                    </kendo-grid-column-group>
+
+                    <kendo-grid-column-group
+                        *ngFor="let item of girdViewNhomViTri; let i = index"
+                        [title]="item.tenNhomViTriViecLam"
+                        [columnMenu]="false"
+                        [headerStyle]="{ 'text-align': 'center' }"
+                    >
+                        <ng-container *ngIf="item.viTriViecLams.length > 1">
+                            <kendo-grid-column-group
+                                *ngFor="let viecLam of item.viTriViecLams"
+                                [title]="viecLam.tenViTriViecLam"
+                                [columnMenu]="false"
+                                class="text-center"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                            >
+                                <kendo-grid-column
+                                    [field]="viecLam.capLuong"
+                                    [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                                    [width]="100"
+                                    [columnMenu]="false"
+                                    [sortable]="false"
+                                    [headerStyle]="{ 'text-align': 'center' }"
+                                >
+                                    <ng-template kendoGridCellTemplate let-dataItem let-column="column">
+                                        <div class="text-right">
+                                            {{ dataItem[column.field] > 0 ? dataItem[column.field] : '-' }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                                <kendo-grid-column
+                                    [field]="viecLam.tuTra"
+                                    [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                                    [width]="90"
+                                    [columnMenu]="false"
+                                    [sortable]="false"
+                                    [headerStyle]="{ 'text-align': 'center' }"
+                                >
+                                    <ng-template kendoGridCellTemplate let-dataItem let-column="column">
+                                        <div class="text-right">
+                                            {{ dataItem[column.field] > 0 ? dataItem[column.field] : '-' }}
+                                        </div>
+                                    </ng-template>
+                                </kendo-grid-column>
+                            </kendo-grid-column-group>
+                        </ng-container>
+                        <ng-container *ngIf="item.viTriViecLams.length <= 1">
+                            <kendo-grid-column
+                                [field]="item.viTriViecLams[0].capLuong"
+                                [title]="'RECRUITMENT.DINH_BIEN.CAP_LUONG' | translate"
+                                [width]="100"
+                                [columnMenu]="false"
+                                [sortable]="false"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-column="column">
+                                    <div class="text-right">
+                                        {{ dataItem[column.field] > 0 ? dataItem[column.field] : '-' }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column
+                                [field]="item.viTriViecLams[0].tuTra"
+                                [title]="'RECRUITMENT.DINH_BIEN.TU_TRA' | translate"
+                                [width]="90"
+                                [columnMenu]="false"
+                                [sortable]="false"
+                                [headerStyle]="{ 'text-align': 'center' }"
+                            >
+                                <ng-template kendoGridCellTemplate let-dataItem let-column="column">
+                                    <div class="text-right">
+                                        {{ dataItem[column.field] > 0 ? dataItem[column.field] : '-' }}
+                                    </div>
+                                </ng-template>
+                            </kendo-grid-column>
+                        </ng-container>
+                    </kendo-grid-column-group>
+                    <kendo-grid-column field="ghiChu" [title]="'LB.NOTE' | translate" width="100" [columnMenu]="false" [sortable]="false">
+                    </kendo-grid-column>
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

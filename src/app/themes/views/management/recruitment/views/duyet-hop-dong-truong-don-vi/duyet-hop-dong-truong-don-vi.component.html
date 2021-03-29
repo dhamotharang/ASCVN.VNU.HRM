@@ -1,0 +1,468 @@
+<div class="search-backdrop" (click)="searchAdvanced()"></div>
+<div class="m-portlet m-portlet--mobile mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption m-portlet__head-caption-title">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ tabName }}
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-caption"></div>
+
+        <!-- <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <button class="btn_custom btn_df">
+                        <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.EXCEL' | translate }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div> -->
+    </div>
+
+    <div class="m-portlet__body">
+        <div class="box-search-body px-3">
+            <div>
+                <div class="pt-3 row">
+                    <div class="col-lg-4">
+                        <div class="form-group m-form__group">
+                            <label>{{ 'LB.SEARCH' | translate }}</label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <input type="text" class="form-control m-input"
+                                    [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                                    [(ngModel)]="modelFilter.keyword" (keydown.enter)="onSearch()" />
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span>
+                                        <i class="la la-search"></i>
+                                    </span>
+                                </span>
+                                <span class="m-input-icon__icon m-input-icon__icon--right">
+                                    <span (click)="openAdvanceSearch()" class="dropbtn-search-advance">
+                                        <i class="la la-caret-down"></i>
+                                    </span>
+                                </span>
+                                <div id="myDropdown" class="dropdown-content-search-advance w-200"
+                                    style="left: 0px!important;"
+                                    [ngClass]="this.searchAdvance ? 'show-search-advance' : ''" *ngIf="openFirstTime">
+                                    <div class="custom-search-advance m-form">
+
+                                        <div class="form-group m-form__group row">
+                                            <label class="col-lg-2 col-form-label"> {{
+                                                'RECRUITMENT.HDCN.VI_TRI_UNG_TUYEN' | translate }} </label>
+                                            <div class="col-lg-4">
+                                                <asc-select [modeOfDropDowList]="dropdownListEnum.VI_TRI_VIEC_LAM"
+                                                    [placeHolder]="'RECRUITMENT.HDCN.VI_TRI_UNG_TUYEN' | translate"
+                                                    [(ngModel)]="modelFilter.idViTriViecLam">
+                                                </asc-select>
+                                            </div>
+                                            <label class="col-lg-2 col-form-label"> {{ 'RECRUITMENT.HDCN.PHAN_LOAI' |
+                                                translate }} </label>
+                                            <div class="col-lg-4">
+                                                <asc-select [modeOfDropDowList]="dropdownListEnum.LOAI_NHAN_SU"
+                                                    [placeHolder]="'RECRUITMENT.HDCN.PHAN_LOAI' | translate"
+                                                    [(ngModel)]="modelFilter.idLoaiNhanSu">
+                                                </asc-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+                                            <label class="col-lg-2 col-form-label"> {{ 'RECRUITMENT.HDCN.CHUC_DANH' |
+                                                translate }} </label>
+                                            <div class="col-lg-4">
+                                                <asc-select [modeOfDropDowList]="dropdownListEnum.NGACH_CONG_CHUC"
+                                                    [placeHolder]="'RECRUITMENT.HDCN.CHUC_DANH' | translate"
+                                                    [(ngModel)]="modelFilter.idNgach">
+                                                </asc-select>
+                                            </div>
+
+                                            <label class="col-lg-2 col-form-label"> {{
+                                                'RECRUITMENT.HDCN.TRINH_DO_CHUYEN_MON' | translate }} </label>
+                                            <div class="col-lg-4">
+                                                <asc-select [modeOfDropDowList]="dropdownListEnum.TRINH_DO_CHUYEN_MON"
+                                                    [placeHolder]="'RECRUITMENT.HDCN.TRINH_DO_CHUYEN_MON' | translate"
+                                                    [(ngModel)]="modelFilter.idTrinhDoChuyenMon">
+                                                </asc-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group m-form__group row">
+                                            <label class="col-lg-2 col-form-label"> {{ 'RECRUITMENT.HDCN.LOAI_HOP_DONG'
+                                                | translate }} </label>
+                                            <div class="col-lg-4">
+                                                <asc-select [modeOfDropDowList]="dropdownListEnum.LOAI_HOP_DONG"
+                                                    [placeHolder]="'RECRUITMENT.HDCN.LOAI_HOP_DONG' | translate"
+                                                    [(ngModel)]="modelFilter.idLoaiHopDong">
+                                                </asc-select>
+                                            </div>
+
+                                            <label class="col-lg-2 col-form-label"> {{ 'RECRUITMENT.HDCN.TRANG_THAI' |
+                                                translate }} </label>
+                                            <div class="col-lg-4">
+                                                <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate"
+                                                    nzAllowClear [(ngModel)]="modelFilter.xacNhanHopDong">
+                                                    <nz-option [nzLabel]="'RECRUITMENT.HDCN.DA_XAC_NHAN' | translate"
+                                                        [nzValue]="xacNhanHopDongEnum.XAC_NHAN"></nz-option>
+                                                    <nz-option [nzLabel]="'RECRUITMENT.HDCN.KO_XAC_NHAN' | translate"
+                                                        [nzValue]="xacNhanHopDongEnum.KHONG_XAC_NHAN"></nz-option>
+                                                </nz-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group m-form__group row text-right">
+                                            <div class="col-12 text-right">
+                                                <div class="btn-actions">
+                                                    <button class="btn_custom btn_add mr-1" (click)="onSearch()">
+                                                        <span class="text">
+                                                            {{ 'BTN.SEARCH' | translate }}
+                                                        </span>
+                                                    </button>
+                                                    <button class="btn_custom btn_df" (click)="onReset()">
+                                                        <span class="text">
+                                                            {{ 'BTN.RESET' | translate }}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-4">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'LB.TIME' | translate }} </label>
+                            <div class="d-flex">
+                                <nz-date-picker class="col-6" [nzDisabledDate]="disabledNgayBatDau"
+                                    [(ngModel)]="modelFilter.tuNgay" nzFormat="dd/MM/yyyy"
+                                    [nzPlaceHolder]="'LB.DATE_FROM' | translate">
+                                </nz-date-picker>
+                                <label>&nbsp;</label>
+                                <nz-date-picker class="col-6" [nzDisabledDate]="disabledNgayKetThuc"
+                                    [(ngModel)]="modelFilter.denNgay" nzFormat="dd/MM/yyyy"
+                                    [nzPlaceHolder]="'LB.DATE_TO' | translate"></nz-date-picker>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-lg-4">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.KE_HOACH.KHTD' | translate }} <span
+                                    class="text-danger">(*)</span></label>
+                            <div>
+                                <nz-select [(ngModel)]="modelFilter.idKeHoachTuyenDung"
+                                    (ngModelChange)="onChangeKeHoach($event)" [nzPlaceHolder]="'LB.SELECT' | translate">
+                                    <nz-option *ngFor="let item of lstDanhMucKeHoach" [nzValue]="item.id"
+                                        [nzLabel]="item.maKeHoach + ' - ' + item.tenKeHoach">
+                                    </nz-option>
+                                </nz-select>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.SO_QUYET_DINH' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum"
+                                    [placeHolder]="'RECRUITMENT.HD.SO_QUYET_DINH' | translate"
+                                    [(ngModel)]="modelFilter.idSoQuyetDinh">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.VI_TRI_UNG_TUYEN' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.VI_TRI_VIEC_LAM"
+                                    [placeHolder]="'RECRUITMENT.HD.VI_TRI_UNG_TUYEN' | translate"
+                                    [(ngModel)]="modelFilter.idViTriViecLam">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.PHAN_LOAI' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum"
+                                    [placeHolder]="'RECRUITMENT.HD.PHAN_LOAI' | translate"
+                                    [(ngModel)]="modelFilter.idLoaiHopDong">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.CHUC_DANH' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.CHUC_DANH"
+                                    [placeHolder]="'RECRUITMENT.HD.CHUC_DANH' | translate"
+                                    [(ngModel)]="modelFilter.idNgach">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.TRINH_DO_CHUYEN_MON' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.TRINH_DO_CHUYEN_MON"
+                                    [placeHolder]="'RECRUITMENT.HD.TRINH_DO_CHUYEN_MON' | translate"
+                                    [(ngModel)]="modelFilter.idTrinhDoChuyenMon">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.LOAI_HOP_DONG' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.LOAI_HOP_DONG"
+                                    [placeHolder]="'RECRUITMENT.HD.LOAI_HOP_DONG' | translate"
+                                    [(ngModel)]="modelFilter.idLoaiHopDong">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'RECRUITMENT.HD.TRANG_THAI' | translate }} </label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance"
+                                style="width: 100%">
+                                <asc-select [modeOfDropDowList]="dropdownListEnum.TRANG_THAI_DANH_GIA"
+                                    [placeHolder]="'RECRUITMENT.HD.TRANG_THAI' | translate"
+                                    [(ngModel)]="modelFilter.idTrangThaiHopDong">
+                                </asc-select>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-4 pl-0">
+                        <div class="form-group m-form__group text-right">
+                            <label>&nbsp;</label>
+                            <div class="btn-actions">
+                                <button type="submit" class="btn_custom btn_add mr-1" (click)="onSearch()">
+                                    <span class="text">
+                                        {{ 'BTN.SEARCH' | translate }}
+                                    </span>
+                                </button>
+                                <button type="button" class="btn_custom btn_df" (click)="onReset()">
+                                    <span class="text">
+                                        {{ 'BTN.RESET' | translate }}
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-wrapper no-hover" [ngStyle]="{ 'height.px': pageHeight }">
+            <kendo-grid [data]="gridView$ | async" [pageSize]="gridState.take" [skip]="gridState.skip"
+                [loading]="loading" [pageable]="pageConfig" [resizable]="true" [columnMenu]="true" [sortable]="true"
+                [sort]="gridState.sort" [style.height]="'100%'" kendoGridSelectBy="idHopDong" [selectedKeys]="selectionIds"
+                (dataStateChange)="onStateChange($event)" [selectable]="true" (detailExpand)="onExpand($event)">
+
+                <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" width="90"
+                    [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <nz-button-group>
+                            <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </nz-button-group>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <div class="m-dropdown__wrapper menu-dropdown-table">
+                                <span
+                                    class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                <div class="m-dropdown__inner">
+                                    <div class="m-dropdown__body">
+                                        <div class="m-dropdown__content">
+                                            <ul class="m-nav">
+                                                <li class="m-nav__section m-nav__section--first">
+                                                    <span class="m-nav__section-text">
+                                                        {{ 'LB.ACTION' | translate }}
+                                                    </span>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="javascript:void(0)" class="m-nav__link"
+                                                        (click)="viewHandler(dataItem)">
+                                                        <span class="m-nav__link-text">
+                                                            {{ 'RECRUITMENT.HD.XEM_HOP_DONG' | translate }}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item" [HideIfUnauthorized]="listRoleOption.HRM_0005">
+                                                    <a href="javascript:void(0)" class="m-nav__link"
+                                                        (click)="duyetHopDong(dataItem)">
+                                                        <span class="m-nav__link-text">
+                                                            {{ 'LB.CONFIRM' | translate }}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nz-dropdown-menu>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <!-- <kendo-grid-column [title]="'LB.CONFIRM' | translate" class="text-center" [width]="90"
+                    [columnMenu]="false" *ngIf="roles.isUpdate" [headerStyle]="{'text-align': 'center'}">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="text-center" *ngIf="dataItem.idTrangThaiHopDong === trangThaiHopDongEnum.KHONG_XAC_NHAN
+                            && dataItem.xacNhanHopDong === xacNhanHopDongEnum.XAC_NHAN">
+                            <button type="button" class="btn_custom btn_add" (click)="duyetHopDong(dataItem)">
+                                <span class="text">
+                                    {{ 'LB.CONFIRM' | translate }}
+                                </span>
+                            </button>
+                        </div>
+                    </ng-template>
+                </kendo-grid-column> -->
+                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false"
+                    [headerStyle]="{'text-align': 'center'}">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="tenTrangThaiHopDong" [title]="'LB.STATUS' | translate" [width]="150"
+                    [columnMenu]="false" [sortable]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="text-center" [ngClass]="dataItem.idTrangThaiHopDong === trangThaiHopDongEnum.KHONG_DUYET ? 'label_error'
+                                : dataItem.idTrangThaiHopDong === trangThaiHopDongEnum.DUYET ? 'label_success'
+                                : 'label_default'
+                        ">
+                            {{ dataItem.tenTrangThaiHopDong }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column [title]="'LB.XAC_NHAN' | translate" [width]="150" [columnMenu]="false"
+                   >
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="text-center" [ngClass]="dataItem.xacNhanHopDong === xacNhanHopDongEnum.KHONG_XAC_NHAN ? 'label_error'
+                                : dataItem.xacNhanHopDong === xacNhanHopDongEnum.XAC_NHAN ? 'label_success'
+                                : 'label_default'
+                        ">
+                            {{ dataItem.xacNhanHopDong == 1 ? 'Xác nhận' : 'Không xác nhận' }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+
+                <kendo-grid-column field="lyDoDuyet" [title]="'RECRUITMENT.HD.NOI_DUNG_DUYET' | translate" [width]="200"
+                    [columnMenu]="false" [sortable]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [columnMenu]="false" field="maNhanSu" [title]="'LB.STAFF_CODE' | translate" [sortable]="true"
+                    width="110">
+                </kendo-grid-column>
+                <kendo-grid-column [columnMenu]="false" field="userName" [title]="'LB.USERNAME' | translate" [sortable]="true"
+                    width="130">
+                </kendo-grid-column>
+                <kendo-grid-column field="ten" class="text-left" [title]="'LB.FULLNAME' | translate" width="250"  [sortable]="true"
+                    [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="dark">
+                            <b>{{ dataItem.hoDem + ' ' + dataItem.ten }}</b>
+                        </div>
+                        <div class="grid-size12">
+                            {{
+                            (dataItem.tenChucVu ? dataItem.tenChucVu : '') +
+                            (dataItem.tenChucVu && dataItem.tenChucDanh ? ' - ' : '') +
+                            (dataItem.tenChucDanh ? dataItem.tenChucDanh : '')
+                            }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [columnMenu]="false" field="idGioiTinh" [title]="'LB.GENDER' | translate" width="80"
+                    class="text-center" [sortable]="true">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{dataItem.tenGioiTinh}}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [columnMenu]="false" field="ngaySinh" [title]="'LB.BIRTHDAY' | translate" width="100"  [sortable]="true"
+                    class="text-center">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem?.ngaySinh | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [columnMenu]="false" field="tenCoQuan" [title]="'LB.DEPARTMENT' | translate"
+                    width="250" [sortable]="false">
+                </kendo-grid-column>
+
+                <kendo-grid-column [title]="'RECRUITMENT.HD.VI_TRI' | translate" field="tenViTriViecLam" [width]="150" [sortable]="false"
+                    [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="tenLoaiNhanSu" [title]="'RECRUITMENT.HD.PHAN_LOAI' | translate" [width]="150" [sortable]="false"
+                    [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.NGHE_NGHIEP' | translate" field="tenNgachCongChuc" [sortable]="false"
+                    [width]="150" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.TRINH_DO_CHUYEN_MON' | translate" [sortable]="false"
+                    field="tenTrinhDoChuyenMon" [width]="150" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.SO_QD' | translate" field="soQuyetDinh" [width]="150" [sortable]="false"
+                    [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.NGUOI_KY' | translate" field="tenNguoiKyQuyetDinh" [sortable]="false"
+                    [width]="150" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.NGAY_KY' | translate" [width]="130" [columnMenu]="false" [sortable]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.ngayKyQuyetDinh | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.SO_HOP_DONG' | translate" field="soHopDong" [width]="150" [sortable]="false"
+                    [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="tenLoaiHopDong" [title]="'LB.HRM.LOAI_HOP_DONG' | translate" [width]="200" [sortable]="false"
+                    [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="tenNguoiKyHopDong" [title]="'RECRUITMENT.HD.NGUOI_KY' | translate" [sortable]="false"
+                    [width]="200" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.NGAY_KY' | translate" [width]="130" [columnMenu]="false" [sortable]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.ngayKyHopDong | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.THOI_GIAN_HOP_DONG' | translate" [width]="130" [sortable]="false"
+                    [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.hdTuNgay | date: 'dd/MM/yyyy' }} - {{ dataItem.hdDenNgay | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.HD.THOI_GIAN_GUI_XAC_NHAN' | translate" [width]="130" [sortable]="false"
+                    [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.ngayXacNhan | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="lyDoXacNhanHopDong" [title]="'RECRUITMENT.HD.CA_NHAN_PHAN_HOI' | translate" [sortable]="false"
+                    [width]="200" [columnMenu]="false">
+                </kendo-grid-column>
+
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

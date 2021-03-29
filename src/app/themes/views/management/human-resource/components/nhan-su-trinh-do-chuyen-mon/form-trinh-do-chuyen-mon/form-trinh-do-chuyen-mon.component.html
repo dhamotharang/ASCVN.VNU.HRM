@@ -1,0 +1,125 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.TRINH_DO_CHUYEN_MON' | translate }} <span
+                        class="text-danger">(*)</span> </label>
+                <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear
+                    formControlName="idTrinhDoChuyenMon" [nzOptions]="listDMTrinhDoChuyenMon">
+                </nz-select>
+                <app-field-error [control]="form.get('idTrinhDoChuyenMon')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'Chuyên ngành' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="tenChuyenNganh" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'LB.TIME' | translate }} </label>
+                <div class="row">
+                    <div class="col-6">
+                        <nz-date-picker nzMode="month" formControlName="batDau" nzFormat="MM/yyyy" style="width: 100%"
+                            [nzPlaceHolder]="'LB.DATE_FROM' | translate"></nz-date-picker>
+                    </div>
+                    <div class="col-6">
+                        <nz-date-picker nzMode="month" formControlName="ketThuc" nzFormat="MM/yyyy" style="width: 100%"
+                            [nzPlaceHolder]="'LB.DATE_TO' | translate"></nz-date-picker>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DAO_TAO_BOI_DUONG.VAN_BANG' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.VAN_BANG" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idVanBang">
+                </asc-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.QUOC_GIA' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.QUOC_TICH" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idQuocGia"></asc-select>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.HINH_THUC_DAO_TAO' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.HINH_THUC_DAO_TAO"
+                    [placeHolder]="'LB.SELECT' | translate" formControlName="idHinhThucDaoTao">
+                </asc-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DAO_TAO_BOI_DUONG.XEP_LOAI' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="xepLoaiVanBang" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.NOI_DAO_TAO' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="noiDaoTao" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.TRINH_DO_CHUYEN_MON.LINH_VUC' | translate }} </label>
+                <asc-select [modeOfDropDowList]="dropdownListEnum.LINH_VUC" [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idLinhVuc"></asc-select>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DAO_TAO_BOI_DUONG.SO_QUYET_DINH' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="soQuyetDinh" />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DAO_TAO_BOI_DUONG.NGAY_QUYET_DINH' | translate }}</label>
+                <nz-date-picker formControlName="ngayQuyetDinh" nzFormat="dd/MM/yyyy"
+                    [nzPlaceHolder]="'LB.SELECT' | translate" style="width: 100%">
+                </nz-date-picker>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.ATTACH_FILE' | translate }}
+        </label>
+        <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput"
+            [folderName]="folder.NS_NhanSu_TrinhDoChuyenMon" [multiple]="false">
+        </asc-upload>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' |
+            translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

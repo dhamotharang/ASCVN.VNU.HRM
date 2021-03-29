@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <h2>NHẬT KÝ CHẤM DỨT HỢP ĐỒNG LAO ĐỘNG</h2>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4">
+        <nz-divider></nz-divider>
+    </div>
+    <div class="col-4"></div>
+</div>
+<ng-container>
+    <nz-timeline>
+        <ng-container *ngFor="let item of list">
+            <nz-timeline-item [nzColor]="item.color">
+                <div class="row">
+                    <div class="col-12">
+                        <label
+                            ><span class="text-danger">{{ item.loai }}</span> {{ 'MANAGEMENT.LABEL.BOI' | translate }}
+                            <span class="text-primary">{{ item.ten }}</span> {{ item.ngay }}</label
+                        >
+                    </div>
+                    <div class="col-12">
+                        <label
+                            ><b>{{ 'MANAGEMENT.LABEL.DEN' | translate }}:</b> <span class="text-primary"> {{ item.den }}</span>
+                        </label>
+                    </div>
+                    <div class="col-12">
+                        <label
+                            ><b>{{ 'MANAGEMENT.LABEL.NOI_DUNG' | translate }}:</b> {{ item.noiDung }}</label
+                        >
+                    </div>
+                </div>
+            </nz-timeline-item>
+        </ng-container>
+    </nz-timeline>
+</ng-container>

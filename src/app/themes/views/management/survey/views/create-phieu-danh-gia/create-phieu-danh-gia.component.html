@@ -1,0 +1,261 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="m-portlet m-portlet--mobile mb-0">
+        <div class="m-portlet__body p-4">
+            <div class="row">
+                <div class="col-md-8 col-12">
+                    <div class="row">
+                        <div class="col-md-2 col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold">
+                                    {{ 'SURVEY.PHIEU_DANH_GIA.CODE' | translate }} <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" class="m-input form-control" formControlName="maPhieu" />
+                                <app-field-error [control]="form.get('maPhieu')"></app-field-error>
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold">
+                                    {{ 'SURVEY.PHIEU_DANH_GIA.NAME' | translate }} <span class="text-danger">(*)</span>
+                                </label>
+                                <input type="text" class="m-input form-control" formControlName="tenPhieu" />
+                                <app-field-error [control]="form.get('tenPhieu')"></app-field-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <ng-container>
+                                <div class="example-list-nhom-cau-hoi">
+                                    <div formArrayName="nhomCauHois">
+                                        <div
+                                            class="example-box-nhom-cau-hoi"
+                                            *ngFor="let itemNhomCauHoi of childNhomCauHoiFormGroup.controls; let iNhomCauHoi = index"
+                                            [formGroupName]="iNhomCauHoi"
+                                            class="wrap_group_question"
+                                        >
+                                            <div class="group_question_area" *ngIf="!itemNhomCauHoi.value.isDeleted">
+                                                <div class="block_group_question">
+                                                    <div class="group_question p-3">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-md-8 col-12">
+                                                                <ckeditor debounce="500" formControlName="noiDung" type="inline">
+                                                                </ckeditor>
+                                                            </div>
+                                                            <div class="col-md-3 col-12">
+                                                                <nz-select
+                                                                    formControlName="doiTuongThucHienId"
+                                                                    (ngModelChange)="checkLoaiDoiTuong($event)"
+                                                                    [nzPlaceHolder]="'SURVEY.PHIEU_DANH_GIA.CONTENT_TYPE' | translate"
+                                                                >
+                                                                    <nz-option
+                                                                        *ngFor="let item of doiTuongThucHien"
+                                                                        [nzValue]="item.doiTuongThucHienId"
+                                                                        [nzLabel]="item.ten"
+                                                                    >
+                                                                    </nz-option>
+                                                                </nz-select>
+                                                            </div>
+                                                            <div class="col-md-1 pl-md-0 col-12">
+                                                                <div
+                                                                    class="removeAnswer d-inline"
+                                                                    (click)="removeChildNhomCauHoi(iNhomCauHoi)"
+                                                                >
+                                                                    <i class="fa fa-trash"></i>
+                                                                </div>
+                                                                <div
+                                                                    class="createAnswer d-inline ml-3"
+                                                                    (click)="editHandler(itemNhomCauHoi.value, iNhomCauHoi)"
+                                                                >
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="block_answer" formArrayName="cauHois">
+                                                    <div class="example-list-cau-hoi">
+                                                        <div
+                                                            class="example-box-cau-hoi"
+                                                            *ngFor="
+                                                                let cauHoi of itemNhomCauHoi['controls'].cauHois['controls'];
+                                                                let iCauHoi = index
+                                                            "
+                                                            [formGroupName]="iCauHoi"
+                                                        >
+                                                            <div
+                                                                class="block_answer_count p-3"
+                                                                *ngIf="!cauHoi.value.isDeleted"
+                                                                [ngClass]="
+                                                                    (itemNhomCauHoi.get('doiTuongThucHienId').value === 1 &&
+                                                                        !checkGroup1 &&
+                                                                        cauHoi.get('hinhThucTraLoiId').value === 3) ||
+                                                                    (itemNhomCauHoi.get('doiTuongThucHienId').value === 2 &&
+                                                                        !checkGroup2 &&
+                                                                        cauHoi.get('hinhThucTraLoiId').value === 3) ||
+                                                                    (itemNhomCauHoi.get('doiTuongThucHienId').value === 3 &&
+                                                                        !checkGroup3 &&
+                                                                        cauHoi.get('hinhThucTraLoiId').value === 3)
+                                                                        ? 'warning-xep-loai-phieu'
+                                                                        : ''
+                                                                "
+                                                            >
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-8 col-12">
+                                                                        <ckeditor debounce="500" formControlName="noiDung" type="inline">
+                                                                        </ckeditor>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-12">
+                                                                        <nz-select
+                                                                            formControlName="hinhThucTraLoiId"
+                                                                            [nzPlaceHolder]="
+                                                                                'SURVEY.PHIEU_DANH_GIA.CONTENT_TYPE' | translate
+                                                                            "
+                                                                        >
+                                                                            <nz-option
+                                                                                *ngFor="let item of hinhThucTraLoi"
+                                                                                [nzValue]="item.hinhThucTraLoiId"
+                                                                                [nzLabel]="item.ten"
+                                                                            >
+                                                                            </nz-option>
+                                                                        </nz-select>
+                                                                    </div>
+                                                                    <div class="col-md-1 pl-md-0 col-12">
+                                                                        <div
+                                                                            class="removeAnswer d-inline"
+                                                                            (click)="removeCauHoi(iNhomCauHoi, iCauHoi)"
+                                                                        >
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </div>
+                                                                        <div
+                                                                            class="createAnswer d-inline ml-3"
+                                                                            (click)="
+                                                                                editCauHoi(
+                                                                                    cauHoi.value,
+                                                                                    itemNhomCauHoi.value,
+                                                                                    iNhomCauHoi,
+                                                                                    iCauHoi
+                                                                                )
+                                                                            "
+                                                                        >
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="space_drop_question"
+                                                        (click)="createCauHoiTrucTiep(itemNhomCauHoi, iNhomCauHoi)"
+                                                    >
+                                                        {{ 'SURVEY.PHIEU_DANH_GIA.ADD_NEW_QUESTION' | translate }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space_drop_group_question" (click)="createChildNhomCauHoiTrucTiep()">
+                                    {{ 'SURVEY.PHIEU_DANH_GIA.ADD_NEW_GROUP' | translate }}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'SURVEY.PHIEU_DANH_GIA.CONTENT_TOP' | translate }}</label>
+                                <ckeditor debounce="500" formControlName="ghiChuDauTrang" type="inline" class="custom--ckeditor">
+                                </ckeditor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'SURVEY.PHIEU_DANH_GIA.CONTENT_BOTTOM' | translate }}</label>
+                                <ckeditor debounce="500" formControlName="ghiChuCuoiTrang" type="inline" class="custom--ckeditor">
+                                </ckeditor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'LB.NOTE' | translate }}</label>
+                                <ckeditor debounce="500" formControlName="ghiChu" type="inline" class="custom--ckeditor"> </ckeditor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold">
+                                    {{ 'SURVEY.PHIEU_DANH_GIA.ORDER' | translate }}
+                                </label>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="stt" style="width: 100%">
+                                        </nz-input-number>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="m-checkbox-inline mt-1">
+                                            <label class="m-checkbox">
+                                                <input type="checkbox" formControlName="isVisible" />
+                                                {{ 'SURVEY.PHIEU_DANH_GIA.VISIBLE' | translate }}
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3" [ngClass]="viewAssig ? 'custom-view-assign-show' : 'custom-view-assign-hide'">
+                        <div class="col-12">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'SURVEY.PHIEU_DANH_GIA.CONFIG_ASSIG' | translate }}</label>
+                            </div>
+                        </div>
+                        <div class="col-12" [ngClass]="viewAssig1 ? 'custom-view-assign-show' : 'custom-view-assign-hide'">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'SURVEY.PHIEU_DANH_GIA.ASSIG_1' | translate }}</label>
+                                <ckeditor debounce="500" formControlName="quyenHanNguoiKy1" type="inline"> </ckeditor>
+                            </div>
+                        </div>
+                        <div class="col-12" [ngClass]="viewAssig2 ? 'custom-view-assign-show' : 'custom-view-assign-hide'">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'SURVEY.PHIEU_DANH_GIA.ASSIG_2' | translate }}</label>
+                                <ckeditor debounce="500" formControlName="quyenHanNguoiKy2" type="inline"> </ckeditor>
+                            </div>
+                        </div>
+                        <div class="col-12" [ngClass]="viewAssig3 ? 'custom-view-assign-show' : 'custom-view-assign-hide'">
+                            <div class="form-group m-form__group">
+                                <label class="font-weight-bold"> {{ 'SURVEY.PHIEU_DANH_GIA.ASSIG_3' | translate }}</label>
+                                <ckeditor debounce="500" formControlName="quyenHanNguoiKy3" type="inline"> </ckeditor>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 text-center">
+                        <div class="col-12 text-center border-form-footer">
+                            <button type="submit" class="btn_custom btn_add mr-1">{{ 'BTN.SAVE' | translate }}</button>
+                            <button type="button" class="btn_custom btn_df" [routerLink]="['/management/survey/list-phieu-danh-gia']">
+                                {{ 'BTN.CANCEL' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

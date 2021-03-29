@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-sm-8">
+        <div class="grid-wrapper grid-wrapper-border">
+            <kendo-grid
+                [data]="gridView$ | async"
+                [pageSize]="gridState.take"
+                [skip]="gridState.skip"
+                [loading]="loading"
+                [pageable]="pageConfig"
+                [resizable]="true"
+                [columnMenu]="true"
+                [sortable]="true"
+                [sort]="gridState.sort"
+                [style.height]="'100%'"
+                (dataStateChange)="onStateChange($event)"
+                [selectable]="true"
+            >
+                <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column
+                    [title]="'RECRUITMENT.HD.KHOAN_PHU_CAP' | translate"
+                    field="tenKhoanPhuCap"
+                    [width]="200"
+                    [columnMenu]="false"
+                >
+                </kendo-grid-column>
+                <kendo-grid-column
+                    [title]="'RECRUITMENT.HD.GIA_TRI' | translate"
+                    field="giaTri"
+                    [width]="150"
+                    [columnMenu]="false"
+                    class="text-right"
+                >
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="text-right">
+                            {{ dataItem.giaTri | number }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'Ghi Chú' | translate" field="ghiChu" [columnMenu]="false"> </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>

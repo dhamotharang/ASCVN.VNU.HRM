@@ -1,0 +1,184 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.NHOM_CONG_CU' | translate }}  </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.NHOM_CONG_CU"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idNhomCongCu"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.CONG_CU' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.CONG_CU"
+                        [isReference]="true"
+                        [referenceId]="form.get('idNhomCongCu').value"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idCongCu"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.MA' | translate }}
+                </label>
+                <div>
+                    <input type="text" class="m-input form-control" formControlName="maThietBi" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.TEN' | translate }}
+                </label>
+                <div>
+                    <input type="text" class="m-input form-control" formControlName="tenThietBi" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.DON_VI' | translate }} </label>
+                <div>
+                     <app-select-user-tree
+                                    [placeholder]="'LB.HRM.CO_QUAN' | translate"
+                                    formControlName="idCoQuan"
+                                    [isMultiple] = false
+                      ></app-select-user-tree>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.QUOC_GIA' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.QUOC_TICH"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idQuocGia"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.NHA_CUNG_CAP' | translate }}
+                </label>
+                <div>
+                    <input type="text" class="m-input form-control" formControlName="nhaCungCap" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.NAM_SU_DUNG' | translate }}
+                </label>
+                <div>
+                    <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.NAM"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="namSuDung"
+                >
+                </asc-select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.PHONG_THI_NGHIEM' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.PTN_PHONG_THI_NGHIEM"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idPhongThiNghiem"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.TINH_TRANG' | translate }} </label>
+                <div>
+                    <asc-select
+                        [modeOfDropDowList]="dropdownListEnum.TINH_TRANG_SU_DUNG_THIET_BI"
+                        [placeHolder]="'LB.SELECT' | translate"
+                        formControlName="idTinhTrangThietBi"
+                    ></asc-select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.NGUYEN_GIA' | translate }} </label>
+                <div>
+                    <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="nguyenGia" style="width: 100%"></nz-input-number>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'PTN.TB.GIA_TRI' | translate }} </label>
+                <div>
+                    <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="giaTriConLai" style="width: 100%"></nz-input-number>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.MO_TA' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="moTa"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.THONG_SO_KI_THUAT' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="thongTinKyThuat"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'PTN.TB.DIEU_KIEN_VAN_HANH' | translate }}
+                </label>
+                <div>
+                    <textarea class="form-control" formControlName="dieuKienVanHanh"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

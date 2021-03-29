@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group">
+        <div class="m-radio-inline">
+            <label class="m-radio">
+                <input
+                    type="radio"
+                    formControlName="idTrangThaiHopDong"
+                    [value]="trangThaiHopDongEnum.DUYET"
+                    (click)="change(trangThaiHopDongEnum.DUYET)"
+                />
+                {{ 'RECRUITMENT.TEXT.03' | translate }}
+                <span></span>
+            </label>
+            <label class="m-radio">
+                <input
+                    type="radio"
+                    formControlName="idTrangThaiHopDong"
+                    [value]="trangThaiHopDongEnum.KHONG_DUYET"
+                    (click)="change(trangThaiHopDongEnum.KHONG_DUYET)"
+                />
+                {{ 'RECRUITMENT.TEXT.04' | translate }}
+                <span></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}<small> {{ 'RECRUITMENT.TEXT.13' | translate }}</small
+            ><span class="text-danger" *ngIf="this.form.get('idTrangThaiHopDong').value === trangThaiHopDongEnum.KHONG_DUYET"
+                >*</span
+            ></label
+        >
+        <textarea class="form-control" formControlName="lyDoDuyet" rows="5"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

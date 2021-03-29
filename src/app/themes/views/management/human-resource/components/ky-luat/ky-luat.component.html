@@ -1,0 +1,224 @@
+<div class="m-portlet m-portlet--mobile">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">{{ 'HR.KHEN_THUONG_KY_LUAT.TITLE' | translate }}
+                    <small *ngIf="isShowInfo" class="text-normal text-danger font-italic">
+                        ({{ 'HR.MES.15' | translate }})
+                    </small>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <ng-container *ngIf="roles.isUpdate">
+                    <li class="m-portlet__nav-item" *ngIf="isDuyetLyLichNhanSu">
+                        <button class="btn_custom btn_update" [disabled]="selectionIds.length < 1"
+                                (click)="onApprove(true)">
+                            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item" *ngIf="isDuyetLyLichNhanSu">
+                        <button class="btn_custom btn_df mr-1" [disabled]="selectionIds.length < 1"
+                                (click)="onApprove(false)">
+                            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+                <li class="m-portlet__nav-item">
+                    <button class="btn_custom btn_add" (click)="addHandler()" scrollTop>
+                        <div [innerHTML]="'plus.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.ADD' | translate }}</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body m-portlet-custom">
+        <ng-template #template let-anchor>
+            <span>{{ anchor.nativeElement.innerText }}</span>
+        </ng-template>
+        <div kendoTooltip showOn="none" [tooltipTemplate]="template" filter=".k-grid td"
+             (mouseover)="showTooltip($event)">
+            <div class="grid-wrapper">
+                <div class="grid-wrapper">
+                    <kendo-grid
+                        [data]="gridView$ | async" [loading]="loading" [pageSize]="gridState.take"
+                        [skip]="gridState.skip" [pageable]="pageConfig" [resizable]="true" [columnMenu]="false"
+                        [sortable]="true" [sort]="gridState.sort" [selectable]="true" kendoGridSelectBy="id"
+                        [selectedKeys]="selectionIds" (dataStateChange)="onStateChange($event)">
+                        <kendo-grid-checkbox-column showSelectAll="true" width="45" [columnMenu]="false"
+                                                    headerClass="text-center"
+                                                    class="text-center"></kendo-grid-checkbox-column>
+                        <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" width="90"
+                                           headerClass="text-center"
+                                           [columnMenu]="false">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <nz-button-group>
+                                    <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu"
+                                            nzPlacement="right">
+                                        <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    </button>
+                                </nz-button-group>
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <div class="m-dropdown__wrapper menu-dropdown-table">
+                                        <span
+                                            class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                        <div class="m-dropdown__inner">
+                                            <div class="m-dropdown__body">
+                                                <div class="m-dropdown__content">
+                                                    <ul class="m-nav">
+                                                        <li class="m-nav__section m-nav__section--first">
+                                                            <span class="m-nav__section-text">
+                                                                {{ 'LB.ACTION' | translate }}
+                                                            </span>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a (click)="editHandler(dataItem)" class="m-nav__link"
+                                                               scrollTop>
+                                                                <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                                                <span class="m-nav__link-text">{{ 'BTN.EDIT' | translate
+                                                                    }}</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a (click)="removeHandler(dataItem)" class="m-nav__link">
+                                                                <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                                <span class="m-nav__link-text"> {{ 'BTN.DELETE' |
+                                                                    translate }}</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nz-dropdown-menu>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false"
+                                           [headerStyle]="{'text-align': 'center'}">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-center">
+                                    {{ rowIndex + 1 }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column width="200" [title]="'HR.KHEN_THUONG_KY_LUAT.DON_VI' | translate"
+                                           field="donViKyLuat" [sortable]="false"></kendo-grid-column>
+                        <kendo-grid-column [width]="150" [title]="'HR.KHEN_THUONG_KY_LUAT.SO_QUYET_DINH' | translate"
+                                           field="soQuyetDinh"></kendo-grid-column>
+                        <kendo-grid-column [width]="130" [title]="'HR.KHEN_THUONG_KY_LUAT.NGAY_QUYET_DINH' | translate"
+                                           field="ngayQuyetDinh" class="text-center">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.ngayQuyetDinh | date: 'dd/MM/yyyy' }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column width="200" [title]="'HR.KHEN_THUONG_KY_LUAT.CAP_KY_LUAT' | translate"
+                                           field="idCapKyLuat" [sortable]="false">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.tenCapKyLuat }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column [title]="'HR.KHEN_THUONG_KY_LUAT.TEN_KY_LUAT' | translate" field="ten"
+                                           [width]="300" [sortable]="false">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                {{ dataItem.tenKyLuat }}
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column width="150" [title]="'HR.THI_DUA_KHEN_THUONG.KY_LUAT_CAO_NHAT' | translate">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-center">
+                                    <i class="la la-check text-success" *ngIf="dataItem?.isKyLuatCaoNhat"></i>
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column width="100" [title]="'LB.ATTACH_FILE' | translate">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <ng-container *ngIf="dataItem.idFileDinhKem">
+                                    <div class="text-center">
+                                        <div nz-popover [nzPopoverTitle]="'LB.ATTACH_FILE' | translate"
+                                             [nzPopoverContent]="contentTemplate"
+                                             [innerHTML]="'selected-file.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    </div>
+                                    <ng-template #contentTemplate>
+                                        <a href="javascript:void(0)" class="md-view-file"
+                                           (click)="showModalViewFile(dataItem.guidId, dataItem.tenFile)">
+                                            <span [innerHTML]="dataItem.tenFile | safeHtml: 'html'"></span>
+                                        </a>
+                                    </ng-template>
+                                </ng-container>
+                            </ng-template>
+                        </kendo-grid-column>
+                        <kendo-grid-column width="120" [title]="'LB.STATUS' | translate" field="noiDung">
+                            <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                                <div class="text-center" [ngClass]="dataItem.idTrangThaiDuLieu | hrmColor">
+                                    {{ trangThaiDuLieus[dataItem?.idTrangThaiDuLieu] }}
+                                </div>
+                            </ng-template>
+                        </kendo-grid-column>
+
+                        <ng-template kendoGridDetailTemplate let-dataItem>
+                            <section>
+                                <!-- <div class="row">
+                                    <label class="col-3 col-form-label">{{ 'HR.KHEN_THUONG_KY_LUAT.SO_QUYET_DINH' |
+                                        translate }}<span class="float-right">:</span></label>
+                                    <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.soQuyetDinh }}</label>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3 col-form-label">{{ 'HR.KHEN_THUONG_KY_LUAT.NGAY_QUYET_DINH' |
+                                        translate }}<span class="float-right">:</span></label>
+                                    <label class="col-9 col-form-label lb-bold-info">{{
+                                        dataItem?.ngayQuyetDinh | date: 'dd/MM/yyyy'
+                                        }}</label>
+                                </div> -->
+                                <!-- <div class="row">
+                                    <label class="col-3 col-form-label"
+                                        >{{ 'HR.KHEN_THUONG_KY_LUAT.NGAY_HIEU_LUC' | translate }}<span class="float-right">:</span></label
+                                    >
+                                    <label class="col-9 col-form-label lb-bold-info">{{
+                                        dataItem?.ngayHieuLuc | date: 'dd/MM/yyyy'
+                                    }}</label>
+                                </div> -->
+                                <!-- <div class="row">
+                                    <label class="col-3 col-form-label">{{ 'HR.KHEN_THUONG_KY_LUAT.TEN_KY_LUAT' |
+                                        translate }}<span class="float-right">:</span></label>
+                                    <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.tenKyLuat }}</label>
+                                </div> -->
+                                <!-- <div class="row">
+                                    <label class="col-3 col-form-label"
+                                        >{{ 'HR.KHEN_THUONG_KY_LUAT.HINH_THUC_KY_LUAT_KHAC' | translate
+                                        }}<span class="float-right">:</span></label
+                                    >
+                                    <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.hinhThucKyLuatKhac }}</label>
+                                </div> -->
+                                <!-- <div class="row">
+                                    <label class="col-3 col-form-label"
+                                        >{{ 'HR.KHEN_THUONG_KY_LUAT.NOI_DUNG' | translate }}<span class="float-right">:</span></label
+                                    >
+                                    <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.noiDung }}</label>
+                                </div> -->
+                                <!-- <div class="row">
+                                    <label class="col-3 col-form-label">{{ 'HR.THI_DUA_KHEN_THUONG.KY_LUAT_CAO_NHAT' |
+                                        translate
+                                        }}<span class="float-right">:</span></label>
+                                    <label class="col-9 col-form-label lb-bold-info">
+                                        <i class="la la-check text-success" *ngIf="dataItem?.isKyLuatCaoNhat"></i>
+                                    </label>
+                                </div> -->
+                                <div class="row">
+                                    <label class="col-3 col-form-label">{{ 'LB.NOTE' | translate }}<span
+                                        class="float-right">:</span></label>
+                                    <label class="col-9 col-form-label lb-bold-info">{{ dataItem?.ghiChu }}</label>
+                                </div>
+                            </section>
+                        </ng-template>
+                    </kendo-grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-overlay" *ngIf="opened"></div>

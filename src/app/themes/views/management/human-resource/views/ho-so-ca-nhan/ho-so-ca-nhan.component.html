@@ -1,0 +1,139 @@
+<div class="profile-user px-3">
+    <div class="row">
+        <div class="col-lg-3 col-12 col-left" [@fadeInOnEnter] [@fadeOutOnLeave]>
+            <div class="profile">
+                <div class="m-card-profile mb-3">
+                    <div class="m-card-profile__pic">
+                        <div class="m-card-profile__pic-wrapper">
+                            <img [src]="userDetail?.pathHinhNhanSu | convertUrl" alt=""
+                                onerror="this.onerror=null;this.src='./assets/images/no-avatar.jpg';" />
+                        </div>
+                    </div>
+                    <div class="m-card-profile__details">
+                        <span class="m-card-profile__name" > {{ userDetail?.hoDem }} {{ userDetail?.ten }} 
+                            <ng-container *ngIf="userDetail?.isSSO">
+                                <span  nz-tooltip [nzTooltipTitle]="'HR.MENU.ISSSO' | translate" class="m-card-profile__SSO" [innerHTML]="'shield-check.svg' | vnuIcon | safeHtml: 'html'"></span>
+                            </ng-container>
+                        </span>
+                        <!-- <a href="" class="m-card-profile__email m-link"> {{ userDetail?.maNhanSu }} </a> -->
+                        <a href="" class="m-card-profile__email m-link"> {{ userDetail?.userName }} </a>
+                    </div>
+                </div>
+                <ul class="m-nav m-nav--hover-bg m-portlet-fit--sides m-0 hrm-nav nav" role="tablist" *ngIf="userId">
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'thong-tin-nhan-su']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="(isShowTabHRM(hrmkey.ThongTinNhanSu) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-avatar"></i>
+                            <span class="m-nav__link-title" nz-tooltip [nzTooltipTitle]="isShowTabHRM(hrmkey.ThongTinNhanSu) ? tooltipTitle :''">
+                                <span class="m-nav__link-wrap">
+                                    <span class="m-nav__link-text"> {{ 'HR.MENU.HO_SO_CA_NHAN' | translate }} </span>
+                                </span>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'thong-tin-tuyen-dung']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="(isShowTabHRM(hrmkey.ThongTinTuyenDung) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-folder-1"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="isShowTabHRM(hrmkey.ThongTinTuyenDung) ? tooltipTitle :''"> {{ 'HR.MENU.TUYEN_DUNG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'qua-trinh-cong-tac']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="((isShowTabHRM(hrmkey.QuaTrinhCongTac) || isShowTabHRM(hrmkey.KiemNhiem)) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-suitcase"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="(isShowTabHRM(hrmkey.QuaTrinhCongTac) || isShowTabHRM(hrmkey.KiemNhiem))  ? tooltipTitle :''"> {{ 'HR.MENU.QUA_TRINH_CONG_TAC' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'trinh-do-chuyen-mon']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="((isShowTabHRM(hrmkey.TrinhDoChuyenMon) ||
+                                isShowTabHRM(hrmkey.TrinhDoNgoaiNgu) ||
+                                isShowTabHRM(hrmkey.TrinhDoTinHoc) ||
+                                isShowTabHRM(hrmkey.DaoTaoBoiDuongDaiHan) ||
+                                isShowTabHRM(hrmkey.DaoTaoBoiDuongNganHan) ||
+                                isShowTabHRM(hrmkey.ChucDanhKhoaHoc)))?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-statistics"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="(isShowTabHRM(hrmkey.TrinhDoChuyenMon) ||
+                            isShowTabHRM(hrmkey.TrinhDoNgoaiNgu) ||
+                            isShowTabHRM(hrmkey.TrinhDoTinHoc) ||
+                            isShowTabHRM(hrmkey.DaoTaoBoiDuongDaiHan) ||
+                            isShowTabHRM(hrmkey.DaoTaoBoiDuongNganHan) ||
+                            isShowTabHRM(hrmkey.ChucDanhKhoaHoc)) ? tooltipTitle :''"> {{ 'HR.MENU.DAO_TAO_BOI_DUONG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'doan-dang']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="(isShowTabHRM(hrmkey.ThongTinDoanDang) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-users"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="isShowTabHRM(hrmkey.ThongTinDoanDang) ? tooltipTitle :''"> {{ 'HR.MENU.DOAN_DANG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'thong-tin-luong']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="(isShowTabHRM(hrmkey.ThongTinLuong) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-piggy-bank"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="isShowTabHRM(hrmkey.ThongTinLuong) ? tooltipTitle :''"> {{ 'HR.MENU.LUONG' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'khen-thuong-ky-luat']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="((isShowTabHRM(hrmkey.KhenThuong) || isShowTabHRM(hrmkey.KyLuat)) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-warning-2"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="(isShowTabHRM(hrmkey.KhenThuong) || isShowTabHRM(hrmkey.KyLuat)) ? tooltipTitle :''"> {{ 'HR.MENU.KHEN_THUONG_KY_LUAT' | translate }} </span>
+                        </a>
+                    </li>
+
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'tinh-trang-suc-khoe']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="(isShowTabHRM(hrmkey.TinhTrangSucKhoe) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-like"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="isShowTabHRM(hrmkey.TinhTrangSucKhoe) ? tooltipTitle :''"> {{ 'HR.MENU.SUC_KHOE' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'quan-he-gia-dinh']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="((isShowTabHRM(hrmkey.QuanHeGiaDinhCaNhan) || isShowTabHRM(hrmkey.QuanHeGiaDinhVoChong)) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon flaticon-network"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="(isShowTabHRM(hrmkey.QuanHeGiaDinhCaNhan) || isShowTabHRM(hrmkey.QuanHeGiaDinhVoChong)) ? tooltipTitle :''"> {{ 'HR.MENU.QUAN_HE_GIA_DINH' | translate }} </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a [routerLink]="['/management/human-resource/', currentUrl, 'thong-tin-khac']"
+                            [queryParams]="{ k: keyUrl, query: queryUrl }" class="m-nav__link" routerLinkActive="active"
+                            [ngClass]="(isShowTabHRM(hrmkey.LichSuCaNhan) || isShowTabHRM(hrmkey.HoanCanhKinhTe) )?'tab-change-data':''">
+                            <i class="m-nav__link-icon 	flaticon-mark"></i>
+                            <span class="m-nav__link-text" nz-tooltip [nzTooltipTitle]="(isShowTabHRM(hrmkey.LichSuCaNhan) || isShowTabHRM(hrmkey.HoanCanhKinhTe) ) ? tooltipTitle :''"> {{ 'HR.MENU.KHAC' | translate }} </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="text-center">
+                    <button class="btn_custom btn_df" (click)="goBack()"
+                        *ngIf="goToDuyetHoSo || goToXacThucLyLich || goToTraCuuNhanSu">
+                        <div [innerHTML]="'reply-all.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'Quay lại' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-12 col-right" [@fadeInOnEnter] [@fadeOutOnLeave]>
+            <div class="tab-content">
+                <div class="tab-pane active" role="tabpanel">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

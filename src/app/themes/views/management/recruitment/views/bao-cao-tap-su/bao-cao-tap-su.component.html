@@ -1,0 +1,234 @@
+<div class="m-portlet m-portlet--mobile mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption m-portlet__head-caption-title">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ tabName }}
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-caption"></div>
+
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <!-- <li class="m-portlet__nav-item">
+                    <button class="btn_custom btn_add" (click)="onNopBaoCao()">
+                        <span class="text">{{ 'RECRUITMENT.BC.NOP_BAO_CAO' | translate }}</span>
+                    </button>
+                </li> -->
+                <!-- <li class="m-portlet__nav-item">
+                    <button class="btn_custom btn_df" (click)="onExportExcel()">
+                        <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.EXCEL' | translate }}</span>
+                    </button>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+    <div class="m-portlet__body">
+        <div class="box-search-body px-3">
+            <div>
+                <div class="pt-3 row">
+                    <div class="col-lg-4">
+                        <div class="form-group m-form__group">
+                            <label>{{ 'LB.SEARCH' | translate }}</label>
+                            <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance" style="width: 100%">
+                                <input
+                                    type="text"
+                                    class="form-control m-input"
+                                    [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                                    [(ngModel)]="modelFilter.keyword"
+                                    (keydown.enter)="onSearchHandler()"
+                                />
+                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                    <span>
+                                        <i class="la la-search"></i>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group m-form__group">
+                            <label> {{ 'LB.TIME' | translate }} </label>
+                            <div class="d-flex">
+                                <nz-date-picker
+                                    class="col-6"
+                                    [nzDisabledDate]="disabledNgayBatDau"
+                                    [(ngModel)]="modelFilter.ngayBatDau"
+                                    nzFormat="dd/MM/yyyy"
+                                    [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                                >
+                                </nz-date-picker>
+                                <label>&nbsp;</label>
+                                <nz-date-picker
+                                    class="col-6"
+                                    [nzDisabledDate]="disabledNgayKetThuc"
+                                    [(ngModel)]="modelFilter.ngayKetThuc"
+                                    nzFormat="dd/MM/yyyy"
+                                    [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                                ></nz-date-picker>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 pl-0">
+                        <div class="form-group m-form__group text-right">
+                            <label>&nbsp;</label>
+                            <div class="btn-actions">
+                                <button type="submit" class="btn_custom btn_add mr-1" (click)="onSearchHandler()">
+                                    <span class="text">
+                                        {{ 'BTN.SEARCH' | translate }}
+                                    </span>
+                                </button>
+                                <button type="button" class="btn_custom btn_df" (click)="resetHandler()">
+                                    <span class="text">
+                                        {{ 'BTN.RESET' | translate }}
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-wrapper no-hover" [ngStyle]="{ 'height.px': pageHeight }">
+            <kendo-grid
+                [data]="gridView$ | async"
+                [pageSize]="gridState.take"
+                [skip]="gridState.skip"
+                [loading]="loading"
+                [pageable]="pageConfig"
+                [resizable]="true"
+                [columnMenu]="true"
+                [sortable]="true"
+                [sort]="gridState.sort"
+                [style.height]="'100%'"
+                kendoGridSelectBy="idPhanCongHuongDanTapSu"
+                (dataStateChange)="onStateChange($event)"
+                [selectable]="true"
+            >
+                <kendo-grid-column
+                    [title]="'LB.STT' | translate"
+                    width="60"
+                    [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                >
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <div class="text-center">
+                            {{ rowIndex + 1 }}
+                        </div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column
+                    [title]="'LB.ACTION' | translate"
+                    class="text-center"
+                    width="90"
+                    [columnMenu]="false"
+                    [headerStyle]="{ 'text-align': 'center' }"
+                >
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        <nz-button-group>
+                            <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </nz-button-group>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <div class="m-dropdown__wrapper menu-dropdown-table">
+                                <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                <div class="m-dropdown__inner">
+                                    <div class="m-dropdown__body">
+                                        <div class="m-dropdown__content">
+                                            <ul class="m-nav">
+                                                <li class="m-nav__section m-nav__section--first">
+                                                    <span class="m-nav__section-text">
+                                                        {{ 'LB.ACTION' | translate }}
+                                                    </span>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="javascript:void(0)" class="m-nav__link" (click)="onNopBaoCao(dataItem)">
+                                                        <i class="m-nav__link-icon flaticon-edit-1"></i>
+                                                        <span class="m-nav__link-text">
+                                                            {{ 'RECRUITMENT.BC.NOP_BAO_CAO' | translate }}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="m-nav__item">
+                                                    <a href="javascript:void(0)" class="m-nav__link" (click)="onHuy(dataItem.id)">
+                                                        <i class="m-nav__link-icon flaticon-delete-1"></i>
+                                                        <span class="m-nav__link-text">
+                                                            {{ 'ACTION.DELETE' | translate }}
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nz-dropdown-menu>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="userName" [title]="'LB.USERNAME' | translate" [width]="150" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="hoDem" [title]="'RECRUITMENT.BC.HO_DEM' | translate" [width]="250" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="ten" [title]="'RECRUITMENT.BC.TEN' | translate" [width]="120" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="tenGioiTinh" [width]="85" [title]="'LB.GENDER' | translate" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column field="ngaySinh" [width]="150" [title]="'LB.BIRTHDAY' | translate" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.ngaySinh | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="tenCoQuan" [title]="'LB.HRM.CO_QUAN' | translate" [width]="250" [columnMenu]="false">
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.BC.THOI_GIAN_NOP' | translate" [width]="250" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.nopBaoCaoTuNgay | date: 'dd/MM/yyyy' }} - {{ dataItem.nopBaoCaoDenNgay | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'RECRUITMENT.BC.NGAY_NOP' | translate" [width]="150" [columnMenu]="false">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.ngayNopBaoCao | date: 'dd/MM/yyyy' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column [title]="'LB.STATUS' | translate" [columnMenu]="false" [width]="150">
+                    <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                        {{ dataItem.ngayXemBaoCao ? 'Đã xem' : '' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <ng-template kendoGridDetailTemplate let-dataItem>
+                    <section>
+                        <div class="row">
+                            <label class="col-2 col-form-label"
+                                >{{ 'RECRUITMENT.BC.NOI_DUNG' | translate }} <span class="float-right">:</span></label
+                            >
+                            <label class="col-10 col-form-label lb-bold-info">{{ dataItem?.noiDungBaoCao }}</label>
+                        </div>
+                        <div class="row">
+                            <label class="col-2 col-form-label"
+                                >{{ 'LB.ATTACH_FILE' | translate }} <span class="float-right">:</span></label
+                            >
+                            <a
+                                class="col-10 col-form-label lb-bold-info"
+                                (click)="openViewFile(dataItem)"
+                                *ngIf="dataItem.idFileDinhKem > 0"
+                            >
+                                <i class="fa fa-paperclip mr-2"></i>{{ dataItem.fileName }}</a
+                            >
+                        </div>
+                    </section>
+                </ng-template>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

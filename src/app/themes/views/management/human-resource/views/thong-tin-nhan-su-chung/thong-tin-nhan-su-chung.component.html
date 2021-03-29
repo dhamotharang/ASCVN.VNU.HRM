@@ -1,0 +1,483 @@
+<div class="m-portlet mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ 'LB.HRM.THONG_TIN_CHUNG' | translate }}
+                    <small *ngIf="model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT"
+                        class="text-normal text-danger font-italic">
+                        <!-- ({{ trangThaiDuLieus[model?.idTrangThaiDuLieu] }}) -->
+                        ({{ 'HR.MES.15' | translate  }})
+                    </small>
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <ng-container *ngIf="model && model.compareData && !isTraCuuNhanSu">
+                        <button class="btn_custom btn_add" nz-popover [nzPopoverTitle]="titleTemplate"
+                            [nzPopoverContent]="contentTemplate" nzPopoverTrigger="click"
+                            [(nzPopoverVisible)]="visible">
+                            <div [innerHTML]="'hummer.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.COMPARE' | translate }}</span>
+                        </button>
+                    </ng-container>
+                    <ng-template #titleTemplate><i nz-icon nzType="field-time"></i> {{ 'LB.HRM.LICH_SU_CHINH_SUA' |
+                        translate }}</ng-template>
+                    <ng-template #contentTemplate>
+                        <app-thong-tin-nhan-su-compare [compareData]="model" (closePopover)="closePopover()">
+                        </app-thong-tin-nhan-su-compare>
+                    </ng-template>
+                </li>
+                <ng-container
+                    *ngIf="isDuyetLyLichNhanSu && model?.idTrangThaiDuLieu === trangThaiDuLieuEnum.DE_XUAT && !model?.compareData">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_update" (click)="onApprove(true)">
+                            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_df" (click)="onApprove(false)">
+                            <div [innerHTML]="'close.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.KHONG_DUYET' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="(isDuyetLyLichNhanSu && !model?.compareData) || !isDuyetLyLichNhanSu">
+                    <li class="m-portlet__nav-item">
+                        <button class="btn_custom btn_add" (click)="showFormCapNhatNhanSuChiTiet()" scrollTop>
+                            <div [innerHTML]="'update.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.UPDATE' | translate }}</span>
+                        </button>
+                    </li>
+                </ng-container>
+                <li class="m-portlet__nav-item">
+                    <app-export-ho-so-nhan-su [nhanSuId]="nhanSuId"></app-export-ho-so-nhan-su>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <nz-collapse nzAccordion class="ant-collapse-custom">
+            <nz-collapse-panel [nzHeader]="'HR.HO_SO_CA_NHAN.PROFILE' | translate" [nzActive]="true">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.HO_TEN' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.hoDem }} {{ model?.ten }} </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.TEN_KHAC' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenGoiKhac }} </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.GIOI_TINH' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenGioiTinh }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label">{{ 'LB.HRM.QUOC_TICH' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenQuocTich }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.NGAY_SINH' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.ngaySinh | date: 'dd/MM/yyyy'
+                                }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label">{{ 'LB.HRM.CO_QUAN' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenCoQuan }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.SO_CMND' | translate }}<span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.soCMND }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.LOAI_NHAN_SU' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenLoaiNhanSu }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.NGAY_CAP_CMND' | translate }} - {{
+                                'LB.HRM.NOI_CAP_CMND' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.ngayCapCMND | date: 'dd/MM/yyyy' }}
+                                - {{ model?.noiCapCMND }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.CHUC_VU' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenChucVu }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.EMAIL' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.email }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.CHUC_DANH_NGHE_NGHIEP' | translate }}<span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.tenNgachCongChuc }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.SO_DIEN_THOAI' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.soDienThoai }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.EMAIL_NOI_BO' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.emailNoiBo }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.DT_NHA_RIENG' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.dienThoaiNhaRieng }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.DT_CO_QUAN' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info"> {{ model?.dienThoaiCoQuan }}</label>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+    
+            <nz-collapse-panel [nzHeader]="'HR.HO_SO_CA_NHAN.INFOR' | translate" [nzActive]="true">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.HO_CHIEU' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.hoChieu }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.NGAY_CAP_HC' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.ngayCapHoChieu | date: 'dd/MM/yyyy'
+                                }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.NOI_CAP_HC' | translate }}<span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.noiCapHoChieu }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.DAN_TOC' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.tenDanToc }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.TON_GIAO' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.tenTonGiao }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.SO_BHXH' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info">{{ model?.soBHXH }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">
+                                {{ 'LB.HRM.DOI_TUONG_CHINH_SACH' | translate }}<span class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.tenDoiTuongChinhSach }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">
+                                {{ 'LB.HRM.TINH_TRANG_HON_NHAN' | translate }}<span class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.tenTinhTrangHonNhan }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label">
+                                {{ 'LB.HRM.THANH_PHAN_GIA_DINH' | translate }}<span class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.tenThanhPhanGiaDinh }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.SO_SO_LAO_DONG' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.soSoLaoDong }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.NGAY_CAP_HC' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.ngayCapSoLaoDong | date: 'dd/MM/yyyy'
+                                }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group row">
+                            <label class="col-6 col-form-label"> {{ 'LB.HRM.NOI_CAP_HC' | translate }}<span
+                                    class="float-right">:</span></label>
+                            <label class="col-6 col-form-label lb-bold-info"> {{ model?.noiCapSoLaoDong }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-6 col-form-label"> {{ 'LB.NOTE' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-md-10 col-6 col-form-label lb-bold-info">{{ model?.ghiChuNhanSuChiTiet
+                                }}</label>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+    
+            <nz-collapse-panel [nzHeader]="'LB.HRM.QUE_QUAN' | translate" [nzActive]="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.QUOC_GIA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.queQuan_TenQuocGia }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.TINH_THANH' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.queQuan_TenTinh }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.QUAN_HUYEN' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.queQuan_TenHuyen }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.PHUONG_XA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.queQuan_TenPhuongXa }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.SO_NHA' | translate }}<span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.queQuan_SoNha }}</label>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+    
+            <nz-collapse-panel [nzHeader]="'LB.HRM.NOI_SINH' | translate" [nzActive]="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.QUOC_GIA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.noiSinh_TenQuocGia }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.TINH_THANH' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.noiSinh_TenTinh }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.QUAN_HUYEN' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.noiSinh_TenHuyen }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.PHUONG_XA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.noiSinh_TenPhuongXa }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.SO_NHA' | translate }}<span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.noiSinh_SoNha }}</label>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+    
+            <nz-collapse-panel [nzHeader]="'LB.HRM.HO_KHAU_THUONG_TRU' | translate" [nzActive]="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.QUOC_GIA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.hktT_TenQuocGia }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.TINH_THANH' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.hktT_TenTinh }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.QUAN_HUYEN' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.hktT_TenHuyen }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.PHUONG_XA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.hktT_TenPhuongXa }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.SO_NHA' | translate }}<span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.hktT_SoNha }}</label>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+    
+            <nz-collapse-panel [nzHeader]="'LB.HRM.DIA_CHI_LIEN_LAC' | translate" [nzActive]="true">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.QUOC_GIA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.dclL_TenQuocGia }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.TINH_THANH' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.dclL_TenTinh }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">
+                                {{ 'LB.HRM.QUAN_HUYEN' | translate }} <span class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.dclL_TenHuyen }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.PHUONG_XA' | translate }} <span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.dclL_TenPhuongXa }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label"> {{ 'LB.HRM.SO_NHA' | translate }}<span
+                                    class="float-right">:</span></label>
+                            <label class="col-8 col-form-label lb-bold-info">{{ model?.dclL_SoNha }}</label>
+                        </div>
+                    </div>
+                </div>
+            </nz-collapse-panel>
+        </nz-collapse>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>

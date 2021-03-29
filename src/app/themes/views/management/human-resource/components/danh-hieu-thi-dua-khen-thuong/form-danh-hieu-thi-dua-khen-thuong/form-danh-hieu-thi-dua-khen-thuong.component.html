@@ -1,0 +1,134 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group">
+        <label> {{ 'Phân loại' | translate }} <span class="text-danger">(*)</span> </label>
+        <div class="m-radio-inline">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="m-radio">
+                        <input type="radio" formControlName="isTapThe" [value]="false" (change)="handleChange(false)"/>
+                        {{ 'Danh hiệu cá nhân' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+                <div class="col-sm-6">
+                    <label class="m-radio">
+                        <input type="radio" formControlName="isTapThe" [value]="true" (change)="handleChange(true)"/>
+                        {{ 'Danh hiệu tập thể' | translate }}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="form-group m-form__group">
+        <label> {{ 'HR.THI_DUA_KHEN_THUONG.DON_VI' | translate }} <span class="text-danger">(*)</span> </label>
+        <input type="text" class="m-input form-control" formControlName="donVi" />
+        <app-field-error [control]="form.get('donVi')"></app-field-error>
+    </div> -->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'Tên danh hiệu' | translate }} <span class="text-danger">(*)</span>
+                </label>
+                <nz-select nzShowSearch [nzPlaceHolder]="'LB.SELECT' | translate" nzAllowClear formControlName="idDanhHieu" >
+                    <ng-container *ngFor="let item of danhHieuList">
+                        <nz-option [nzLabel]="item.ten" [nzValue]="item.danhHieuId">
+                        </nz-option>
+                    </ng-container>
+                </nz-select>
+                <app-field-error [control]="form.get('idDanhHieu')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.THI_DUA_KHEN_THUONG.CAP_THI_DUA' | translate }}</label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.CAP_QUYET_DINH"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idCapQuyetDinh"
+                >
+                </asc-select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.THI_DUA_KHEN_THUONG.SO_QUYET_DINH' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="soQuyetDinh" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.THI_DUA_KHEN_THUONG.NGAY_QUYET_DINH' | translate }} </label>
+                <div>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayQuyetDinh" style="width: 100%"> </nz-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.THI_DUA_KHEN_THUONG.NGAY_HIEU_LUC' | translate }} </label>
+                <div>
+                    <nz-date-picker nzFormat="dd/MM/yyyy" formControlName="ngayHieuLuc" style="width: 100%"> </nz-date-picker>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.THI_DUA_KHEN_THUONG.CAP_THI_DUA' | translate }}</label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.CAP_QUYET_DINH"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idCapQuyetDinh"
+                >
+                </asc-select>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row">
+        <!-- <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.THI_DUA_KHEN_THUONG.TEN_DANH_HIEU' | translate }} <span class="text-danger">(*)</span></label>
+                <input type="text" class="m-input form-control" formControlName="tenDanhHieu" />
+                <app-field-error [control]="form.get('tenDanhHieu')"></app-field-error>
+            </div>
+        </div> -->
+        <div class="col-sm-6">
+            <label>&nbsp;</label>
+            <div class="m-checkbox-inline">
+                <label class="m-checkbox">
+                    <input type="checkbox" formControlName="isDanhHieuCaoNhat" />
+                    {{ 'HR.THI_DUA_KHEN_THUONG.DANH_HIEU_CAO_NHAT' | translate }}
+                    <span></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.ATTACH_FILE' | translate }}
+        </label>
+        <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput" [folderName]="folder.NS_NhanSu_DanhHieuThiDua" [multiple]="false">
+        </asc-upload>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

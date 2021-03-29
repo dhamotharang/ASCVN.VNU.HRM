@@ -1,0 +1,698 @@
+<div class="search-backdrop" (click)="searchAdvanced()"></div>
+<div class="m-portlet m-portlet--mobile mb-0">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption m-portlet__head-caption-title">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    {{ tabName }}
+                </h3>
+            </div>
+        </div>
+        <div class="m-portlet__head-caption"></div>
+
+        <div class="m-portlet__head-tools">
+            <ul class="m-portlet__nav">
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate && currentLayoutView === layoutView.TABLE_VIEW">
+                    <button class="btn_custom btn_df" (click)="onXetDuyet()">
+                        <div [innerHTML]="'edit.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'SURVEY.QUAN_LY_DANH_GIA.XET_DUYET' | translate }}</span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate && currentLayoutView === layoutView.TABLE_VIEW">
+                    <button class="btn_custom btn_df" (click)="transferSurveys()">
+                        <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.TRANSFER_SURVEY' | translate }}</span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <button class="btn_custom btn_df" (click)="onPrintExcel()">
+                        <div [innerHTML]="'printer.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        <span class="text">{{ 'BTN.PRINT' | translate }}</span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="roles.isUpdate">
+                    <nz-button-group>
+                        <button nz-button nz-dropdown class="btn_custom btn_df" [nzDropdownMenu]="menu" nzPlacement="right">
+                            <div [innerHTML]="'download.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            <span class="text">{{ 'BTN.EXCEL' | translate }}</span>
+                        </button>
+                    </nz-button-group>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <div class="m-dropdown__wrapper menu-dropdown-table">
+                            <div class="m-dropdown__inner">
+                                <div class="m-dropdown__body">
+                                    <div class="m-dropdown__content">
+                                        <ul class="m-nav">
+                                            <li class="m-nav__item">
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="m-nav__link"
+                                                    (click)="onExportExcel(exportEnum.ExportExcel)"
+                                                >
+                                                    <span class="m-nav__link-text"> Báo cáo chung</span>
+                                                </a>
+                                            </li>
+                                            <li class="m-nav__item">
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="m-nav__link"
+                                                    (click)="onExportExcel(exportEnum.ExportExcelTongHopKetQuaDanhGiaXepLoaiChatLuong)"
+                                                >
+                                                    <span class="m-nav__link-text"> Tổng hợp kết quả đánh giá xếp loại chất lượng </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nz-dropdown-menu>
+                </li>
+
+                <ng-container *ngIf="currentLayoutView === layoutView.CARD_VIEW">
+                    <li class="m-portlet__nav-item" *ngIf="isBtnPrevious">
+                        <button class="btn_custom btn_df" (click)="onPreviousPage()">
+                            <div [innerHTML]="'previous-page.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        </button>
+                    </li>
+                    <li class="m-portlet__nav-item" *ngIf="isBtnNext">
+                        <button class="btn_custom btn_df" (click)="onNextPage()">
+                            <div [innerHTML]="'next-page.svg' | vnuIcon | safeHtml: 'html'"></div>
+                        </button>
+                    </li>
+                </ng-container>
+
+                <li class="m-portlet__nav-item" *ngIf="layoutView.CARD_VIEW !== currentLayoutView">
+                    <button class="btn_custom btn_df" (click)="setLayoutView(layoutView.CARD_VIEW)">
+                        <span class="svg-icon pr-0">
+                            <i class="fa fa-th"></i>
+                        </span>
+                    </button>
+                </li>
+                <li class="m-portlet__nav-item" *ngIf="layoutView.TABLE_VIEW !== currentLayoutView">
+                    <button class="btn_custom btn_df" (click)="setLayoutView(layoutView.TABLE_VIEW)">
+                        <span class="svg-icon pr-0">
+                            <i class="fa fa-th-list"></i>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="m-portlet__body">
+        <div class="box-search-body pr-3 pl-3">
+            <div class="pt-3 row">
+                <div class="col-lg-3">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'SURVEY.QUAN_LY_DANH_GIA.OBJECT' | translate }} </label>
+                        <div>
+                            <asc-select
+                                [modeOfDropDowList]="dropdownListEnum.DOI_TUONG_DANH_GIA"
+                                [placeHolder]="'LB.SELECT' | translate"
+                                [(ngModel)]="modelSearch.doiTuongDanhGiaId"
+                            >
+                            </asc-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'SURVEY.QUAN_LY_DANH_GIA.ORGANIZATION' | translate }} </label>
+                        <div>
+                            <app-select-user-tree
+                                [placeholder]="'LB.SELECT' | translate"
+                                [(ngModel)]="chonDonVi"
+                                [userSelectedIds]="chonDonVi"
+                            ></app-select-user-tree>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group m-form__group">
+                        <label>Tìm kiếm</label>
+                        <div class="m-input-icon m-input-icon--left m-input-icon--right dropdown-search-advance" style="width: 100%">
+                            <input
+                                type="text"
+                                class="form-control m-input"
+                                [placeholder]="'LB.SEARCH_PLACEHOLDER' | translate"
+                                [formControl]="searchControl"
+                            />
+                            <span class="m-input-icon__icon m-input-icon__icon--left">
+                                <span>
+                                    <i class="la la-search"></i>
+                                </span>
+                            </span>
+                            <span class="m-input-icon__icon m-input-icon__icon--right">
+                                <span (click)="searchAdvanced()" class="dropbtn-search-advance">
+                                    <i class="la la-caret-down"></i>
+                                </span>
+                            </span>
+                            <div
+                                id="myDropdown"
+                                class="dropdown-content-search-advance"
+                                [ngClass]="this.searchAdvance ? 'show-search-advance' : ''"
+                                *ngIf="openFirstTime"
+                            >
+                                <div class="custom-search-advance m-form">
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'SURVEY.BAN_QUAN_LY_DANH_GIA.KEYWORD' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <div class="m-input-icon m-input-icon--left">
+                                                <input
+                                                    type="text"
+                                                    class="form-control m-input m-input--solid"
+                                                    placeholder="{{ 'BTN.SEARCH' | translate }}"
+                                                    id="generalSearch"
+                                                    [(ngModel)]="modelSearch.keyword"
+                                                />
+                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                    <span>
+                                                        <i class="la la-search"></i>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'SURVEY.BAN_QUAN_LY_DANH_GIA.TIME' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <div class="d-flex">
+                                                <nz-date-picker
+                                                    [(ngModel)]="modelSearch.tuNgay"
+                                                    nzFormat="dd/MM/yyyy"
+                                                    [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                                                >
+                                                </nz-date-picker>
+                                                <label>&nbsp;</label>
+                                                <nz-date-picker
+                                                    [(ngModel)]="modelSearch.denNgay"
+                                                    nzFormat="dd/MM/yyyy"
+                                                    [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                                                ></nz-date-picker>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'LB.YEAR' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <asc-select
+                                                [modeOfDropDowList]="dropdownListEnum.NAM"
+                                                [placeHolder]="'LB.SELECT' | translate"
+                                                [(ngModel)]="modelSearch.nam"
+                                            >
+                                            </asc-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'SURVEY.BAN_QUAN_LY_DANH_GIA.RATE' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <asc-select
+                                                [modeOfDropDowList]="dropdownListEnum.QUY"
+                                                [placeHolder]="'LB.SELECT' | translate"
+                                                [(ngModel)]="modelSearch.quy"
+                                            >
+                                            </asc-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'LB.STATUS' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <asc-select
+                                                [modeOfDropDowList]="dropdownListEnum.TRANG_THAI_DANH_GIA"
+                                                [placeHolder]="'LB.SELECT' | translate"
+                                                [(ngModel)]="modelSearch.trangThaiDanhGia"
+                                            >
+                                            </asc-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label"> {{ 'SURVEY.QUAN_LY_DANH_GIA.STAFF' | translate }} </label>
+                                        <div class="col-lg-8 custom-select-widget">
+                                            <widget-select-user-for-filter
+                                                [placeholder]="'LB.SELECT' | translate"
+                                                [(ngModel)]="chonNhanSu"
+                                                [userSelectedIds]="chonNhanSu"
+                                                [mode]="'multiple'"
+                                                (listItems)="changeNhanSu($event)"
+                                            >
+                                            </widget-select-user-for-filter>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'LB.HRM.CHUC_DANH' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <asc-select
+                                                [modeOfDropDowList]="dropdownListEnum.CHUC_DANH"
+                                                [placeHolder]="'LB.SELECT' | translate"
+                                                [mode]="'multiple'"
+                                                [(ngModel)]="modelSearch.chucDanhIds"
+                                            >
+                                            </asc-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group m-form__group row">
+                                        <label class="col-lg-4 col-form-label">
+                                            {{ 'LB.HRM.CHUC_VU' | translate }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            <asc-select
+                                                [modeOfDropDowList]="dropdownListEnum.CHUC_VU"
+                                                [placeHolder]="'LB.SELECT' | translate"
+                                                [mode]="'multiple'"
+                                                [(ngModel)]="modelSearch.chucVuIds"
+                                            >
+                                            </asc-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 pl-0">
+                    <div class="form-group m-form__group text-right">
+                        <label>&nbsp;</label>
+                        <div class="btn-actions">
+                            <button type="button" class="btn_custom btn_add mr-1" (click)="searchHandler()">
+                                <span class="text">
+                                    {{ 'BTN.SEARCH' | translate }}
+                                </span>
+                            </button>
+                            <button type="button" class="btn_custom btn_df" (click)="refreshHandler()">
+                                <span class="text">
+                                    {{ 'BTN.RESET' | translate }}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="layoutView.CARD_VIEW === currentLayoutView">
+            <div class="p-4">
+                <div class="row card_wapper">
+                    <ng-container *ngFor="let item of (cardView$ | async).data">
+                        <div class="col-xl-4 col-lg-6 col-12">
+                            <div class="card-df">
+                                <div class="card-df-header">
+                                    <div class="line-card">
+                                        <div class="avatar-image">
+                                            <img
+                                                alt="Pic"
+                                                [src]="
+                                                    item.avatarUrl && item.avatarUrl !== ''
+                                                        ? item.avatarUrl
+                                                        : './assets/images/no-avatar.jpg'
+                                                "
+                                                width="100%"
+                                                height="100%"
+                                            />
+                                        </div>
+
+                                        <ng-container *ngIf="!item.isDanhGia3">
+                                            <div class="status-rated">{{ 'SURVEY.QUAN_LY_DANH_GIA.RATED' | translate }}</div>
+                                        </ng-container>
+
+                                        <span
+                                            class="position-note-pdg"
+                                            nz-popover
+                                            nzPopoverTitle="Ghi chú"
+                                            [nzPopoverContent]="contentTemplate"
+                                        >
+                                            <span class="flaticon flaticon-questions-circular-button"></span>
+                                            <ng-template #contentTemplate>
+                                                <span [innerHTML]="item.ghiChuPhieuDanhGia | safeHtml: 'html'"></span>
+                                            </ng-template>
+                                        </span>
+                                    </div>
+                                    <div class="card-header-info">
+                                        <div class="card-name">
+                                            {{ item.tenNhanSuDanhGia1 }}
+                                        </div>
+                                        <div class="card-desc">
+                                            {{ 'SURVEY.QUAN_LY_DANH_GIA.POSITION_' | translate }}:
+                                            {{
+                                                (item.tenChucVu1 ? item.tenChucVu1 : '') +
+                                                    (item.tenChucVu1 && item.tenChucDanh1 ? ' - ' : '') +
+                                                    (item.tenChucDanh1 ? item.tenChucDanh1 : '')
+                                            }}
+                                        </div>
+                                        <div class="card-desc">
+                                            {{ 'SURVEY.QUAN_LY_DANH_GIA.ORGANIZATION' | translate }}: {{ item.tenCoQuan1 }}
+                                        </div>
+
+                                        <ng-container *ngIf="item.isDanhGia3">
+                                            <div class="card-action">
+                                                <div>
+                                                    <ng-container *ngIf="checkShowButtonDanhGia(item)">
+                                                        <a href="javascript:void(0)" (click)="danhGia(item)" class="btn_custom btn_add">
+                                                            <div [innerHTML]="'edit.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                                            <span class="text">{{ 'SURVEY.QUAN_LY_DANH_GIA.DO' | translate }}</span>
+                                                        </a>
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="checkShowButtonChuyen(item)">
+                                                        <a
+                                                            href="javascript:void(0)"
+                                                            class="btn_custom btn_df"
+                                                            (click)="onChuyenDanhGia(item)"
+                                                        >
+                                                            <div [innerHTML]="'sending.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                                            <span class="text">{{
+                                                                'SURVEY.QUAN_LY_DANH_GIA.TRANFER_SURVEY' | translate
+                                                            }}</span>
+                                                        </a>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                                <div class="card-df-body">
+                                    <div class="box-info">
+                                        <div class="title">
+                                            {{ 'SURVEY.QUAN_LY_DANH_GIA.RESULT_YOURSELF' | translate }}
+                                        </div>
+                                        <div class="info-content">
+                                            <span>{{ 'SURVEY.QUAN_LY_DANH_GIA.RESULT' | translate }}:</span> {{ item.tenXepLoai1 }}
+                                        </div>
+                                    </div>
+
+                                    <div class="box-info">
+                                        <div class="title">
+                                            {{ 'SURVEY.QUAN_LY_DANH_GIA.RESULT_MANAGEMENE1' | translate }}
+                                        </div>
+                                        <div class="info-content">
+                                            <span>{{ 'SURVEY.QUAN_LY_DANH_GIA.FULLNAME' | translate }}:</span> {{ item.tenNhanSuDanhGia2 }}
+                                        </div>
+                                        <div class="info-content">
+                                            <span>{{ 'SURVEY.QUAN_LY_DANH_GIA.RESULT' | translate }}:</span> {{ item.tenXepLoai2 }}
+                                        </div>
+                                    </div>
+
+                                    <div class="box-info">
+                                        <div class="title">
+                                            {{ 'SURVEY.QUAN_LY_DANH_GIA.RESULT_MANAGEMENT2' | translate }}
+                                        </div>
+                                        <div class="info-content">
+                                            <span>{{ 'SURVEY.QUAN_LY_DANH_GIA.FULLNAME' | translate }}:</span> {{ item.tenNhanSuDanhGia3 }}
+                                        </div>
+                                        <div class="info-content">
+                                            <span>{{ 'SURVEY.QUAN_LY_DANH_GIA.RESULT' | translate }}:</span> {{ item.tenXepLoai3 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-df-footer">
+                                    <div class="card-title">
+                                        <div class="title">{{ item.tenPhieu }}</div>
+                                        <div class="desc">{{ item.tenDotDanhGia }}</div>
+                                    </div>
+                                    <div style="padding: 15px">
+                                        <button class="btn_custom btn_survey w-100" (click)="viewHandler(item)">
+                                            {{ 'SURVEY.QUAN_LY_DANH_GIA.VIEW_SURVEY' | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="loading">
+                        <nz-skeleton [nzActive]="true"></nz-skeleton>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="layoutView.TABLE_VIEW === currentLayoutView">
+            <div class="box-thongke">
+                <div class="box-content">
+                    <div class="item">
+                        {{ 'SURVEY.BAN_QUAN_LY_DANH_GIA.TOTAL_ALL' | translate }}
+                        <span>
+                            (<b>{{ modelThongKe?.totalItems }}</b
+                            >)
+                        </span>
+                    </div>
+                    <div class="item">
+                        {{ 'SURVEY.BAN_QUAN_LY_DANH_GIA.TOTAL_DONE' | translate }}
+                        <span>
+                            (<b>{{ modelThongKe?.soLuongDaDanhGia }}</b
+                            >)
+                        </span>
+                    </div>
+                    <div class="item">
+                        {{ 'SURVEY.BAN_QUAN_LY_DANH_GIA.TOTAL_YET' | translate }}
+                        <span>
+                            (<b>{{ modelThongKe?.soLuongChuaDanhGia }}</b
+                            >)
+                        </span>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <div class="item">
+                        {{ 'SURVEY.QUAN_LY_DANH_GIA.EXCELLENT' | translate }}
+                        <span>
+                            <b>{{ modelThongKe?.tyLe1 }}%</b>
+                        </span>
+                    </div>
+                    <div class="item">
+                        {{ 'SURVEY.QUAN_LY_DANH_GIA.GOOD' | translate }}
+                        <span >
+                            <b>{{ modelThongKe?.tyLe2 }}%</b>
+                        </span>
+                    </div>
+                    <div class="item">
+                        {{ 'SURVEY.QUAN_LY_DANH_GIA.DONE' | translate }}
+                        <span>
+                            <b>{{ modelThongKe?.tyLe3 }}%</b>
+                        </span>
+                    </div>
+                    <div class="item">
+                        {{ 'SURVEY.QUAN_LY_DANH_GIA.NOT_YET' | translate }}
+                        <span>
+                            <b>{{ modelThongKe?.tyLe4 }}%</b>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-wrapper" [ngStyle]="{ 'height.px': pageHeight }">
+                <kendo-grid
+                    [data]="cardView$ | async"
+                    [pageSize]="gridState.take"
+                    [skip]="gridState.skip"
+                    [loading]="loading"
+                    [pageable]="pageConfig"
+                    [resizable]="true"
+                    [columnMenu]="true"
+                    [sortable]="true"
+                    [sort]="gridState.sort"
+                    (sortChange)="sortChange($event)"
+                    [style.height]="'100%'"
+                    kendoGridSelectBy="nhanSuDanhGiaChiTietId"
+                    [selectedKeys]="selectionIds"
+                    (dataStateChange)="onStateChange($event)"
+                    [selectable]="true"
+                >
+                    <kendo-grid-checkbox-column showSelectAll="true" width="40" [columnMenu]="false" [headerStyle]="{'text-align': 'center'}"> </kendo-grid-checkbox-column>
+                    <kendo-grid-column [title]="'LB.ACTION' | translate" class="text-center" width="60" [columnMenu]="false" [headerStyle]="{'text-align': 'center'}">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <ng-container>
+                                <nz-button-group>
+                                    <button nz-button nz-dropdown class="btn-light" [nzDropdownMenu]="menu" nzPlacement="right">
+                                        <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    </button>
+                                </nz-button-group>
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <div class="m-dropdown__wrapper menu-dropdown-table">
+                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                        <div class="m-dropdown__inner">
+                                            <div class="m-dropdown__body">
+                                                <div class="m-dropdown__content">
+                                                    <ul class="m-nav">
+                                                        <li class="m-nav__section m-nav__section--first">
+                                                            <span class="m-nav__section-text">
+                                                                {{ 'LB.ACTION' | translate }}
+                                                            </span>
+                                                        </li>
+                                                        <li class="m-nav__item">
+                                                            <a
+                                                                href="javascript:void(0)"
+                                                                (click)="viewHandler(dataItem)"
+                                                                class="m-nav__link"
+                                                            >
+                                                                <i class="m-nav__link-icon flaticon-list-1"></i>
+                                                                <span class="m-nav__link-text"> Xem phiếu đánh giá</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item" *ngIf="checkShowButtonDanhGia(dataItem)">
+                                                            <a href="javascript:void(0)" class="m-nav__link" (click)="danhGia(dataItem)">
+                                                                <i class="m-nav__link-icon flaticon-interface-1"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    {{ 'SURVEY.QUAN_LY_DANH_GIA.DO' | translate }}
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="m-nav__item" *ngIf="checkShowButtonChuyen(dataItem)">
+                                                            <a
+                                                                href="javascript:void(0)"
+                                                                class="m-nav__link"
+                                                                (click)="onChuyenDanhGia(dataItem)"
+                                                            >
+                                                                <i class="m-nav__link-icon flaticon-interface-1"></i>
+                                                                <span class="m-nav__link-text">
+                                                                    {{ 'SURVEY.QUAN_LY_DANH_GIA.TRANFER_SURVEY' | translate }}
+                                                                </span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nz-dropdown-menu>
+                            </ng-container>
+                            <ng-template #btnDisabled>
+                                <div class="text-center">
+                                    <button nz-button class="btn-disabled">
+                                        <div [innerHTML]="'commode1.svg' | vnuIcon | safeHtml: 'html'"></div>
+                                    </button>
+                                </div>
+                            </ng-template>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column [title]="'LB.STT' | translate" width="50" [columnMenu]="false" [headerStyle]="{'text-align': 'center'}">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div class="text-center">
+                                {{ rowIndex + 1 }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="userName" [width]="110" [title]="'LB.USERNAME' | translate"  [columnMenu]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="tenNhanSuDanhGia1"
+                        class="text-left"
+                        [title]="'LB.FULLNAME' | translate"
+                        width="200"
+                        [columnMenu]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <div class="dark">
+                                <b>{{ dataItem.tenNhanSuDanhGia1 }}</b>
+                            </div>
+                            <div class="grid-size12">
+                                {{
+                                    (dataItem.tenChucVu1 ? dataItem.tenChucVu1 : '') +
+                                        (dataItem.tenChucVu1 && dataItem.tenChucDanh1 ? ' - ' : '') +
+                                        (dataItem.tenChucDanh1 ? dataItem.tenChucDanh1 : '')
+                                }}
+                            </div>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="tenGioiTinh" [width]="50" [title]="'LB.GENDER' | translate"  [columnMenu]="false">
+                    </kendo-grid-column>
+                    <kendo-grid-column field="ngaySinh" [width]="90" [title]="'LB.BIRTHDAY' | translate"  [columnMenu]="false" class="text-center">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.ngaySinh | date: 'dd/MM/yyyy' }}
+                        </ng-template>
+                    </kendo-grid-column>
+                    <kendo-grid-column field="tenCoQuan1" [width]="200" [title]="'LB.DEPARTMENT' | translate"  [columnMenu]="false">
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column
+                        field="tenPhieu"
+                        [title]="'SURVEY.BAN_QUAN_LY_DANH_GIA.SURVEY' | translate"
+                        [columnMenu]="false"
+                        width="300"
+                    >
+                    </kendo-grid-column> -->
+                    <kendo-grid-column
+                        field="maPhieu"
+                        width="100"
+                        [title]="'SURVEY.QUAN_LY_DANH_GIA.CODE_ITEM' | translate"
+                        [columnMenu]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <span nz-popover [nzPopoverContent]="contentPhieu">
+                                <span>{{ dataItem.maPhieu }}</span>
+                            </span>
+                            <ng-template #contentPhieu>
+                                <span> {{ dataItem.tenPhieu }}</span>
+                                <span [innerHTML]="dataItem.ghiChuPhieuDanhGia | safeHtml: 'html'"></span>
+                            </ng-template>
+                        </ng-template>
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column
+                        field="ghiChuPhieuDanhGia"
+                        width="400"
+                        [title]="'LB.NOTE' | translate"
+                        [columnMenu]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <div [innerHTML]="dataItem.ghiChuPhieuDanhGia"></div>
+                        </ng-template>
+                    </kendo-grid-column> -->
+                    <!-- <kendo-grid-column
+                        [title]="'SURVEY.BAN_QUAN_LY_DANH_GIA.TIME' | translate"
+                        width="180"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            {{ dataItem.tuNgay | date: 'dd/MM/yyyy' }} - {{ dataItem.denNgay | date: 'dd/MM/yyyy' }}
+                        </ng-template>
+                    </kendo-grid-column> -->
+                    <kendo-grid-column
+                        field="tenXepLoai1"
+                        [title]="'SURVEY.QUAN_LY_DANH_GIA.RESULT_YOURSELF' | translate"
+                        width="200"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                    ></kendo-grid-column>
+                    <kendo-grid-column
+                        field="tenXepLoai2"
+                        [title]="'SURVEY.QUAN_LY_DANH_GIA.OPINION' | translate"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                        width="250"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        field="tenXepLoai3"
+                        [title]="'SURVEY.QUAN_LY_DANH_GIA.RESULT' | translate"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                        width="200"
+                    >
+                    </kendo-grid-column>
+                    <!-- <kendo-grid-column
+                        field="tenXepLoai9"
+                        [title]="'Kết quả xét duyệt' | translate"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                        width="200"
+                    >
+                    </kendo-grid-column> -->
+                </kendo-grid>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<div class="k-overlay" *ngIf="opened"></div>
+<div class="wrapper form-layouts">
+    <div kendoWindowContainer></div>
+</div>

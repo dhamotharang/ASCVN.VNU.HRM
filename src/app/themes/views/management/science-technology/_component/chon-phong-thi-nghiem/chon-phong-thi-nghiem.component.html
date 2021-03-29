@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-sm-9">
+        <div class="form-group m-form__group">
+            <label> {{ 'SCI.PTN.CHON_PTN' | translate }} </label>
+            <div>
+                <div class="select-user">
+                    <nz-select
+                        nzShowSearch
+                        [nzPlaceHolder]="'LB.SELECT' | translate"
+                        nzAllowClear
+                        [(ngModel)]="listPTN"
+                        nzMode="multiple"
+                    >
+                        <ng-container *ngFor="let item of listDropPTN">
+                            <nz-option [nzLabel]="item.tenPhongThiNghiem" [nzValue]="item"></nz-option>
+                        </ng-container>
+                    </nz-select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group m-form__group">
+            <label style="color: white">.</label>
+            <div>
+                <a type="button" class="btn_custom btn_add ml-1" (click)="addPhongThiNghiemHandler()">
+                    <div [innerHTML]="'add-user.svg' | vnuIcon | safeHtml: 'html'"></div>
+                    <span class="text">{{ 'SCI.PTN.THEM_PTN' | translate }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group m-form__group">
+            <div class="grid-wrapper grid-wrapper-border">
+                <kendo-grid [data]="viewPTN" [resizable]="true" [columnMenu]="false">
+                    <kendo-grid-column
+                        [title]="'LB.ACTION' | translate"
+                        class="text-center"
+                        [width]="90"
+                        [columnMenu]="false"
+                        [sortable]="false"
+                    >
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <button
+                                type="button"
+                                nz-button
+                                class="btn-svg-danger d-inline-block"
+                                (click)="removePhongThiNghiemHandler(dataItem, rowIndex)"
+                            >
+                                <div [innerHTML]="'trash-danger.svg' | vnuIcon | safeHtml: 'html'"></div>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column
+                        field="maPhongThiNghiem"
+                        [columnMenu]="false"
+                        [title]="'SCI.PTN.MA' | translate"
+                        width="200"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column
+                        [columnMenu]="false"
+                        field="tenPhongThiNghiem"
+                        [title]="'SCI.PTN.TEN' | translate"
+                        [sortable]="false"
+                    >
+                    </kendo-grid-column>
+                    <kendo-grid-column [width]="200" [title]="'SCI.PTN.MUC_DO_SU_DUNG' | translate" [headerStyle]="{'text-align': 'center'}">
+                        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                            <nz-input-number
+                                [nzMin]="1"
+                                [nzMax]="100"
+                                [nzStep]="1"
+                                [(ngModel)]="dataItem.mucDoSuDung" style="width: 100%"
+                                [nzFormatter]="formatterPercent"
+                                [nzParser]="parserPercent">
+                            </nz-input-number>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </kendo-grid>
+            </div>
+        </div>
+    </div>
+</div>

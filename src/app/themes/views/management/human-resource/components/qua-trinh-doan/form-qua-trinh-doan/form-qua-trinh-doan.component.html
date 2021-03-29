@@ -1,0 +1,52 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DOAN_DANG.NGAY_VAO_DOAN' | translate }} <span class="text-danger">(*)</span> </label>
+                <div>
+                    <nz-date-picker
+                        nzFormat="dd/MM/yyyy"
+                        [nzPlaceHolder]="'LB.SELECT' | translate"
+                        style="width: 100%"
+                        formControlName="ngayBatDau"
+                    >
+                    </nz-date-picker>
+                </div>
+                <app-field-error [control]="form.get('ngayBatDau')"></app-field-error>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DOAN_DANG.CHUC_VU_DOAN' | translate }} <span class="text-danger">(*)</span></label>
+                <asc-select
+                    [modeOfDropDowList]="dropdownListEnum.CHUC_VU_DOAN"
+                    [placeHolder]="'LB.SELECT' | translate"
+                    formControlName="idChucVuDoan"
+                >
+                </asc-select>
+                <app-field-error [control]="form.get('idChucVuDoan')"></app-field-error>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group m-form__group">
+                <label> {{ 'HR.DOAN_DANG.NOI_SINH_HOAT_DOAN' | translate }} </label>
+                <input type="text" class="m-input form-control" formControlName="noiSinhHoat" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

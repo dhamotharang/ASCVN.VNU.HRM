@@ -1,0 +1,109 @@
+<form class="m-form form-tt-don" novalidate>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-10" *ngIf="itemData">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2>{{itemData.tieuDe}}</h2>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+          <nz-divider></nz-divider>
+        </div>
+        <div class="col-4"></div> 
+        <div class="col-12 text-center">
+          <label class="col-form-label">{{ 'MANAGEMENT.LABEL.SO_QUYET_DINH' | translate }}: </label>
+          <label class="pl-2 text-success">QDTD/123401562</label>
+        </div> 
+        <div class="col-12 pb-4"></div> 
+
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <label class="font-weight-bold">
+                {{ 'MANAGEMENT.DON.CAN_CU' | translate }} :</label>
+              <label class="pl-2">HĐLĐ/2020A2</label>
+            </div>
+
+            <div class="col-6">
+              <label class="font-weight-bold"> {{ 'MANAGEMENT.DON.KY_NGAY' | translate }} : </label>
+              <label class="pl-2">20/05/2018</label>
+            </div>
+
+            <div class="col-6">
+              <label class="font-weight-bold">
+               Giữa Đại học Quốc Gia Hà Nội Ông/Bà:</label>
+              <label class="pl-2">Trịnh Thu Chi</label>
+            </div>
+
+            <div class="col-6"> 
+              <label class="font-weight-bold">
+                {{ 'MANAGEMENT.DON.CHUC_VU' | translate }} :</label>
+              <label class="pl-2">Phó phòng</label>
+            </div>
+
+            <div class="col-6"> 
+              <label class="font-weight-bold">
+                {{ 'MANAGEMENT.DON.THUOC_DON_VI' | translate }} :</label>
+              <label class="pl-2">ĐH An Ninh</label>
+            </div>
+
+            <div class="col-6">
+
+              <label class="font-weight-bold">
+                {{ 'MANAGEMENT.DON.CHUC_DANH_NGHE_NGHIEP' | translate }}:</label>
+              <label class="pl-2">Chuyên viên</label>
+            </div>
+
+            <div class="col-12">
+              <label class="font-weight-bold">
+                {{ 'MANAGEMENT.DON.CHAM_DUT_HOP_DONG_LD_TU_NGAY' | translate }} :</label>
+              <label class="pl-2">15/05/2021</label> 
+            </div>
+
+            <div class="col-12">
+              <label>
+                ({{ 'MANAGEMENT.TEXT.1' | translate }})</label> 
+            </div>
+  
+            <div class="col-12">
+              <label class="m-checkbox">
+                <input type="checkbox"/>{{
+                    'MANAGEMENT.DON.KHOA_TK' | translate
+                }}
+                <span></span>
+            </label>
+            </div> 
+            <div class="col-12"></div>
+            <div class="col-12"></div>
+
+            <div class="col-4">
+              <label >
+                <u>{{ 'MANAGEMENT.LABEL.NOI_NHAN' | translate }}:</u></label>
+              <label class="pl-2">ĐH An Ninh Phòng TCCB Ông/Bà</label> 
+            </div>
+         
+            <!-- <div class="col-4"> 
+              <div class="form-group m-form__group">
+                <label>
+                  {{ 'MANAGEMENT.LABEL.VAN_BAN_DINH_KEM' | translate }}
+                </label>
+                <asc-upload (fileInput)="onSelectFile($event)" [file]="fileInput$ | async"
+                  [folderName]="folder.TD_HopDongTuyenDung" [multiple]="false">
+                </asc-upload>
+              </div>
+            </div> -->
+          
+            <div class="col-4 ">
+              <label class="d-block">
+                <b>Hà Nội</b>, Ngày <b>05</b> tháng <b>05</b> năm <b>2021</b></label>
+              <label class="pl-2 font-weight-bold text-center d-block"> ({{ 'MANAGEMENT.LABEL.NGUOI_QUYET_DINH' | translate }})</label> 
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</form>

@@ -1,0 +1,67 @@
+<form class="m-form" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'SURVEY.PHIEU_DANH_GIA.CONTENT_GROUP' | translate }}
+        </label>
+        <div class="form-control content-nhomnoidung" [innerHTML]="form.controls['nhomNoiDung'].value"></div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label> {{ 'SURVEY.PHIEU_DANH_GIA.CONTENT' | translate }} <span class="text-danger">(*)</span> </label>
+                <ckeditor debounce="500" formControlName="noiDung" type="inline" class="custom--ckeditor"> </ckeditor>
+                <app-field-error [control]="form.get('noiDung')"></app-field-error>
+            </div>
+        </div>
+        <!-- <div class="col-2">
+            <div class="form-group m-form__group">
+                <label>
+                    {{ 'SURVEY.PHIEU_DANH_GIA.ORDER' | translate }}
+                </label>
+                <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="stt" style="width: 100%"></nz-input-number>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="form-group m-form__group">
+        <label> {{ 'SURVEY.PHIEU_DANH_GIA.CONTENT_TYPE' | translate }} <span class="text-danger">(*)</span> </label>
+        <asc-select
+            [modeOfDropDowList]="dropdownListEnum.LOAI_CAU_HOI_DANH_GIA"
+            [placeHolder]="'LB.SELECT' | translate"
+            formControlName="hinhThucTraLoiId"
+            [isDisabled]="flagGroup"
+        ></asc-select>
+        <app-field-error [control]="form.get('hinhThucTraLoiId')"></app-field-error>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label> {{ 'SURVEY.PHIEU_DANH_GIA.PERSON' | translate }} <span class="text-danger">(*)</span> </label>
+        <asc-select
+            [modeOfDropDowList]="dropdownListEnum.LOAI_DANH_GIA"
+            [placeHolder]="'LB.SELECT' | translate"
+            formControlName="doiTuongThucHienId"
+            [isDisabled]="!flagGroup"
+        ></asc-select>
+        <app-field-error [control]="form.get('doiTuongThucHienId')"></app-field-error>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'SURVEY.PHIEU_DANH_GIA.TARGET' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="tieuChiDanhGia"></textarea>
+    </div>
+
+    <div class="form-group m-form__group">
+        <label>
+            {{ 'LB.NOTE' | translate }}
+        </label>
+        <textarea class="form-control" formControlName="ghiChu"></textarea>
+    </div>
+
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_remove btn_close mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

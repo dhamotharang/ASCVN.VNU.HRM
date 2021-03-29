@@ -1,0 +1,146 @@
+<form class="m-form dg-tap-su" novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <nz-tabset>
+        <nz-tab [nzTitle]="'RECRUITMENT.TAP_SU.DANH_GIA' | translate">
+            <div class="row">
+                <div class="col-sm-12 d-flex">
+                    <div class="mr-5">
+                        <label class="col-form-label lb-bold-info mr-2">
+                            {{ 'LB.NGUOI_TAP_SU' | translate }}
+                            <span class="float-right">:</span>
+                        </label>
+                        <label class="col-form-label lb-bold-info bolder">
+                            <ng-container>{{ tenNguoiTapSu }}</ng-container>
+                        </label>
+                    </div>
+                    <div class="ml-5">
+                        <label class="col-form-label lb-bold-info mr-2">
+                            {{ 'LB.HRM.VI_TRI_VIEC_LAM' | translate }}
+                            <span class="float-right">:</span>
+                        </label>
+                        <label class="col-form-label lb-bold-info bolder">
+                            <ng-container>{{ tenViTriViecLam }}</ng-container>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.CONG_VIEC_DUOC_PHAN_CONG' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="congViecDuocPhanCong" readonly />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.PHAM_CHAT_DAO_DUC' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="phamChatDaoDuc" readonly />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.NANG_LUC_TRINH_DO' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="nangLuc" readonly />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.Y_THUC_CHAP_HANH' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="yThucToChuc" readonly />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.THAM_GIA_CONG_TAC_DOAN_THE' | translate }}</label>
+                        <input type="text" class="m-input form-control" formControlName="thamGiaCongTac" readonly />
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label>
+                            {{ 'LB.ATTACH_FILE' | translate }}
+                        </label>
+                        <asc-upload
+                            (fileInput)="onSelectFile($event)"
+                            [file]="fileInput$ | async"
+                            [folderName]="folder.TS_BaoCaoCaNhan"
+                            [multiple]="false"
+                            [isDisabled]="true"
+                        >
+                        </asc-upload>
+                    </div>
+                </div>
+                <nz-divider></nz-divider>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.NHAN_XET' | translate }}</label>
+                        <textarea
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="nhanXet"
+                            [readOnly]="action === isAction.VIEW"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.TAP_SU.DE_XUAT_KHAC' | translate }}</label>
+                        <textarea
+                            type="text"
+                            class="m-input form-control"
+                            formControlName="deXuatKhac"
+                            [readOnly]="action === isAction.VIEW"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'LB.STATUS' | translate }}</label>
+                        <nz-select
+                            nzShowSearch
+                            [nzPlaceHolder]="'LB.SELECT' | translate"
+                            nzAllowClear
+                            formControlName="trangThai"
+                            [nzDisabled]="action === isAction.VIEW"
+                        >
+                            <nz-option [nzLabel]="'RECRUITMENT.TAP_SU.DAT' | translate" [nzValue]="trangThaiHopDongEnum.DAT"></nz-option>
+                            <nz-option
+                                [nzLabel]="'RECRUITMENT.TAP_SU.CHAM_DUT_HOP_DONG' | translate"
+                                [nzValue]="trangThaiHopDongEnum.CHAM_DUT_HOP_DONG"
+                            ></nz-option>
+                            <nz-option
+                                [nzLabel]="'RECRUITMENT.TAP_SU.GIA_HAN_THOI_GIAN_TAP_SU' | translate"
+                                [nzValue]="trangThaiHopDongEnum.GIA_HAN_THOI_GIAN_TAP_SU"
+                            ></nz-option>
+                        </nz-select>
+                    </div>
+                </div>
+                <div class="col-sm-6" *ngIf="form.get('trangThai').value === trangThaiHopDongEnum.GIA_HAN_THOI_GIAN_TAP_SU">
+                    <div class="form-group m-form__group">
+                        <label> {{ 'RECRUITMENT.HD.THOI_GIAN_BAO_CAO' | translate }} </label>
+                        <div class="d-flex mr-2">
+                            <nz-date-picker
+                                class="col-6"
+                                [nzDisabled]="true"
+                                formControlName="tapSuDenNgay"
+                                nzFormat="dd/MM/yyyy"
+                                [nzPlaceHolder]="'LB.DATE_FROM' | translate"
+                            >
+                            </nz-date-picker>
+                            <label>&nbsp;</label>
+                            <nz-date-picker
+                                class="col-6"
+                                [nzDisabledDate]="disabledNgayGiaHan"
+                                [nzDisabled]="action === isAction.VIEW"
+                                formControlName="ngayGiaHan"
+                                nzFormat="dd/MM/yyyy"
+                                [nzPlaceHolder]="'LB.DATE_TO' | translate"
+                            ></nz-date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+    <div class="text-right border-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df mr-1">{{ 'BTN.CANCEL' | translate }}</button>
+        <button *ngIf="!(action == isAction.VIEW)" type="submit" class="btn_custom btn_add">{{ 'BTN.SAVE' | translate }}</button>
+    </div>
+</form>

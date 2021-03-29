@@ -1,0 +1,18 @@
+<nz-table [nzData]="ketQuaDuKien" [nzShowPagination]="false" *ngFor="let nhom of ketQuaDuKien">
+    <thead>
+        <tr>
+            <th class="text-left" colspan="2">{{ nhom.ten }}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="m-1" *ngFor="let child of nhom.ketQuaDuKien">
+            <td class="p-0 pl-5">
+                {{ child.ten }}
+            </td>
+            <td class="p-0 text-right">
+                <nz-input-number [(ngModel)]="child.ketQua" [nzMin]="1" [nzStep]="1" (ngModelChange)="onChange($event)"></nz-input-number>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

@@ -1,0 +1,97 @@
+<div class="form-group m-form__group">
+    <label>
+        <b>{{ 'SURVEY.NHAT_KY_PHIEU_DANH_GIA.TEN_PHIEU' | translate }}</b
+        >: {{ model?.tenPhieu }}</label
+    >
+</div>
+<div class="form-group m-form__group">
+    <label>
+        <b>{{ 'SURVEY.NHAT_KY_PHIEU_DANH_GIA.HO_TEN' | translate }}</b
+        >: {{ model?.tenNhanSuDanhGia1 }}
+    </label>
+</div>
+<div class="form-group m-form__group">
+    <label>
+        <b>{{ 'SURVEY.NHAT_KY_PHIEU_DANH_GIA.DOI_TUONG' | translate }}</b> : {{ model?.tenDoiTuongDanhGia }}</label
+    >
+</div>
+<div class="form-group m-form__group">
+    <div class="grid-wrapper grid-wrapper-border">
+        <kendo-grid
+            [data]="gridNhatKyPhieuDanhGia"
+            [pageSize]="gridState.take"
+            [skip]="gridState.skip"
+            [loading]="loading"
+            [pageable]="pageConfig"
+            [resizable]="true"
+            [columnMenu]="true"
+            [sortable]="true"
+            [sort]="gridState.sort"
+            [height]="600"
+            (dataStateChange)="onStateChange($event)"
+            [selectable]="true"
+        >
+            <kendo-grid-column [title]="'LB.STT' | translate" width="60" [columnMenu]="false">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        {{ rowIndex + 1 }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [columnMenu]="false" [title]="'SURVEY.NHAT_KY_PHIEU_DANH_GIA.THOI_GIAN' | translate" width="200">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="text-center">
+                        {{ dataItem.creationDate | date: 'HH:mm - dd/MM/yyyy' }}
+                    </div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="noiDung" [columnMenu]="false" [title]="'Nội dung' | translate" [sortable]="false">
+            </kendo-grid-column>
+            <kendo-grid-column [title]="'Nhân sự cũ' | translate" [columnMenu]="false" width="200">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="dark">
+                        <b>{{
+                            (dataItem.hoDemNhanSuCu ? dataItem.hoDemNhanSuCu : '') +
+                                ' ' +
+                                (dataItem.tenNhanSuCu ? dataItem.tenNhanSuCu : '')
+                        }}</b>
+                    </div>
+                    <div class="grid-size12">{{ dataItem.maNhanSuCu ? dataItem.maNhanSuCu : '' }}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column [title]="'Nhân sự mới' | translate" [columnMenu]="false" width="200">
+                <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+                    <div class="dark">
+                        <b>{{
+                            (dataItem.hoDemNhanSuMoi ? dataItem.hoDemNhanSuMoi : '') +
+                                ' ' +
+                                (dataItem.tenNhanSuMoi ? dataItem.tenNhanSuMoi : '')
+                        }}</b>
+                    </div>
+                    <div class="grid-size12">{{ dataItem.maNhanSuMoi ? dataItem.maNhanSuMoi : '' }}</div>
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="tenXepLoaiKetQuaDanhGiaCu"
+                [title]="'Kết quả đánh giá cũ' | translate"
+                [columnMenu]="false"
+                width="250"
+                [sortable]="false"
+            >
+            </kendo-grid-column>
+            <kendo-grid-column
+                field="tenXepLoaiKetQuaDanhGiaMoi"
+                [title]="'Kết quả đánh giá mới' | translate"
+                [columnMenu]="false"
+                width="250"
+                [sortable]="false"
+            >
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+</div>
+<div class="form-group m-form__group">
+    <div class="text-center order-form-footer">
+        <button type="button" (click)="closeForm()" class="btn_custom btn_df">{{ 'BTN.CLOSE' | translate }}</button>
+    </div>
+</div>
